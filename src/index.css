@@ -15,53 +15,64 @@
 }
 
 @layer utilities {
+  /* TYPOGRAPHY */
   /* open-sans */
   .open-title-1 {
+    line-height: 1;
     font-family: "Open Sans", sans-serif;
     font-weight: 800;
     font-size: 96px;
   }
   .open-title-2 {
+    line-height: 1;
     font-family: "Open Sans", sans-serif;
     font-weight: 800;
     font-size: 88px;
   }
   .open-title-3 {
+    line-height: 1;
     font-family: "Open Sans", sans-serif;
     font-weight: 800;
     font-size: 80px;
   }
   .open-title-4 {
+    line-height: 1;
     font-family: "Open Sans", sans-serif;
     font-weight: 800;
     font-size: 72px;
   }
   .open-heading-1 {
+    line-height: 1;
     font-family: "Open Sans", sans-serif;
     font-weight: 700;
     font-size: 64px;
   }
   .open-heading-2 {
+    line-height: 1;
     font-family: "Open Sans", sans-serif;
     font-weight: 700;
     font-size: 56px;
   }
   .open-heading-3 {
+    line-height: 1;
     font-family: "Open Sans", sans-serif;
     font-weight: 700;
     font-size: 48px;
   }
   .open-heading-4 {
+    line-height: 1;
     font-family: "Open Sans", sans-serif;
     font-weight: 700;
     font-size: 40px;
   }
   .open-heading-5 {
+    line-height: 1;
     font-family: "Open Sans", sans-serif;
     font-weight: 700;
     font-size: 32px;
   }
   .open-heading-6 {
+    line-height: 1;
     font-family: "Open Sans", sans-serif;
     font-weight: 700;
     font-size: 24px;
@@ -84,51 +95,61 @@
 
   /* poppins */
   .poppins-title-1 {
+    line-height: 1;
     font-family: "Poppins", sans-serif;
     font-weight: 800;
     font-size: 96px;
   }
   .poppins-title-2 {
+    line-height: 1;
     font-family: "Poppins", sans-serif;
     font-weight: 800;
     font-size: 88px;
   }
   .poppins-title-3 {
+    line-height: 1;
     font-family: "Poppins", sans-serif;
     font-weight: 800;
     font-size: 80px;
   }
   .poppins-title-4 {
+    line-height: 1;
     font-family: "Poppins", sans-serif;
     font-weight: 800;
     font-size: 72px;
   }
   .poppins-heading-1 {
+    line-height: 1;
     font-family: "Poppins", sans-serif;
     font-weight: 700;
     font-size: 64px;
   }
   .poppins-heading-2 {
+    line-height: 1;
     font-family: "Poppins", sans-serif;
     font-weight: 700;
     font-size: 56px;
   }
   .poppins-heading-3 {
+    line-height: 1;
     font-family: "Poppins", sans-serif;
     font-weight: 700;
     font-size: 48px;
   }
   .poppins-heading-4 {
+    line-height: 1;
     font-family: "Poppins", sans-serif;
     font-weight: 700;
     font-size: 40px;
   }
   .poppins-heading-5 {
+    line-height: 1;
     font-family: "Poppins", sans-serif;
     font-weight: 700;
     font-size: 32px;
   }
   .poppins-heading-6 {
+    line-height: 1;
     font-family: "Poppins", sans-serif;
     font-weight: 700;
     font-size: 24px;
@@ -147,5 +168,39 @@
     font-family: "Poppins", sans-serif;
     font-weight: 600;
     font-size: 14px;
+  }
+
+  /* SHADOW */
+  .shadow {
+    box-shadow: 0px 6px 6px 2px rgba(0, 0, 0, 0.06);
+  }
+
+  /* SPACING */
+  .spacing-xxxs {
+    height: 8px;
+  }
+  .spacing-xxs {
+    height: 16px;
+  }
+  .spacing-xs {
+    height: 24px;
+  }
+  .spacing-sm {
+    height: 32px;
+  }
+  .spacing-md {
+    height: 40px;
+  }
+  .spacing-lg {
+    height: 48px;
+  }
+  .spacing-xl {
+    height: 56px;
+  }
+  .spacing-xxl {
+    height: 64px;
+  }
+  .spacing-xxxl {
+    height: 72px;
   }
 }

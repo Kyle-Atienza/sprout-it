@@ -1,0 +1,21 @@
+export const TextField = ({
+  value,
+  name,
+  id,
+  placeholder,
+  type,
+  onChange,
+  className,
+}) => (
+  <>
+    <input
+      type={type}
+      value={value}
+      name={name}
+      id={id}
+      placeholder={placeholder}
+      onChange={onChange}
+      className={`p-4 bg-light-200 rounded-full open-paragrap-sm my-2 ${className}`}
+    />
+  </>
+);
