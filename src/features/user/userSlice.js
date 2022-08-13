@@ -14,9 +14,45 @@ const initialState = {
   message: "",
 };
 
-const register = createAsyncThunk("user/register", async (user, thunkAPI) => {
+export const register = createAsyncThunk(
+  "user/register",
+  async (user, thunkAPI) => {
+    try {
+      return await userService.register(user);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.register.data.message) ||
+        error.message ||
+        error.toString();
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const registerWithInvite = createAsyncThunk(
+  "user/register-invite",
+  async (user, thunkAPI) => {
+    try {
+      return await userService.register(user);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.register.data.message) ||
+        error.message ||
+        error.toString();
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const login = createAsyncThunk("user/login", async (user, thunkAPI) => {
   try {
-    return await userService.register(user);
+    return await userService.login(user);
   } catch (error) {
     const message =
       (error.response && error.response.data && error.register.data.message) ||
@@ -50,6 +86,20 @@ export const userSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(register.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        state.user = null;
+      })
+      .addCase(registerWithInvite.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(registerWithInvite.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload;
+      })
+      .addCase(registerWithInvite.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
