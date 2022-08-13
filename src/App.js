@@ -1,11 +1,12 @@
 import { Routes, Route } from 'react-router'
-import { LoginUser, RegisterUser } from "./pages";
+import { LoginUser, RegisterUser, Production } from "./pages";
 
 export const App = () => {
   return (
     <Routes>
       <Route element={<LoginUser />} path='/' />
       <Route element={<RegisterUser />} path='/register' />
+      <Route element={<Production />} path='/production' />
     </Routes>
   );
 }

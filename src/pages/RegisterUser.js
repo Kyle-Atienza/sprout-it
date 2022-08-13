@@ -32,14 +32,14 @@ export const RegisterUser = () => {
                 name='first-name'
                 id='first-name'
                 placeholder='First name'
-                className="w-full"
+                className='w-full'
               />
               <TextField
                 type='text'
                 name='last-name'
                 id='last-name'
                 placeholder='Last name'
-                className="w-full"
+                className='w-full'
               />
             </div>
             <TextField
@@ -53,6 +53,18 @@ export const RegisterUser = () => {
               name='password'
               id='password'
               placeholder='Password'
+            />
+            <TextField
+              type='password'
+              name='password2x'
+              id='password2x'
+              placeholder='Repeat Password'
+            />
+            <TextField
+              type='text'
+              name='invite-code'
+              id='invite-code'
+              placeholder='Invite code'
             />
             <a className='text-right open-button text-light-700' href='/'>
               Forgot Password?
