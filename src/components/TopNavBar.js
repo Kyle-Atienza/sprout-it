@@ -9,6 +9,7 @@ import {
   SettingOutlined,
   LogoutOutlined,
   MenuOutlined,
+  PlusOutlined,
 } from "@ant-design/icons";
 import { PrimaryButton, NotificationButton } from "../components";
 
@@ -16,8 +17,8 @@ export const TopNavBar = ({ pageName }) => {
   return (
     <>
       <nav
-          class='
-            fixed
+        class='
+            absolute
             w-full
             h-20
             lg:hidden
@@ -31,7 +32,7 @@ export const TopNavBar = ({ pageName }) => {
             focus:text-gray-700
             navbar navbar-expand-lg navbar-light
             '
-        >
+      >
         <div class='container-fluid w-auto flex flex-wrap items-center justify-between px-2 md:px-4'>
           <button
             class='
@@ -136,10 +137,16 @@ export const TopNavBar = ({ pageName }) => {
         </h1>
         <div className='flex flex-row items-center gap-4'>
           <PrimaryButton
-            className='hidden md:block mx-4'
+            className='hidden mx-4 text-xl leading-none md:flex justify-center items-center'
             name='Start a new batch'
             onClick=''
           />
+          <button
+            className='block md:hidden w-12 h-12 mx-4 text-xl pb-0.5 leading-none text-light-100 rounded-full bg-primary-400 hover:bg-primary-500 shadow transition-all'
+            onClick=''
+          >
+            <PlusOutlined />
+          </button>
           <NotificationButton className='text-xl leading-none flex justify-center items-center' />
         </div>
       </div>

@@ -6,7 +6,10 @@ export const Production = () => {
   return (
     <>
       <div className='flex flex-row w-screen'>
-        <SideNavBar />
+        <div className='w-1/6'>
+          <SideNavBar />
+        </div>
+
         <div className='flex flex-col w-full lg:w-5/6'>
           <div className='w-full'>
             <TopNavBar pageName='Production' />
