@@ -74,12 +74,11 @@
   .open-heading-6 {
     line-height: 1;
     font-family: "Open Sans", sans-serif;
-    font-weight: 700;
+    font-weight: 600;
     font-size: 24px;
   }
   .open-paragraph {
     font-family: "Open Sans", sans-serif;
-    font-weight: 400;
     font-size: 18px;
   }
   .open-paragraph-sm {
@@ -151,22 +150,41 @@
   .poppins-heading-6 {
     line-height: 1;
     font-family: "Poppins", sans-serif;
-    font-weight: 700;
+    font-weight: 600;
     font-size: 24px;
   }
   .poppins-paragraph {
     font-family: "Poppins", sans-serif;
-    font-weight: 400;
     font-size: 18px;
   }
   .poppins-paragraph-sm {
     font-family: "Poppins", sans-serif;
-    font-weight: 400;
     font-size: 16px;
   }
   .poppins-button {
     font-family: "Poppins", sans-serif;
     font-weight: 600;
     font-size: 14px;
+  }
+
+  /* SCROLLBAR */
+  .scrollbar::-webkit-scrollbar {
+    width: auto;
+    height: 8px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: #F0E6D4;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: #CCBCA1;
+    border-radius: 100vh;
+    border: 0px;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #A29072;
   }
 }

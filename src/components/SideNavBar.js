@@ -1,82 +1,93 @@
 import React from "react";
-
+import { Images } from "../core";
 import {
-  HomeTwoTone,
-  CalendarTwoTone,
-  FundTwoTone,
-  FolderOpenTwoTone,
+  HomeOutlined,
+  CalendarOutlined,
+  FundOutlined,
+  FolderOutlined,
   UserOutlined,
-  SettingTwoTone,
+  SettingOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
 
-
-
-export const SideNavBar = () => {
+export const SideNavBar = (className) => {
   return (
-    <div className='flex flex-col h-screen p-3 bg-white shadow w-60 bg-light-100'>
-      <div className='space-y-3'>
-        <div className='flex items-center'>
-          <h2 className='text-xl font-bold'>Dashboard</h2>
-        </div>
-        <div className='flex-1'>
-          <ul className='pt-2 pb-4 space-y-1 text-sm'>
-            <li className='rounded-sm'>
-              <a
-                href='/home'
-                className='flex items-center p-2 space-x-3 rounded-md'
-              >
-                <HomeTwoTone twoToneColor='#4A4A4A' />
-                <span>Home</span>
-              </a>
-            </li>
-            <li className='rounded-sm'>
-              <a
-                href='/production'
-                className='flex items-center p-2 space-x-3 rounded-md'
-              >
-                <CalendarTwoTone twoToneColor='#4A4A4A' />
-                <span>Production</span>
-              </a>
-            </li>
-            <li className='rounded-sm'>
-              <a
-                href='/analytics'
-                className='flex items-center p-2 space-x-3 rounded-md'
-              >
-                <FundTwoTone twoToneColor='#4A4A4A' />
-                <span>Analytics</span>
-              </a>
-            </li>
-            <li className='rounded-sm'>
-              <a
-                href='/records'
-                className='flex items-center p-2 space-x-3 rounded-md'
-              >
-                <FolderOpenTwoTone twoToneColor='#4A4A4A' />
-                <span>Records</span>
-              </a>
-            </li>
-            <li className='rounded-sm'>
-              <a
-                href='/profile'
-                className='flex items-center p-2 space-x-3 rounded-md'
-              >
-                <UserOutlined twoToneColor='#4A4A4A' />
-                <span>Profile</span>
-              </a>
-            </li>
-            <li className='rounded-sm'>
-              <a
-                href='/settings'
-                className='flex items-center p-2 space-x-3 rounded-md'
-              >
-                <SettingTwoTone twoToneColor='#4A4A4A' />
-                <span>Settings</span>
-              </a>
-            </li>
-          </ul>
-        </div>
+    <aside
+      className={`lg:flex flex-col p-4 bg-white shadow w-1/6 h-screen bg-light-100 justify-between hidden ${className}`}
+    >
+      <div className='p-4'>
+        <img src={Images.EandBLogo} alt='E and B logo' />
       </div>
-    </div>
+      <div className='h-auto w-full'>
+        <ul className='space-y-1 w-full'>
+          <li className='rounded-full px-4 py-2 hover:bg-primary-100 active:bg-primary-100 text-dark-400 hover:text-primary-700 transition-all'>
+            <a
+              href='/home'
+              className='flex items-center p-2 space-x-3 rounded-md'
+            >
+              <HomeOutlined className='text-xl leading-none -mt-1' />
+              <h4 className='poppins-paragraph font-semibold'>Home</h4>
+            </a>
+          </li>
+          <li className='rounded-full px-4 py-2 hover:bg-primary-100 active:bg-primary-100 text-dark-400 hover:text-primary-700 transition-all'>
+            <a
+              href='/production'
+              className='flex items-center p-2 space-x-3 rounded-md'
+            >
+              <CalendarOutlined className='text-xl leading-none -mt-1' />
+              <h4 className='poppins-paragraph font-semibold'>Production</h4>
+            </a>
+          </li>
+          <li className='rounded-full px-4 py-2 hover:bg-primary-100 active:bg-primary-100 text-dark-400 hover:text-primary-700 transition-all'>
+            <a
+              href='/analytics'
+              className='flex items-center p-2 space-x-3 rounded-md'
+            >
+              <FundOutlined className='text-xl leading-none -mt-1' />
+              <h4 className='poppins-paragraph font-semibold'>Analytics</h4>
+            </a>
+          </li>
+          <li className='rounded-full px-4 py-2 hover:bg-primary-100 active:bg-primary-100 text-dark-400 hover:text-primary-700 transition-all'>
+            <a
+              href='/records'
+              className='flex items-center p-2 space-x-3 rounded-md'
+            >
+              <FolderOutlined className='text-xl leading-none -mt-1' />
+              <h4 className='poppins-paragraph font-semibold'>Records</h4>
+            </a>
+          </li>
+          <li className='rounded-full px-4 py-2 hover:bg-primary-100 active:bg-primary-100 text-dark-400 hover:text-primary-700 transition-all'>
+            <a
+              href='/profile'
+              className='flex items-center p-2 space-x-3 rounded-md'
+            >
+              <UserOutlined className='text-xl leading-none -mt-1' />
+              <h4 className='poppins-paragraph font-semibold'>Profile</h4>
+            </a>
+          </li>
+          <li className='rounded-full px-4 py-2 hover:bg-primary-100 active:bg-primary-100 text-dark-400 hover:text-primary-700 transition-all'>
+            <a
+              href='/settings'
+              className='flex items-center p-2 space-x-3 rounded-md'
+            >
+              <SettingOutlined className='text-xl leading-none -mt-1' />
+              <h4 className='poppins-paragraph font-semibold'>Settings</h4>
+            </a>
+          </li>
+          <li className='rounded-full px-4 py-2 hover:bg-primary-100 text-dark-400 hover:text-primary-700 transition-all'>
+            <a
+              href='/settings'
+              className='flex items-center p-2 space-x-3 rounded-md'
+            >
+              <LogoutOutlined className='text-xl leading-none -mt-1' />
+              <h4 className='poppins-paragraph font-semibold'>Log out</h4>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div className='p-4'>
+        <img src={Images.Logo} alt='Sprout It logo' />
+      </div>
+    </aside>
   );
 };

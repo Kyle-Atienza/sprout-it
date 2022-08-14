@@ -13,7 +13,7 @@ module.exports = {
         600: "#4D7F21",
         700: "#345903",
       },
-      seconday: {
+      secondary: {
         100: "#F0E6D4",
         200: "#CCBCA1",
         300: "#A29072",
@@ -55,5 +55,5 @@ module.exports = {
       poppins: ["Poppins", "sans-serif"],
     },
   },
-  plugins: [],
+  plugins: [require("tw-elements/dist/plugin")],
 };
