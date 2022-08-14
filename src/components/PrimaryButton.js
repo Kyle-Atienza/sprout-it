@@ -8,4 +8,3 @@ export const PrimaryButton = ({ name, onClick, className }) => (
     </button>
   </>
 );
-
