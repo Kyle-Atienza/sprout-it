@@ -2,11 +2,18 @@ import React from "react";
 import { Images } from "../core";
 import { TextField, PrimaryButton } from "../components";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { login } from "../features/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { login, reset } from "../features/user/userSlice";
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
 
 export const LoginUser = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { user, isSuccess, isLoading, isError, message } = useSelector(
+    (state) => state.user
+  );
 
   const [formData, setFormData] = useState({
     email: "",
@@ -14,6 +21,17 @@ export const LoginUser = () => {
   });
 
   const { email, password } = formData;
+
+  useEffect(() => {
+    if (isError) {
+      console.log(message);
+    }
+    if (user || isSuccess) {
+      navigate("/production");
+    }
+
+    dispatch(reset());
+  }, [user, isSuccess, isLoading, isError, message, navigate, dispatch]);
 
   const onChange = (e) => {
     setFormData((prevState) => ({
