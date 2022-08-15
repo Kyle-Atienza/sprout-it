@@ -11,13 +11,14 @@ import {
   MenuOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
-import { PrimaryButton, NotificationButton } from "../components";
+import { PrimaryButton, NotificationButton, Modal } from "../components";
 
 export const TopNavBar = ({ pageName }) => {
   return (
     <>
       <nav
         class='
+        z-0
             absolute
             w-full
             h-20
@@ -131,22 +132,23 @@ export const TopNavBar = ({ pageName }) => {
           {/* <!-- Collapsible wrapper --> */}
         </div>
       </nav>
-      <div className='flex flex-row h-20 items-center justify-between px-4 md:px-6 lg:px-9'>
+      <div className='z-30 flex flex-row h-20 items-center justify-between px-4 md:px-6 lg:px-9'>
         <h1 className='ml-8 md:ml-10 lg:ml-0 md:block poppins-paragraph font-semibold md:poppins-heading-4 lg:poppins-heading-3 text-primary-400'>
           {pageName}
         </h1>
         <div className='flex flex-row items-center gap-4'>
-          <PrimaryButton
+          <Modal />
+          {/* <PrimaryButton
             className='hidden mx-4 text-xl leading-none md:flex justify-center items-center'
             name='Start a new batch'
-            onClick=''
+            onClick={openModal}
           />
           <button
             className='block md:hidden w-12 h-12 mx-4 text-xl pb-0.5 leading-none text-light-100 rounded-full bg-primary-400 hover:bg-primary-500 shadow transition-all'
-            onClick=''
+            onClick={openModal}
           >
             <PlusOutlined />
-          </button>
+          </button> */}
           <NotificationButton className='text-xl leading-none flex justify-center items-center' />
         </div>
       </div>
