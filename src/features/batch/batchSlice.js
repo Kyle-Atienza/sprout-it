@@ -5,6 +5,7 @@ const initialState = {
   initialBatches: [],
   batches: [],
   tasks: [],
+  finished: [],
   isSuccess: false,
   isError: false,
   isLoading: false,
@@ -52,13 +53,20 @@ export const batchSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.initialBatches = action.payload;
-        state.batches = action.payload.reduce((phases, batch) => {
-          const { activePhase } = batch;
-          phases[activePhase] = phases[activePhase] ?? [];
-          phases[activePhase].push(batch);
-          return phases;
-        }, {});
+        state.batches = action.payload
+          .filter((batch) => {
+            return batch.activePhase !== "";
+          })
+          .reduce((phases, batch) => {
+            const { activePhase } = batch;
+            phases[activePhase] = phases[activePhase] ?? [];
+            phases[activePhase].push(batch);
+            return phases;
+          }, {});
         state.tasks = batchTasks;
+        state.finished = action.payload.filter((batch) => {
+          return batch.activePhase === "";
+        });
       })
       .addCase(getBatches.rejected, (state, action) => {
         state.isLoading = false;
