@@ -11,7 +11,7 @@ import {
   MenuOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
-import { PrimaryButton, NotificationButton, Modal } from "../components";
+import { NotificationButton, Modal, HelpButton } from "../components";
 
 export const TopNavBar = ({ pageName }) => {
   return (
@@ -27,7 +27,7 @@ export const TopNavBar = ({ pageName }) => {
             items-center
             justify-between
             py-4
-            bg-gray-100
+            //bg-gray-100
             text-gray-500
             hover:text-gray-700
             focus:text-gray-700
@@ -60,8 +60,10 @@ export const TopNavBar = ({ pageName }) => {
             id='navbarSupportedContent'
           >
             {/* <!-- Left links --> */}
-            <ul class='nas
-            svbar-nav flex flex-col list-style-none mr-auto bg-light-100 rounded-lg lg:hidd shadow p-4'>
+            <ul
+              class='nas
+            svbar-nav flex flex-col list-style-none mr-auto bg-light-100 rounded-lg lg:hidd shadow p-4'
+            >
               <li className='rounded-full px-4 py-2 hover:bg-primary-100 active:bg-primary-100 text-dark-400 hover:text-primary-700 transition-all'>
                 <a
                   href='/home'
@@ -151,6 +153,7 @@ export const TopNavBar = ({ pageName }) => {
             <PlusOutlined />
           </button> */}
           <NotificationButton className='text-xl leading-none flex justify-center items-center' />
+          <HelpButton className='text-xl leading-none flex justify-center items-center' />
         </div>
       </div>
     </>

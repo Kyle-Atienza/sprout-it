@@ -6,3 +6,4 @@ export * from "./NotificationButton";
 export * from "./ProductionCard";
 export * from "./WeeklyTaskCard";
 export * from "./Modal";
+export * from "./HelpButton";

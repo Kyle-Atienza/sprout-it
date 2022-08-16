@@ -17,7 +17,7 @@ export const Modal = () => {
   return (
     <>
       <PrimaryButton
-        className="hidden mx-4 text-xl leading-none md:flex justify-center items-center"
+        className="hidden text-xl leading-none md:flex justify-center items-center"
         name="Start a new batch"
         onClick={openModal}
       />

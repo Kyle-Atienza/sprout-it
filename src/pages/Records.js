@@ -183,7 +183,7 @@ export const Records = () => {
       </Transition>
 
       <div className="flex flex-row w-screen">
-        <div className="w-1/6">
+        <div className="w-0 lg:w-1/6">
           <SideNavBar />
         </div>
 
