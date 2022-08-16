@@ -63,6 +63,10 @@ export const login = createAsyncThunk("user/login", async (user, thunkAPI) => {
   }
 });
 
+export const logout = createAsyncThunk("user/logout", async () => {
+  await localStorage.removeItem("sproutItUser");
+});
+
 //create slice
 export const userSlice = createSlice({
   name: "user",
@@ -84,6 +88,7 @@ export const userSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.user = action.payload;
+        console.log(action.payload);
       })
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false;
@@ -103,6 +108,9 @@ export const userSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
+        state.user = null;
+      })
+      .addCase(logout.fulfilled, (state) => {
         state.user = null;
       });
   },

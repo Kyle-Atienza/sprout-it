@@ -27,10 +27,11 @@ export const LoginUser = () => {
       console.log(message);
     }
     if (user || isSuccess) {
+      console.log(user);
       navigate("/production");
     }
 
-    dispatch(reset());
+    // dispatch(reset());
   }, [user, isSuccess, isLoading, isError, message, navigate, dispatch]);
 
   const onChange = (e) => {
