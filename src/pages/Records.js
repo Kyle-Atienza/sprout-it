@@ -68,7 +68,11 @@ export const Records = () => {
                     </div>
                     <div className="dates-started flex flex-col gap-1">
                       <p className="open-paragraph-sm">Date Finished</p>
-                      <h6 className="poppins-heading-6">Sept 12 2022</h6>
+                      <h6 className="poppins-heading-6">
+                        {new Date(selectedBatch.finishedAt).toLocaleDateString(
+                          "en-ph"
+                        )}
+                      </h6>
                     </div>
                   </div>
                   <Tab.Group>
@@ -238,7 +242,11 @@ export const Records = () => {
                       <td className="py-4 px-6">
                         {new Date(batch.createdAt).toLocaleDateString("en-ph")}
                       </td>
-                      <td className="py-4 px-6">Laptop</td>
+                      <td className="py-4 px-6">
+                        {new Date(selectedBatch.finishedAt).toLocaleDateString(
+                          "en-ph"
+                        )}
+                      </td>
                       <td className="py-4 px-6">$2999</td>
                       <td className="py-4 px-6">$2999</td>
                       <td className="py-4 px-6 text-center">
@@ -250,22 +258,6 @@ export const Records = () => {
                     </tr>
                   );
                 })}
-                {/* <tr
-                  className="bg-light-100 hover:bg-light-200 border-b dark:bg-gray-800 dark:border-gray-700 transition-all duration-300 ease-in-out cursor-pointer"
-                  onClick={() => setIsOpen(true)}
-                >
-                  <td className="py-4 px-6">Sliver</td>
-                  <td className="py-4 px-6">Sliver</td>
-                  <td className="py-4 px-6">Laptop</td>
-                  <td className="py-4 px-6">$2999</td>
-                  <td className="py-4 px-6">$2999</td>
-                  <td className="py-4 px-6 text-center">
-                    <EditOutlined className="text-lg cursor-pointer" />
-                  </td>
-                  <td className="py-4 px-6 text-center">
-                    <DeleteOutlined className="text-lg cursor-pointer" />
-                  </td>
-                </tr> */}
               </tbody>
             </table>
           </div>
