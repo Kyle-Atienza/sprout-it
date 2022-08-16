@@ -3,7 +3,7 @@ import { Images } from "../core";
 import { TextField, PrimaryButton } from "../components";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { login, reset } from "../features/user/userSlice";
+import { login } from "../features/user/userSlice";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 
@@ -94,7 +94,7 @@ export const LoginUser = () => {
             <a className="text-right open-button text-light-700" href="/">
               Forgot Password?
             </a>
-            <PrimaryButton className={"mt-10"} name="Log in">
+            <PrimaryButton className={"mt-10"} name="Log in" onClick={onSubmit}>
               <input type="submit" value="Submit" />
             </PrimaryButton>
           </form>

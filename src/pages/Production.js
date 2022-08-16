@@ -6,7 +6,7 @@ import {
   WeeklyTaskCard,
 } from "../components";
 import { Images } from "../core";
-import { useSelector, useDispatch, batch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { getBatches } from "../features/batch/batchSlice";
@@ -33,7 +33,7 @@ export const Production = () => {
       case 1:
         return "Mon";
       case 2:
-        return "Teu";
+        return "Tue";
       case 3:
         return "Wed";
       case 4:
@@ -65,13 +65,14 @@ export const Production = () => {
             <section className="w-max flex flex-row space-x-4 pt-4">
               {Object.keys(batches).map((batch) => {
                 return (
-                  <div className="w-80 text-center">
+                  <div key={batch} className="w-80 text-center">
                     <h2 className="poppins-heading-6 text-seconday-400 mb-4">
                       {batch.slice(0, 1).toUpperCase() + batch.slice(1)}
                     </h2>
                     {batches[batch].map((batchItem) => {
                       return (
                         <ProductionCard
+                          key={batchItem.name}
                           className=""
                           batchNumber={"Batch " + batchItem.name}
                           description="Lorem ipsum dolor sit amet consectetur"
@@ -105,6 +106,7 @@ export const Production = () => {
                   .map((taskItem) => {
                     return (
                       <WeeklyTaskCard
+                        key={taskItem.task.name}
                         className=""
                         task={taskItem.task.name}
                         batch={taskItem.name}
