@@ -1,7 +1,7 @@
 import React from "react";
 import { SideNavBar, TopNavBar } from "../components";
 import { Dialog, Transition, Tab } from "@headlessui/react";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { DeleteFilled, EditFilled } from "@ant-design/icons";
 import { useState, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -250,10 +250,10 @@ export const Records = () => {
                       <td className="py-4 px-6">$2999</td>
                       <td className="py-4 px-6">$2999</td>
                       <td className="py-4 px-6 text-center">
-                        <EditOutlined className="text-lg cursor-pointer" />
+                        <EditFilled className="text-lg cursor-pointer text-blue-400" />
                       </td>
                       <td className="py-4 px-6 text-center">
-                        <DeleteOutlined className="text-lg cursor-pointer" />
+                        <DeleteFilled className="text-lg cursor-pointer text-red-400" />
                       </td>
                     </tr>
                   );
