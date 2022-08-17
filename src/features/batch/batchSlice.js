@@ -48,7 +48,9 @@ export const batchSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getBatches.fulfilled, (state, action) => {
-        const batchTasks = action.payload.filter((batch) => batch.tasks.length);
+        const batchTasks = action.payload.filter(
+          (batch) => batch.tasks.length && batch.active
+        );
 
         state.isLoading = false;
         state.isSuccess = true;

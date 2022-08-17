@@ -3,7 +3,7 @@ import { Images } from "../core";
 import { TextField, PrimaryButton } from "../components";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../features/user/userSlice";
+import { login, reset } from "../features/user/userSlice";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 
@@ -31,7 +31,7 @@ export const LoginUser = () => {
       navigate("/production");
     }
 
-    // dispatch(reset());
+    dispatch(reset());
   }, [user, isSuccess, isLoading, isError, message, navigate, dispatch]);
 
   const onChange = (e) => {
