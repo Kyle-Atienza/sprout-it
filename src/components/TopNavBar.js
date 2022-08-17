@@ -11,13 +11,13 @@ import {
   MenuOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
-import { NotificationButton, Modal, HelpButton } from "../components";
+import { NotificationButton, Modal, HelpButton, PreProductionForm } from "../components";
 
 export const TopNavBar = ({ pageName }) => {
   return (
     <>
       <nav
-        class='
+        className='
         z-0
             absolute
             w-full
@@ -34,9 +34,9 @@ export const TopNavBar = ({ pageName }) => {
             navbar navbar-expand-lg navbar-light
             '
       >
-        <div class='container-fluid w-auto flex flex-wrap items-center justify-between px-2 md:px-4'>
+        <div className='container-fluid w-auto flex flex-wrap items-center justify-between px-2 md:px-4'>
           <button
-            class='
+            className='
               navbar-toggler
               text-gray-500
               border-0
@@ -56,14 +56,11 @@ export const TopNavBar = ({ pageName }) => {
             <MenuOutlined className='text-xl' />
           </button>
           <div
-            class='collapse navbar-collapse flex-grow items-center'
+            className='collapse navbar-collapse flex-grow items-center'
             id='navbarSupportedContent'
           >
             {/* <!-- Left links --> */}
-            <ul
-              class='nas
-            svbar-nav flex flex-col list-style-none mr-auto bg-light-100 rounded-lg lg:hidd shadow p-4'
-            >
+            <ul className='navbar-nav flex flex-col list-style-none mr-auto bg-light-100 rounded-lg lg:hidd shadow p-4'>
               <li className='rounded-full px-4 py-2 hover:bg-primary-100 active:bg-primary-100 text-dark-400 hover:text-primary-700 transition-all'>
                 <a
                   href='/home'
@@ -140,7 +137,9 @@ export const TopNavBar = ({ pageName }) => {
           {pageName}
         </h1>
         <div className='flex flex-row items-center gap-4'>
-          <Modal />
+          <Modal title='Start New Production'>
+            <PreProductionForm />
+          </Modal>
           {/* <PrimaryButton
             className='hidden mx-4 text-xl leading-none md:flex justify-center items-center'
             name='Start a new batch'
