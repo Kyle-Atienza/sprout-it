@@ -53,7 +53,7 @@ export const Modal = ({ children }) => {
                 leaveFrom='opacity-100 scale-100'
                 leaveTo='opacity-0 scale-95'
               >
-                <Dialog.Panel className='bg-light-100 w-full max-w-md transform overflow-hidden rounded-2xl p-12 text-left align-middle shadow-lg transition-all'>
+                <Dialog.Panel className='bg-light-100 w-full max-w-lg transform overflow-hidden rounded-2xl p-12 text-left align-middle shadow-lg transition-all'>
                   <div className='-mb-6 flex justify-end'>
                     <button
                       className='text-xl leading-none flex justify-center items-center hover:text-red-500'
