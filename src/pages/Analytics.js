@@ -100,7 +100,7 @@ export const Analytics = () => {
           </div>
           <div className="charts d-flex flex-wrap">
             <div className="flex m-5 gap-5 h-[40vh]">
-              <div className="p-12 w-1/2 bg-white rounded-3xl shadow-lg">
+              <div className="p-12 w-1/2 bg-white rounded-3xl shadow">
                 <Bar
                   data={barData}
                   options={{
@@ -118,7 +118,7 @@ export const Analytics = () => {
                   }}
                 />
               </div>
-              <div className="p-5 w-1/2 bg-secondary-100 rounded-3xl shadow-lg flex flex-col gap-4 overflow-y-scroll">
+              <div className="p-5 w-1/2 bg-secondary-100 rounded-3xl shadow flex flex-col gap-4 overflow-y-scroll">
                 <div className="flex items-center gap-4 p-5 bg-white rounded-2xl">
                   <CaretUpFilled className="text-2xl text-primary-400" />
                   <p className="poppins-paragraph-sm">
@@ -146,7 +146,7 @@ export const Analytics = () => {
               </div>
             </div>
             <div className="flex m-5 gap-5">
-              <div className="p-12 w-3/5 bg-white rounded-3xl shadow-lg">
+              <div className="p-12 w-3/5 bg-white rounded-3xl shadow">
                 <Line
                   data={lineData}
                   options={{
@@ -164,7 +164,7 @@ export const Analytics = () => {
                   }}
                 />
               </div>
-              <div className="p-12 w-2/5 bg-white rounded-3xl shadow-lg">
+              <div className="p-12 w-2/5 bg-white rounded-3xl shadow">
                 <Doughnut
                   data={dougnutData}
                   options={{
