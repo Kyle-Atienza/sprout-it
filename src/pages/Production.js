@@ -6,7 +6,7 @@ import {
   WeeklyTaskCard,
 } from "../components";
 import { Images } from "../core";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, batch } from "react-redux";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { getBatches } from "../features/batch/batchSlice";
@@ -63,26 +63,86 @@ export const Production = () => {
 
           <div className="my-4 py-4 px-4 md:px-6 lg:px-9 overflow-x-scroll scrollbar">
             <section className="w-max flex flex-row space-x-4 pt-4">
-              {Object.keys(batches).map((batch) => {
-                return (
-                  <div key={batch} className="w-80 text-center">
-                    <h2 className="poppins-heading-6 text-seconday-400 mb-4">
-                      {batch.slice(0, 1).toUpperCase() + batch.slice(1)}
-                    </h2>
-                    {batches[batch].map((batchItem) => {
-                      return (
-                        <ProductionCard
-                          key={batchItem.name}
-                          className=""
-                          batchNumber={"Batch " + batchItem.name}
-                          description="Lorem ipsum dolor sit amet consectetur"
-                          daysLeft="2"
-                        />
-                      );
-                    })}
-                  </div>
-                );
-              })}
+              <div className="w-80 text-center">
+                <h2 className="poppins-heading-6 text-seconday-400 mb-4">
+                  Composting
+                </h2>
+                {batches["composting"]?.map((batch) => {
+                  return (
+                    <ProductionCard
+                      key={batch.name}
+                      className=""
+                      batchNumber={"Batch " + batch.name}
+                      description="Lorem ipsum dolor sit amet consectetur"
+                      daysLeft="2"
+                    />
+                  );
+                })}
+              </div>
+              <div className="w-80 text-center">
+                <h2 className="poppins-heading-6 text-seconday-400 mb-4">
+                  Bagging
+                </h2>
+                {batches["bagging"]?.map((batch) => {
+                  return (
+                    <ProductionCard
+                      key={batch.name}
+                      className=""
+                      batchNumber={"Batch " + batch.name}
+                      description="Lorem ipsum dolor sit amet consectetur"
+                      daysLeft="2"
+                    />
+                  );
+                })}
+              </div>
+              <div className="w-80 text-center">
+                <h2 className="poppins-heading-6 text-seconday-400 mb-4">
+                  Sterilization
+                </h2>
+                {batches["sterilization"]?.map((batch) => {
+                  return (
+                    <ProductionCard
+                      key={batch.name}
+                      className=""
+                      batchNumber={"Batch " + batch.name}
+                      description="Lorem ipsum dolor sit amet consectetur"
+                      daysLeft="2"
+                    />
+                  );
+                })}
+              </div>
+              <div className="w-80 text-center">
+                <h2 className="poppins-heading-6 text-seconday-400 mb-4">
+                  Inoculation
+                </h2>
+                {batches["inoculation"]?.map((batch) => {
+                  return (
+                    <ProductionCard
+                      key={batch.name}
+                      className=""
+                      batchNumber={"Batch " + batch.name}
+                      description="Lorem ipsum dolor sit amet consectetur"
+                      daysLeft="2"
+                    />
+                  );
+                })}
+              </div>
+              <div className="w-80 text-center">
+                <h2 className="poppins-heading-6 text-seconday-400 mb-4">
+                  Fruiting
+                </h2>
+                {batches["fruiting"]?.map((batch) => {
+                  return (
+                    <ProductionCard
+                      key={batch.name}
+                      className=""
+                      batchNumber={"Batch " + batch.name}
+                      description="Lorem ipsum dolor sit amet consectetur"
+                      daysLeft="2"
+                    />
+                  );
+                })}
+              </div>
             </section>
           </div>
           <div className="w-full my-4 py-4 px-4 md:px-6 lg:px-9">

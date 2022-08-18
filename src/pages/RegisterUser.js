@@ -81,7 +81,7 @@ export const RegisterUser = () => {
               Create a new account
             </h3>
           </div>
-          <form className="flex flex-col " onSubmit={onSubmit}>
+          <form className="flex flex-col ">
             <div className="flex flex-col md:flex-row md:space-x-4">
               <TextField
                 value={firstName}
@@ -129,7 +129,11 @@ export const RegisterUser = () => {
             <a className="text-right open-button text-light-700" href="/">
               Forgot Password?
             </a>
-            <PrimaryButton className={"mt-10"} name="Register">
+            <PrimaryButton
+              className={"mt-10"}
+              name="Register"
+              onClick={onSubmit}
+            >
               <input type="submit" value="Submit" />
             </PrimaryButton>
           </form>

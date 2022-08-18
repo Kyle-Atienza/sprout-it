@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import batchService from "./batchService";
+import materialService from "./materialService";
 
 const initialState = {
   initialBatches: [],
@@ -13,11 +14,49 @@ const initialState = {
 };
 
 export const getBatches = createAsyncThunk(
-  "user/batches",
+  "batches/getAll",
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().user.user.token;
       return await batchService.getBatches(token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.register.data.message) ||
+        error.message ||
+        error.toString();
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const createBatch = createAsyncThunk(
+  "batches/create",
+  async (batchData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().user.user.token;
+      return await batchService.createBatch(batchData, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.register.data.message) ||
+        error.message ||
+        error.toString();
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const setMaterials = createAsyncThunk(
+  "batches/setMaterials",
+  async (materialData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().user.user.token;
+      return await materialService.setMaterials(materialData, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -71,6 +110,31 @@ export const batchSlice = createSlice({
         });
       })
       .addCase(getBatches.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(createBatch.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createBatch.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.initialBatches = [...state.initialBatches, action.payload];
+      })
+      .addCase(createBatch.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(setMaterials.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(setMaterials.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+      })
+      .addCase(setMaterials.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

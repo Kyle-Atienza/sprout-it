@@ -14,6 +14,18 @@ const getBatches = async (token) => {
   return response.data;
 };
 
-const batchService = { getBatches };
+const createBatch = async (batchData, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.post(API_URL, batchData, config);
+
+  return response.data;
+};
+
+const batchService = { getBatches, createBatch };
 
 export default batchService;
