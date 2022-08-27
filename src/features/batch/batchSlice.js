@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import batchService from "./batchService";
-import materialService from "./materialService";
 
 const initialState = {
   initialBatches: [],
@@ -20,12 +19,10 @@ export const getBatches = createAsyncThunk(
       const token = thunkAPI.getState().user.user.token;
       return await batchService.getBatches(token);
     } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.register.data.message) ||
-        error.message ||
-        error.toString();
+      const message = {
+        status: error.message,
+        response: error.response.data.message,
+      };
 
       return thunkAPI.rejectWithValue(message);
     }
@@ -39,31 +36,44 @@ export const createBatch = createAsyncThunk(
       const token = thunkAPI.getState().user.user.token;
       return await batchService.createBatch(batchData, token);
     } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.register.data.message) ||
-        error.message ||
-        error.toString();
+      const message = {
+        status: error.message,
+        response: error.response.data.message,
+      };
 
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
-export const setMaterials = createAsyncThunk(
-  "batches/setMaterials",
-  async (materialData, thunkAPI) => {
+export const updateBatch = createAsyncThunk(
+  "batches/update",
+  async (updatedBatchData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().user.user.token;
-      return await materialService.setMaterials(materialData, token);
+      return await batchService.updateBatch(updatedBatchData, token);
     } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.register.data.message) ||
-        error.message ||
-        error.toString();
+      const message = {
+        status: error.message,
+        response: error.response.data.message,
+      };
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const createTask = createAsyncThunk(
+  "batch/addTask",
+  async (taskData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().user.user.token;
+      await batchService.createTask(taskData, token);
+    } catch (error) {
+      const message = {
+        status: error.message,
+        response: error.response.data.message,
+      };
 
       return thunkAPI.rejectWithValue(message);
     }
@@ -87,13 +97,13 @@ export const batchSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getBatches.fulfilled, (state, action) => {
-        const batchTasks = action.payload.filter(
-          (batch) => batch.tasks.length && batch.active
-        );
-
         state.isLoading = false;
         state.isSuccess = true;
+
+        // all batches not filtered
         state.initialBatches = action.payload;
+
+        // all active batches separated in their own phases
         state.batches = action.payload
           .filter((batch) => {
             return batch.activePhase !== "";
@@ -104,7 +114,13 @@ export const batchSlice = createSlice({
             phases[activePhase].push(batch);
             return phases;
           }, {});
-        state.tasks = batchTasks;
+
+        // batches with tasks
+        state.tasks = action.payload.filter(
+          (batch) => batch.tasks.length && batch.active
+        );
+
+        // finished tasks
         state.finished = action.payload.filter((batch) => {
           return batch.activePhase === "";
         });
@@ -127,14 +143,45 @@ export const batchSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
       })
-      .addCase(setMaterials.pending, (state) => {
+      .addCase(updateBatch.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(setMaterials.fulfilled, (state, action) => {
+      .addCase(updateBatch.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+
+        //replace batch
+        const replaceIndex = state.initialBatches.indexOf(
+          state.initialBatches.find((batch) => {
+            return batch._id === action.payload._id;
+          })
+        );
+        state.initialBatches[replaceIndex] = action.payload;
+
+        state.batches = state.initialBatches
+          .filter((batch) => {
+            return batch.activePhase !== "";
+          })
+          .reduce((phases, batch) => {
+            const { activePhase } = batch;
+            phases[activePhase] = phases[activePhase] ?? [];
+            phases[activePhase].push(batch);
+            return phases;
+          }, {});
+      })
+      .addCase(updateBatch.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(createTask.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createTask.fulfilled, (state) => {
         state.isLoading = false;
         state.isSuccess = true;
       })
-      .addCase(setMaterials.rejected, (state, action) => {
+      .addCase(createTask.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

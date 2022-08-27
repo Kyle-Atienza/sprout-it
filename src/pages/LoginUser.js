@@ -11,7 +11,7 @@ export const LoginUser = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { user, isSuccess, isLoading, isError, message } = useSelector(
+  const { user, isSuccess, isError, message } = useSelector(
     (state) => state.user
   );
 
@@ -24,15 +24,14 @@ export const LoginUser = () => {
 
   useEffect(() => {
     if (isError) {
-      console.log(message);
+      alert(message.response);
     }
-    if (user || isSuccess) {
-      console.log(user);
+    if (isSuccess || user) {
       navigate("/production");
     }
 
     dispatch(reset());
-  }, [user, isSuccess, isLoading, isError, message, navigate, dispatch]);
+  }, [user, isSuccess, isError, message, navigate, dispatch]);
 
   const onChange = (e) => {
     setFormData((prevState) => ({

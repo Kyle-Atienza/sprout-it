@@ -20,12 +20,10 @@ export const register = createAsyncThunk(
     try {
       return await userService.register(user);
     } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.register.data.message) ||
-        error.message ||
-        error.toString();
+      const message = {
+        status: error.message,
+        response: error.response.data.message,
+      };
 
       return thunkAPI.rejectWithValue(message);
     }
@@ -38,12 +36,10 @@ export const registerWithInvite = createAsyncThunk(
     try {
       return await userService.register(user);
     } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.register.data.message) ||
-        error.message ||
-        error.toString();
+      const message = {
+        status: error.message,
+        response: error.response.data.message,
+      };
 
       return thunkAPI.rejectWithValue(message);
     }
@@ -54,10 +50,10 @@ export const login = createAsyncThunk("user/login", async (user, thunkAPI) => {
   try {
     return await userService.login(user);
   } catch (error) {
-    const message =
-      (error.response && error.response.data && error.register.data.message) ||
-      error.message ||
-      error.toString();
+    const message = {
+      status: error.message,
+      response: error.response.data.message,
+    };
 
     return thunkAPI.rejectWithValue(message);
   }
@@ -81,6 +77,20 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(login.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload;
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        state.user = null;
+      })
       .addCase(register.pending, (state) => {
         state.isLoading = true;
       })
@@ -88,7 +98,6 @@ export const userSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.user = action.payload;
-        console.log(action.payload);
       })
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false;

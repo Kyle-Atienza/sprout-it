@@ -2,19 +2,20 @@ import axios from "axios";
 
 const API_URL = `${process.env.REACT_APP_PROXY}api/material/`;
 
-const setMaterials = async (materialData, token) => {
+const getMaterials = async (token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
 
-  const response = await axios.post(API_URL, materialData, config);
-  console.log(materialData);
+  const response = await axios.get(API_URL, config);
 
   return response.data;
 };
 
-const materialService = { setMaterials };
+const materialService = {
+  getMaterials,
+};
 
 export default materialService;

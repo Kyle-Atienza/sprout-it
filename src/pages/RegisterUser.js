@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { Images } from "../core";
 import { TextField, PrimaryButton } from "../components";
-import { useDispatch } from "react-redux";
-import { register } from "../features/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { register, reset } from "../features/user/userSlice";
 import { useJwt } from "react-jwt";
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const RegisterUser = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const location = useLocation();
 
   const [formData, setFormData] = useState({
@@ -23,9 +24,14 @@ export const RegisterUser = () => {
   const { firstName, lastName, email, password, confirmPassword } = formData;
   const { decodedToken } = useJwt(location.pathname.split("/")[2]);
 
+  const { user, isSuccess, isError, message } = useSelector(
+    (state) => state.user
+  );
+
   useEffect(() => {
     if (decodedToken) {
       const { email, name } = decodedToken;
+
       setFormData({
         ...formData,
         email: email,
@@ -35,6 +41,17 @@ export const RegisterUser = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [decodedToken]);
+
+  useEffect(() => {
+    if (isError) {
+      alert(message.response);
+    }
+    if (isSuccess || user) {
+      navigate("/production");
+    }
+
+    dispatch(reset());
+  }, [user, isSuccess, isError, message, navigate, dispatch]);
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -47,16 +64,18 @@ export const RegisterUser = () => {
     e.preventDefault();
     console.log("register");
 
-    if (password === confirmPassword) {
-      const userData = {
-        name: `${firstName} ${lastName}`,
-        email: email,
-        password: password,
-        role: "worker",
-      };
-
-      dispatch(register(userData));
+    if (password !== confirmPassword) {
+      alert("Password didn't match");
     }
+
+    const userData = {
+      name: `${firstName} ${lastName}`,
+      email: email,
+      password: password,
+      role: "worker",
+    };
+
+    dispatch(register(userData));
   };
 
   return (

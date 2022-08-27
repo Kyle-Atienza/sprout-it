@@ -17,6 +17,7 @@ export const SideNavBar = (className) => {
   const dispatch = useDispatch();
 
   const onLogout = () => {
+    console.log("logout");
     dispatch(logout());
   };
 
