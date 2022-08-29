@@ -4,7 +4,6 @@ import batchService from "./batchService";
 const initialState = {
   initialBatches: [],
   batches: [],
-  tasks: [],
   finished: [],
   isSuccess: false,
   isError: false,
@@ -63,23 +62,6 @@ export const updateBatch = createAsyncThunk(
   }
 );
 
-export const createTask = createAsyncThunk(
-  "batch/addTask",
-  async (taskData, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().user.user.token;
-      await batchService.createTask(taskData, token);
-    } catch (error) {
-      const message = {
-        status: error.message,
-        response: error.response.data.message,
-      };
-
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
-
 export const batchSlice = createSlice({
   name: "batch",
   initialState,
@@ -114,12 +96,6 @@ export const batchSlice = createSlice({
             phases[activePhase].push(batch);
             return phases;
           }, {});
-
-        // batches with tasks
-        state.tasks = action.payload.filter(
-          (batch) => batch.tasks.length && batch.active
-        );
-
         // finished tasks
         state.finished = action.payload.filter((batch) => {
           return batch.activePhase === "";
@@ -170,18 +146,6 @@ export const batchSlice = createSlice({
           }, {});
       })
       .addCase(updateBatch.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
-      })
-      .addCase(createTask.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(createTask.fulfilled, (state) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-      })
-      .addCase(createTask.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

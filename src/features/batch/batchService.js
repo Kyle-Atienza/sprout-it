@@ -50,13 +50,24 @@ const updateBatch = async ({ id, payload }, token) => {
   return response.data;
 };
 
+const getTasks = async (token) => {
+  const response = await axios.get(`${API_URL}task/`, config(token));
+
+  return response.data;
+};
+
 const createTask = async (taskData, token) => {
   const response = await axios.post(`${API_URL}task/`, taskData, config(token));
 
-  console.log(response.data);
-  // return response.data;
+  return response.data;
 };
 
-const batchService = { getBatches, createBatch, updateBatch, createTask };
+const batchService = {
+  getBatches,
+  createBatch,
+  updateBatch,
+  getTasks,
+  createTask,
+};
 
 export default batchService;

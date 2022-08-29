@@ -8,3 +8,5 @@ export * from "./WeeklyTaskCard";
 export * from "./Modal";
 export * from "./HelpButton";
 export * from "./ProductionForms";
+export * from "./TaskForm";
+export * from "./BatchDetails";

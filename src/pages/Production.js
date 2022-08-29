@@ -4,17 +4,16 @@ import {
   TopNavBar,
   ProductionCard,
   WeeklyTaskCard,
+  TaskForm,
+  BatchDetails,
 } from "../components";
 import { Images } from "../core";
 import { useSelector, useDispatch } from "react-redux";
-import { Dialog, Transition, Tab } from "@headlessui/react";
+import { Dialog, Transition } from "@headlessui/react";
 import { useEffect, Fragment } from "react";
 import { useNavigate } from "react-router";
-import {
-  createTask,
-  getBatches,
-  updateBatch,
-} from "../features/batch/batchSlice";
+import { getBatches, updateBatch } from "../features/batch/batchSlice";
+import { getTasks, updateTask } from "../features/task/taskSlice";
 import { getMaterials } from "../features/inventory/inventorySlice";
 import { useState } from "react";
 
@@ -22,10 +21,10 @@ export const Production = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [isBatchDetailsOpen, setIsBatchDetailsOpen] = useState(false);
+  const [isBatchModalOpen, setIsBatchModalOpen] = useState(false);
+  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
   const [selectedBatch, setSelectedBatch] = useState({});
-  const [task, setTask] = useState("");
-
+  const [selectedTask, setSelectedTask] = useState({});
   const {
     user,
     isSuccess: userSuccess,
@@ -34,26 +33,24 @@ export const Production = () => {
     message: userMessage,
   } = useSelector((state) => state.user);
   const {
-    tasks,
     batches,
     isSuccess: batchSuccess,
     isLoading: batchLoading,
     isError: batchError,
   } = useSelector((state) => state.batch);
+  const { tasks } = useSelector((state) => state.task);
   const { phases } = useSelector((state) => state.phases);
 
   useEffect(() => {
     dispatch(getMaterials());
     dispatch(getBatches());
+    dispatch(getTasks());
   }, [dispatch]);
 
   useEffect(() => {
     if (!user) {
       navigate("/");
     }
-
-    /* dispatch(getMaterials());
-    dispatch(getBatches()); */
   }, [
     user,
     userSuccess,
@@ -79,7 +76,7 @@ export const Production = () => {
           },
         })
       );
-      setIsBatchDetailsOpen(false);
+      setIsBatchModalOpen(false);
     } else {
       const nextPhase =
         phases[
@@ -99,20 +96,16 @@ export const Production = () => {
     }
   };
 
-  const onChange = (e) => {
-    setTask(e.target.value);
-    // console.log(task);
-  };
-
-  const onCreateTask = () => {
-    // console.log("task");
+  const onEndTask = (phase) => {
     dispatch(
-      createTask({
-        batchId: selectedBatch._id,
-        name: "task",
-        frequency: 1,
+      updateTask({
+        id: selectedTask._id,
+        payload: {
+          status: "cancel",
+        },
       })
     );
+    window.location.reload();
   };
 
   const getDay = (day) => {
@@ -138,11 +131,11 @@ export const Production = () => {
 
   return (
     <>
-      <Transition appear show={isBatchDetailsOpen} as={Fragment}>
+      <Transition appear show={isBatchModalOpen} as={Fragment}>
         <Dialog
           as="div"
           className="relative z-20"
-          onClose={() => setIsBatchDetailsOpen(false)}
+          onClose={() => setIsBatchModalOpen(false)}
         >
           <Transition.Child
             as={Fragment}
@@ -167,127 +160,9 @@ export const Production = () => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="bg-primary-100 w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-lg transition-all h-[40rem] flex flex-col">
-                  <Tab.Group>
-                    <Tab.List className="flex gap-2 mt-7 overflow-x-scroll pb-2">
-                      {phases.map((phase) => {
-                        return (
-                          <Tab
-                            className="poppins-paragraph px-4 py-3 bg-primary-200 rounded-xl disabled:opacity-50"
-                            key={phase}
-                          >
-                            {phase}
-                          </Tab>
-                        );
-                      })}
-                    </Tab.List>
-                    <Tab.Panels className="py-5 flex-1">
-                      <Tab.Panel>
-                        <div>
-                          <table className="w-full text-sm text-left">
-                            <thead className=" poppins-paragraph ">
-                              <tr>
-                                <th scope="col" className="py-2">
-                                  Material
-                                </th>
-                                <th scope="col" className="py-2">
-                                  Quantity
-                                </th>
-                              </tr>
-                            </thead>
-                            <tbody className="poppins-paragraph-sm ">
-                              <tr className="transition-all duration-300 ease-in-out cursor-pointer">
-                                <td className="py-2">Kusot</td>
-                                <td className="py-2">12 kg</td>
-                              </tr>
-                              <tr className="transition-all duration-300 ease-in-out cursor-pointer">
-                                <td className="py-2">Kusot</td>
-                                <td className="py-2">12 kg</td>
-                              </tr>
-                              <tr className="transition-all duration-300 ease-in-out cursor-pointer">
-                                <td className="py-2">Kusot</td>
-                                <td className="py-2">12 kg</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </Tab.Panel>
-                      <Tab.Panel>
-                        <div>
-                          <p className="poppins-paragraph">
-                            27 days composting
-                          </p>
-                        </div>
-                      </Tab.Panel>
-                      <Tab.Panel>
-                        <div className="">
-                          <p className="poppins-paragraph">
-                            200 days composting
-                          </p>
-                          <p className="poppins-paragraph">1kg bag weight</p>
-                        </div>
-                      </Tab.Panel>
-                      <Tab.Panel>
-                        <div className="">
-                          <p className="poppins-paragraph">
-                            8 hours Sterilization
-                          </p>
-                        </div>
-                        <div className="mt-auto">
-                          <p className="poppins-paragraph">2 defects</p>
-                        </div>
-                      </Tab.Panel>
-                      <Tab.Panel>
-                        <div className="">
-                          <p className="poppins-paragraph">
-                            198 Total Inoculated
-                          </p>
-                          <p className="poppins-paragraph">F2 Sorgum Spawn</p>
-                        </div>
-                        <div className="mt-auto">
-                          <p className="poppins-paragraph">4 defects</p>
-                        </div>
-                      </Tab.Panel>
-                      <Tab.Panel>
-                        <div className="">
-                          <p className="poppins-paragraph">
-                            194 total bags for fruiting
-                          </p>
-                          <p className="poppins-paragraph">
-                            2 weeks waiting time
-                          </p>
-                        </div>
-                      </Tab.Panel>
-                    </Tab.Panels>
-                  </Tab.Group>
-                  <form className=" mb-4">
-                    <div className="mb-4">
-                      <label
-                        className="block text-gray-700 text-sm font-bold mb-2"
-                        htmlFor="username"
-                      >
-                        Task Message
-                      </label>
-                      <input
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        id="username"
-                        type="text"
-                        value={task}
-                        onChange={onChange}
-                        placeholder="Clean Mushroom House"
-                      />
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <button
-                        onClick={onCreateTask}
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                        type="button"
-                      >
-                        Create Task
-                      </button>
-                    </div>
-                  </form>
+                <Dialog.Panel className="overflow-y-scroll bg-primary-100 w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-lg transition-all h-[40rem] flex flex-col">
+                  <BatchDetails />
+                  <TaskForm batch={selectedBatch} />
                   {selectedBatch.activePhase === "fruiting" ? (
                     <button
                       onClick={() => onUpdateBatch(selectedBatch.activePhase)}
@@ -303,6 +178,50 @@ export const Production = () => {
                       Start Next Phase
                     </button>
                   )}
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
+
+      <Transition appear show={isTaskModalOpen} as={Fragment}>
+        <Dialog
+          as="div"
+          className="relative z-20"
+          onClose={() => setIsTaskModalOpen(false)}
+        >
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-dark-700 bg-opacity-25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="overflow-y-scroll bg-primary-100 w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-lg transition-all h-[40rem] flex flex-col">
+                  <pre>{JSON.stringify(selectedTask, null, 2)}</pre>
+                  <button
+                    onClick={() => onEndTask()}
+                    className="bg-red-500 hover:bg-red-700 text-white poppins-button font-bold py-2 px-4 rounded"
+                  >
+                    End Task
+                  </button>
                 </Dialog.Panel>
               </Transition.Child>
             </div>
@@ -330,7 +249,7 @@ export const Production = () => {
                   return (
                     <ProductionCard
                       onClick={() => {
-                        setIsBatchDetailsOpen(true);
+                        setIsBatchModalOpen(true);
                         setSelectedBatch(batch);
                       }}
                       key={batch.name}
@@ -350,7 +269,7 @@ export const Production = () => {
                   return (
                     <ProductionCard
                       onClick={() => {
-                        setIsBatchDetailsOpen(true);
+                        setIsBatchModalOpen(true);
                         setSelectedBatch(batch);
                       }}
                       key={batch.name}
@@ -370,7 +289,7 @@ export const Production = () => {
                   return (
                     <ProductionCard
                       onClick={() => {
-                        setIsBatchDetailsOpen(true);
+                        setIsBatchModalOpen(true);
                         setSelectedBatch(batch);
                       }}
                       key={batch.name}
@@ -390,7 +309,7 @@ export const Production = () => {
                   return (
                     <ProductionCard
                       onClick={() => {
-                        setIsBatchDetailsOpen(true);
+                        setIsBatchModalOpen(true);
                         setSelectedBatch(batch);
                       }}
                       key={batch.name}
@@ -410,7 +329,7 @@ export const Production = () => {
                   return (
                     <ProductionCard
                       onClick={() => {
-                        setIsBatchDetailsOpen(true);
+                        setIsBatchModalOpen(true);
                         setSelectedBatch(batch);
                       }}
                       key={batch.name}
@@ -431,33 +350,28 @@ export const Production = () => {
                   Weekly Tasks
                 </h2>
                 {tasks
-                  .map((batch) => {
-                    return batch.tasks.map((task) => {
-                      return {
-                        phase: batch.activePhase,
-                        name: batch.name,
-                        task: task,
-                        day: task.frequency,
-                      };
-                    });
+                  .filter((task) => {
+                    return task.status === "ongoing" && task.batch.active;
                   })
-                  .flat()
-                  .map((taskItem) => {
+                  .map((task) => {
                     return (
                       <WeeklyTaskCard
-                        key={taskItem.task._id}
+                        onClick={() => {
+                          setIsTaskModalOpen(true);
+                          setSelectedTask(task);
+                        }}
+                        key={task._id}
                         className=""
-                        task={taskItem.task.name}
-                        batch={taskItem.name}
+                        task={task.name}
+                        batch={task.batch.name}
                         phase={
-                          taskItem.phase.slice(0, 1).toUpperCase() +
-                          taskItem.phase.slice(1)
+                          task.batch.activePhase.slice(0, 1).toUpperCase() +
+                          task.batch.activePhase.slice(1)
                         }
-                        day={getDay(taskItem.day)}
                         image={
                           Images[
-                            taskItem.phase.slice(0, 1).toUpperCase() +
-                              taskItem.phase.slice(1)
+                            task.batch.activePhase.slice(0, 1).toUpperCase() +
+                              task.batch.activePhase.slice(1)
                           ]
                         }
                       />
