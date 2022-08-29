@@ -4,3 +4,4 @@ export * from "./Production";
 export * from "./Records";
 export * from "./Help";
 export * from "./Analytics";
+export * from "./Settings";

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 // import { createTask, getTasks } from "../features/batch/batchSlice";
 import { createTask, getTasks } from "../features/task/taskSlice";
-import { getBatches } from "../features/batch/batchSlice";
 
 export function TaskForm({ batch }) {
   const dispatch = useDispatch();
@@ -224,9 +223,9 @@ export function TaskForm({ batch }) {
           Time
         </label>
         <div className="flex items-center gap-4">
-          <div class="form-check flex">
+          <div className="form-check flex">
             <input
-              class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+              className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
               type="checkbox"
               value="allDay"
               name="time"
@@ -239,7 +238,7 @@ export function TaskForm({ batch }) {
               }
             />
             <label
-              class=" whitespace-nowrap form-check-label inline-block text-gray-800"
+              className=" whitespace-nowrap form-check-label inline-block text-gray-800"
               htmlFor="flexCheckDefault"
             >
               All day

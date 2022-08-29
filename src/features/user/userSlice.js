@@ -8,6 +8,7 @@ const user = JSON.parse(localStorage.getItem("sproutItUser"));
 //create initial state for user
 const initialState = {
   user: user ? user : null,
+  inviteToken: "",
   isSuccess: false,
   isError: false,
   isLoading: false,
@@ -59,8 +60,24 @@ export const login = createAsyncThunk("user/login", async (user, thunkAPI) => {
   }
 });
 
+export const invite = createAsyncThunk(
+  "user/invite",
+  async (invitedUser, thunkAPI) => {
+    try {
+      return await userService.invite(invitedUser);
+    } catch (error) {
+      const message = {
+        status: error.message,
+        response: error.response.data.message,
+      };
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const logout = createAsyncThunk("user/logout", async () => {
-  await localStorage.removeItem("sproutItUser");
+  localStorage.removeItem("sproutItUser");
 });
 
 //create slice
@@ -73,6 +90,9 @@ export const userSlice = createSlice({
       state.isError = false;
       state.isLoading = false;
       state.message = "";
+    },
+    clearInviteToken: (state) => {
+      state.inviteToken = null;
     },
   },
   extraReducers: (builder) => {
@@ -119,11 +139,24 @@ export const userSlice = createSlice({
         state.message = action.payload;
         state.user = null;
       })
+      .addCase(invite.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(invite.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.inviteToken = action.payload;
+      })
+      .addCase(invite.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
       .addCase(logout.fulfilled, (state) => {
         state.user = null;
       });
   },
 });
 
-export const { reset } = userSlice.actions;
+export const { reset, clearInviteToken } = userSlice.actions;
 export default userSlice.reducer;

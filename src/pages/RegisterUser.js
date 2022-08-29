@@ -30,13 +30,15 @@ export const RegisterUser = () => {
 
   useEffect(() => {
     if (decodedToken) {
-      const { email, name } = decodedToken;
+      const { firstName, lastName, email } = decodedToken;
+
+      console.log(decodedToken);
 
       setFormData({
         ...formData,
         email: email,
-        firstName: name.split(" ")[0],
-        lastName: name.split(" ")[1],
+        firstName: firstName,
+        lastName: lastName,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -1,14 +1,26 @@
 import { Tab } from "@headlessui/react";
 import React from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-export function BatchDetails({ batchData }) {
+export function BatchDetails({ batch }) {
   const { phases } = useSelector((state) => state.phases);
 
   return (
-    <Tab.Group>
+    /* disabled={
+      index >
+      phases.indexOf(
+        batch.activePhase.slice(0, 1).toUpperCase() +
+          batch.activePhase.slice(1)
+      )
+    } */
+    <Tab.Group
+      selectedIndex={phases.indexOf(
+        batch.activePhase.slice(0, 1).toUpperCase() + batch.activePhase.slice(1)
+      )}
+    >
       <Tab.List className="flex gap-2 overflow-x-scroll pb-2 flex-shrink-0">
-        {phases.map((phase) => {
+        {phases.map((phase, index) => {
           return (
             <Tab
               className="poppins-paragraph px-4 py-3 bg-primary-200 rounded-xl disabled:opacity-50"

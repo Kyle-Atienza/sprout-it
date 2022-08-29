@@ -35,10 +35,16 @@ const login = async (user) => {
   return response.data;
 };
 
+const invite = async (invitedUser) => {
+  const response = await axios.post(`${API_URL}invite`, invitedUser);
+
+  return response.data;
+};
 const userService = {
   register,
   registerWithInvite,
   login,
+  invite,
 };
 
 export default userService;
