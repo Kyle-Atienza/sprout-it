@@ -19,11 +19,11 @@ export function BatchDetails({ batch }) {
         batch.activePhase.slice(0, 1).toUpperCase() + batch.activePhase.slice(1)
       )}
     >
-      <Tab.List className="flex gap-2 overflow-x-scroll pb-2 flex-shrink-0">
+      <Tab.List className="flex gap-2 overflow-x-scroll scrollbar pb-2 flex-shrink-0">
         {phases.map((phase, index) => {
           return (
             <Tab
-              className="poppins-paragraph px-4 py-3 bg-primary-200 rounded-xl disabled:opacity-50"
+              className={({selected}) => selected ? "poppins-paragraph px-4 py-3 bg-primary-200 rounded-xl disabled:opacity-50" : "poppins-paragraph px-4 py-3 bg-light-100 hover:bg-primary-100 rounded-xl disabled:opacity-50"}
               key={phase}
             >
               {phase}

@@ -169,22 +169,26 @@
 
   /* SCROLLBAR */
   .scrollbar::-webkit-scrollbar {
-    width: auto;
+    width: 8px;
     height: 8px;
   }
 
   .scrollbar::-webkit-scrollbar-track {
     border-radius: 100vh;
-    background: #F0E6D4;
+    background: #f0e6d4;
   }
 
   .scrollbar::-webkit-scrollbar-thumb {
-    background: #CCBCA1;
+    background: #ccbca1;
     border-radius: 100vh;
     border: 0px;
   }
 
   .scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #A29072;
+    background: #a29072;
   }
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
 }

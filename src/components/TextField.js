@@ -15,7 +15,7 @@ export const TextField = ({
       id={id}
       placeholder={placeholder}
       onChange={onChange}
-      className={`p-4 bg-light-200 rounded-full border-1 border-light-200 open-paragrap-sm my-2 ${className}`}
+      className={`p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm my-2 focus:ring-primary-500 focus:border-primary-400 ${className}`}
     />
   </>
 );
