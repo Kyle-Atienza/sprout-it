@@ -7,19 +7,21 @@ import {
   Help,
   Analytics,
   Settings,
+  Inventory,
 } from "./pages";
 
 export const App = () => {
   return (
-    <div className="bg-accent-100">
+    <div className='bg-accent-100'>
       <Routes>
-        <Route element={<LoginUser />} path="/" />
-        <Route element={<RegisterUser />} path="/register/:token" />
-        <Route element={<Production />} path="/production" />
-        <Route element={<Records />} path="/records" />
-        <Route element={<Help />} path="/help" />
-        <Route element={<Analytics />} path="/analytics" />
-        <Route element={<Settings />} path="/settings" />
+        <Route element={<LoginUser />} path='/' />
+        <Route element={<RegisterUser />} path='/register/:token' />
+        <Route element={<Production />} path='/production' />
+        <Route element={<Inventory />} path='/inventory' />
+        <Route element={<Records />} path='/records' />
+        <Route element={<Help />} path='/help' />
+        <Route element={<Analytics />} path='/analytics' />
+        <Route element={<Settings />} path='/settings' />
       </Routes>
     </div>
   );

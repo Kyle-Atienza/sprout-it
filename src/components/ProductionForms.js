@@ -3,6 +3,7 @@ import { PrimaryButton, TextField } from "../components";
 import { useDispatch, useSelector } from "react-redux";
 import { createBatch } from "../features/batch/batchSlice";
 import { useState } from "react";
+import { Tab } from "@headlessui/react";
 
 export const PreProductionForm = () => {
   const dispatch = useDispatch();
@@ -38,24 +39,24 @@ export const PreProductionForm = () => {
 
   return (
     <div>
-      <h3 className="poppins-heading-6">Pre-Production</h3>
-      <form className="flex flex-col mt-8">
+      <h3 className='poppins-heading-6'>Pre-Production</h3>
+      <form className='flex flex-col mt-8'>
         {materials.map((material) => {
           return (
             <div
-              className="w-full flex flex-col md:flex-row md:space-x-4 items-start md:items-center"
+              className='w-full flex flex-col md:flex-row md:space-x-4 items-start md:items-center'
               key={material.name}
             >
-              <p className="open-paragraph font-semibold w-1/3">
+              <p className='open-paragraph font-semibold w-1/3'>
                 {material.name} ({material.unit})
               </p>
               <TextField
                 value={formData[material.id]}
-                type="number"
+                type='number'
                 name={material.name}
-                id="dayami-kg"
-                placeholder="0"
-                className="w-full md:w-2/3"
+                id='dayami-kg'
+                placeholder='0'
+                className='w-full md:w-2/3'
                 onChange={onChange}
               />
             </div>
@@ -63,11 +64,11 @@ export const PreProductionForm = () => {
         })}
         <PrimaryButton
           disabled={Object.keys(formData).length === 0}
-          className="mt-8"
-          name="Start Production"
+          className='mt-8'
+          name='Start Production'
           onClick={onSubmit}
         >
-          <input type="submit" value="Submit" />
+          <input type='submit' value='Submit' />
         </PrimaryButton>
       </form>
     </div>

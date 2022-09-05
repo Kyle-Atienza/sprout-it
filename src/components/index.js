@@ -12,3 +12,4 @@ export * from "./TaskForm";
 export * from "./BatchDetails";
 export * from "./InviteForm";
 export * from "./SecondaryButton";
+export * from "./AddMaterialsForm";
