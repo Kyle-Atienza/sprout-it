@@ -6,6 +6,28 @@ import { useSelector } from "react-redux";
 export function BatchDetails({ batch }) {
   const { phases } = useSelector((state) => state.phases);
 
+  const mappedPhases = (phase) => {
+    switch (phase) {
+      case "pre":
+        return "Pre-production";
+      case "composting":
+        return "Composting";
+      case "bagging":
+        return "Bagging";
+      case "sterilization":
+        return "Sterilization";
+      case "inoculation":
+        return "Inculation";
+      case "fruiting":
+        return "Fruiting";
+      case "post":
+        return "Post-production";
+
+      default:
+        break;
+    }
+  };
+
   return (
     /* disabled={
       index >
@@ -23,10 +45,14 @@ export function BatchDetails({ batch }) {
         {phases.map((phase, index) => {
           return (
             <Tab
-              className={({selected}) => selected ? "poppins-paragraph px-4 py-3 bg-primary-200 rounded-xl disabled:opacity-50" : "poppins-paragraph px-4 py-3 bg-light-100 hover:bg-primary-100 rounded-xl disabled:opacity-50"}
+              className={({ selected }) =>
+                selected
+                  ? "poppins-paragraph px-4 py-3 bg-primary-200 rounded-xl disabled:opacity-50 whitespace-nowrap"
+                  : "poppins-paragraph px-4 py-3 bg-light-100 hover:bg-primary-100 rounded-xl disabled:opacity-50 whitespace-nowrap"
+              }
               key={phase}
             >
-              {phase}
+              {mappedPhases(phase)}
             </Tab>
           );
         })}

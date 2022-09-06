@@ -66,34 +66,20 @@ export function TaskForm({ batch }) {
         },
         name: name,
         description: description,
+        for: batch.activePhase,
         frequency: frequency,
         time: time,
       })
     );
     dispatch(getTasks());
   };
-  /* 
-  const getFrequencyInputType = (frequency) => {
-    switch (frequency) {
-      case "once":
-        return "date";
-      case "daily":
-        return "date";
-      case "weekly":
-        return "week";
-      case "monthly":
-        return "month";
-      default:
-        break;
-    }
-  }; */
 
   const getInputByType = (on, type) => {
     if (type === "phase") {
       return (
         <select
-          id='countries'
-          className='w-full p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm my-2 focus:ring-primary-500 focus:border-primary-400'
+          id="countries"
+          className="w-full p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm my-2 focus:ring-primary-500 focus:border-primary-400"
           onChange={onChange}
           name={`${on}On`}
           required
@@ -101,21 +87,21 @@ export function TaskForm({ batch }) {
           <option hidden defaultValue>
             Select Phase
           </option>
-          <option value='composting'>Composting</option>
-          <option value='bagging'>Bagging</option>
-          <option value='sterilization'>Sterilization</option>
-          <option value='inoculation'>Inoculation</option>
-          <option value='fruiting'>Fruiting</option>
+          <option value="composting">Composting</option>
+          <option value="bagging">Bagging</option>
+          <option value="sterilization">Sterilization</option>
+          <option value="inoculation">Inoculation</option>
+          <option value="fruiting">Fruiting</option>
         </select>
       );
     }
     if (type === "date") {
       return (
         <input
-          className='w-full p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm my-2 focus:ring-primary-500 focus:border-primary-400'
-          id='username'
+          className="w-full p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm my-2 focus:ring-primary-500 focus:border-primary-400"
+          id="username"
           name={`${on}On`}
-          type='date'
+          type="date"
           onChange={onChange}
           required
         />
@@ -124,10 +110,10 @@ export function TaskForm({ batch }) {
     if (type === "occurrence") {
       return (
         <input
-          className='w-full p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm my-2 focus:ring-primary-500 focus:border-primary-400'
-          id='username'
+          className="w-full p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm my-2 focus:ring-primary-500 focus:border-primary-400"
+          id="username"
           name={`${on}On`}
-          type='number'
+          type="number"
           onChange={onChange}
           required
         />
@@ -136,91 +122,91 @@ export function TaskForm({ batch }) {
   };
 
   return (
-    <form className='mb-4'>
-      <div className='mb-4'>
-        <label className='block open-button mb-2' htmlFor='username'>
-          Task Name <span className='text-red-600'>*</span>
+    <form className="mb-4">
+      <div className="mb-4">
+        <label className="block open-button mb-2" htmlFor="username">
+          Task Name <span className="text-red-600">*</span>
         </label>
         <TextField
-          className='w-full open-paragraph-sm mt-0'
-          id='username'
-          type='text'
-          name='name'
+          className="w-full open-paragraph-sm mt-0"
+          id="username"
+          type="text"
+          name="name"
           value={task.name}
           onChange={onChange}
-          placeholder='Clean Mushroom House'
+          placeholder="Clean Mushroom House"
           required
         />
       </div>
-      <div className='mb-4'>
-        <label className='block open-button mb-2' htmlFor='username'>
+      <div className="mb-4">
+        <label className="block open-button mb-2" htmlFor="username">
           Task Description
         </label>
         <TextField
-          className='w-full open-paragraph-sm mt-0'
-          id='username'
-          type='text'
-          name='name'
+          className="w-full open-paragraph-sm mt-0"
+          id="username"
+          type="text"
+          name="description"
           value={task.description}
           onChange={onChange}
-          placeholder='Optional'
+          placeholder="Optional"
         />
       </div>
-      <div className='mb-4'>
-        <label className='block open-button' htmlFor='username'>
-          Frequency <span className='text-red-600'>*</span>
+      <div className="mb-4">
+        <label className="block open-button" htmlFor="username">
+          Frequency <span className="text-red-600">*</span>
         </label>
         <select
-          id='countries'
-          className='w-full p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm my-2 focus:ring-primary-500 focus:border-primary-400'
+          id="countries"
+          className="w-full p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm my-2 focus:ring-primary-500 focus:border-primary-400"
           onChange={onChange}
-          name='frequency'
+          name="frequency"
           required
         >
           <option hidden defaultValue>
             Select Frequency
           </option>
-          <option value='once'>Once</option>
-          <option value='daily'>Daily</option>
-          <option value='weekly'>Weekly</option>
-          <option value='monthly'>Monthly</option>
+          <option value="once">Once</option>
+          <option value="daily">Daily</option>
+          <option value="weekly">Weekly</option>
+          <option value="monthly">Monthly</option>
         </select>
       </div>
 
-      <div className='mb-4'>
-        <label className='flex-1 block open-button' htmlFor='username'>
-          Start On <span className='text-red-600'>*</span>
+      <div className="mb-4">
+        <label className="flex-1 block open-button" htmlFor="username">
+          Start On <span className="text-red-600">*</span>
         </label>
-        <div className='flex items-center gap-4'>
+        <div className="flex items-center gap-4">
           <select
-            id='countries'
-            className='w-1/3 p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm my-2 focus:ring-primary-500 focus:border-primary-400'
+            id="countries"
+            className="w-1/3 p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm my-2 focus:ring-primary-500 focus:border-primary-400"
             onChange={onChange}
-            name='startBy'
+            name="startBy"
             required
           >
             <option hidden defaultValue>
               Start By
             </option>
-            <option value='phase'>Phase</option>
-            <option value='date'>Date</option>
+            <option value="phase">Phase</option>
+            <option value="date">Date</option>
           </select>
           {getInputByType("start", task.startBy)}
         </div>
       </div>
 
-      <div className='mb-4'>
-        <label className='flex-1 block open-button' htmlFor='username'>
-          Time <span className='text-red-600'>*</span>
+      <div className="mb-4">
+        <label className="flex-1 block open-button" htmlFor="username">
+          Time <span className="text-red-600">*</span>
         </label>
-        <div className='flex items-center gap-4'>
-          <div className='form-check flex'>
+        <div className="flex items-center gap-4">
+          <div className="form-check flex">
             <input
-              className='form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-primary-500 checked:border-primary-500 focus:ring-primary-500 focus:border-primary-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer'
-              type='checkbox'
-              value='allDay'
-              name='time'
-              id='flexCheckDefault'
+              className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-primary-500 checked:border-primary-500 focus:ring-primary-500 focus:border-primary-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+              type="checkbox"
+              value="allDay"
+              name="time"
+              id="flexCheckDefault"
               onChange={() =>
                 setTask((prevState) => ({
                   ...prevState,
@@ -229,18 +215,18 @@ export function TaskForm({ batch }) {
               }
             />
             <label
-              className=' whitespace-nowrap form-check-label inline-block text-gray-800'
-              htmlFor='flexCheckDefault'
+              className=" whitespace-nowrap form-check-label inline-block text-gray-800"
+              htmlFor="flexCheckDefault"
             >
               All day
             </label>
           </div>
           <input
             disabled={task.time === "allDay"}
-            className='w-full p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm my-2 focus:ring-primary-500 focus:border-primary-400'
-            id='username'
-            name='time'
-            type='time'
+            className="w-full p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm my-2 focus:ring-primary-500 focus:border-primary-400"
+            id="username"
+            name="time"
+            type="time"
             value={time}
             onChange={onChange}
             required
@@ -248,31 +234,31 @@ export function TaskForm({ batch }) {
         </div>
       </div>
       {task.frequency !== "once" ? (
-        <div className='mb-4 flex-1'>
-          <label className='flex-1 block open-button' htmlFor='username'>
-            End on <span className='text-red-600'>*</span>
+        <div className="mb-4 flex-1">
+          <label className="flex-1 block open-button" htmlFor="username">
+            End on <span className="text-red-600">*</span>
           </label>
           <select
-            id='countries'
-            className='w-full p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm my-2 focus:ring-primary-500 focus:border-primary-400'
+            id="countries"
+            className="w-full p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm my-2 focus:ring-primary-500 focus:border-primary-400"
             onChange={onChange}
-            name='endBy'
+            name="endBy"
             required
           >
             <option hidden defaultValue>
               End By
             </option>
-            <option value='phase'>Phase</option>
-            <option value='date'>Date</option>
-            <option value='occurrence'>Occurrence</option>
-            <option value='manual'>Manually End</option>
+            <option value="phase">Phase</option>
+            <option value="date">Date</option>
+            <option value="occurrence">Occurrence</option>
+            <option value="manual">Manually End</option>
           </select>
           {getInputByType("end", task.endBy)}
         </div>
       ) : null}
 
-      <div className='w-full flex items-center justify-end'>
-        <PrimaryButton name='Create Task' className='' onClick={onCreateTask} />
+      <div className="w-full flex items-center justify-end">
+        <PrimaryButton name="Create Task" className="" onClick={onCreateTask} />
       </div>
     </form>
   );

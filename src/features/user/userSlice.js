@@ -9,6 +9,7 @@ const user = JSON.parse(localStorage.getItem("sproutItUser"));
 const initialState = {
   user: user ? user : null,
   inviteToken: "",
+  resetLink: "",
   isSuccess: false,
   isError: false,
   isLoading: false,
@@ -65,6 +66,38 @@ export const invite = createAsyncThunk(
   async (invitedUser, thunkAPI) => {
     try {
       return await userService.invite(invitedUser);
+    } catch (error) {
+      const message = {
+        status: error.message,
+        response: error.response.data.message,
+      };
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const forgetPassword = createAsyncThunk(
+  "user/forgotPassword",
+  async (email, thunkAPI) => {
+    try {
+      return await userService.forgotPassword(email);
+    } catch (error) {
+      const message = {
+        status: error.message,
+        response: error.response.data.message,
+      };
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const resetPassword = createAsyncThunk(
+  "user/resetPassword",
+  async (payload, thunkAPI) => {
+    try {
+      return await userService.resetPassword(payload);
     } catch (error) {
       const message = {
         status: error.message,
@@ -154,6 +187,32 @@ export const userSlice = createSlice({
       })
       .addCase(logout.fulfilled, (state) => {
         state.user = null;
+      })
+      .addCase(forgetPassword.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(forgetPassword.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.resetLink = action.payload;
+      })
+      .addCase(forgetPassword.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(resetPassword.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(resetPassword.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.resetLink = action.payload;
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
       });
   },
 });

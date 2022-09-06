@@ -3,34 +3,55 @@ import { Images } from "../core";
 import { TextField, PrimaryButton } from "../components";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { login, reset } from "../features/user/userSlice";
+import { reset, resetPassword } from "../features/user/userSlice";
+import { useJwt } from "react-jwt";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
+import { useLocation } from "react-router-dom";
 
-export const LoginUser = () => {
+export const ResetPassword = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
+  const { decodedToken } = useJwt(location.pathname.split("/")[2]);
   const { user, isSuccess, isError, message } = useSelector(
     (state) => state.user
   );
 
   const [formData, setFormData] = useState({
-    email: "",
     password: "",
+    confirmPassword: "",
   });
+  /* const [payload, setPayload] = useState({
+    id: "",
+    email: ""
+  }) */
+  const [id, setId] = useState("");
+  const [email, setEmail] = useState("");
 
-  const { email, password } = formData;
+  const { confirmPassword, password } = formData;
 
   useEffect(() => {
-    if (isError) {
+    if (decodedToken) {
+      const { id, email } = decodedToken;
+
+      setId(id);
+      setEmail(email);
+
+      console.log(decodedToken);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [decodedToken]);
+
+  useEffect(() => {
+    /* if (isError) {
       alert(message.response);
     }
     if (isSuccess || user) {
       navigate("/production");
-    }
-
-    dispatch(reset());
+    } */
+    // dispatch(reset());
   }, [user, isSuccess, isError, message, navigate, dispatch]);
 
   const onChange = (e) => {
@@ -43,12 +64,18 @@ export const LoginUser = () => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const user = {
-      email,
-      password,
+    if (password !== confirmPassword) {
+      alert("Password did not match");
+      return;
+    }
+
+    const payload = {
+      id: id,
+      email: email,
+      password: password,
     };
 
-    dispatch(login(user));
+    dispatch(resetPassword(payload));
   };
 
   return (
@@ -67,36 +94,34 @@ export const LoginUser = () => {
           </div>
           <div className="mt-4 mb-8">
             <h1 className="poppins-heading-5 text-primary-500 mb-4">
-              Welcome to Sprout It
+              Reset your Password
             </h1>
             <h3 className="open-heading-6 text-seconday-400">
-              Log in to your account
+              Please create your new password
             </h3>
           </div>
           <form className="flex flex-col" onSubmit={onSubmit}>
             <TextField
-              value={email}
-              type="text"
-              name="email"
-              id="email"
-              placeholder="Email"
-              onChange={onChange}
-            />
-            <TextField
               value={password}
               type="password"
               name="password"
-              id="password"
-              placeholder="Password"
+              id="email"
+              placeholder="New Password"
               onChange={onChange}
             />
-            <a
-              className="text-right open-button text-light-700"
-              href="/forgot-password"
+            <TextField
+              value={confirmPassword}
+              type="password"
+              name="confirmPassword"
+              id="email"
+              placeholder="Re-enter new Password"
+              onChange={onChange}
+            />
+            <PrimaryButton
+              className={"mt-10"}
+              name="Generate Token"
+              onClick={onSubmit}
             >
-              Forgot Password?
-            </a>
-            <PrimaryButton className={"mt-10"} name="Log in" onClick={onSubmit}>
               <input type="submit" value="Submit" />
             </PrimaryButton>
           </form>

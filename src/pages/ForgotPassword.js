@@ -2,36 +2,30 @@ import React from "react";
 import { Images } from "../core";
 import { TextField, PrimaryButton } from "../components";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { login, reset } from "../features/user/userSlice";
-import { useEffect } from "react";
-import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { forgetPassword } from "../features/user/userSlice";
 
-export const LoginUser = () => {
+export const ForgotPassword = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const { user, isSuccess, isError, message } = useSelector(
+  /* const { user, isSuccess, isError, message } = useSelector(
     (state) => state.user
-  );
+  ); */
 
   const [formData, setFormData] = useState({
     email: "",
-    password: "",
   });
 
-  const { email, password } = formData;
+  const { email } = formData;
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (isError) {
       alert(message.response);
     }
-    if (isSuccess || user) {
-      navigate("/production");
-    }
 
     dispatch(reset());
-  }, [user, isSuccess, isError, message, navigate, dispatch]);
+  }, [user, isSuccess, isError, message, navigate, dispatch]); */
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -43,12 +37,7 @@ export const LoginUser = () => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const user = {
-      email,
-      password,
-    };
-
-    dispatch(login(user));
+    dispatch(forgetPassword({ email: email }));
   };
 
   return (
@@ -67,10 +56,10 @@ export const LoginUser = () => {
           </div>
           <div className="mt-4 mb-8">
             <h1 className="poppins-heading-5 text-primary-500 mb-4">
-              Welcome to Sprout It
+              Reset your Password
             </h1>
             <h3 className="open-heading-6 text-seconday-400">
-              Log in to your account
+              Please enter your email
             </h3>
           </div>
           <form className="flex flex-col" onSubmit={onSubmit}>
@@ -82,21 +71,11 @@ export const LoginUser = () => {
               placeholder="Email"
               onChange={onChange}
             />
-            <TextField
-              value={password}
-              type="password"
-              name="password"
-              id="password"
-              placeholder="Password"
-              onChange={onChange}
-            />
-            <a
-              className="text-right open-button text-light-700"
-              href="/forgot-password"
+            <PrimaryButton
+              className={"mt-10"}
+              name="Generate Token"
+              onClick={onSubmit}
             >
-              Forgot Password?
-            </a>
-            <PrimaryButton className={"mt-10"} name="Log in" onClick={onSubmit}>
               <input type="submit" value="Submit" />
             </PrimaryButton>
           </form>

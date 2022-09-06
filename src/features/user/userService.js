@@ -40,11 +40,28 @@ const invite = async (invitedUser) => {
 
   return response.data;
 };
+
+const forgotPassword = async (email) => {
+  console.log(email);
+  const response = await axios.post(`${API_URL}forgot-password`, email);
+
+  return response.data;
+};
+
+const resetPassword = async (payload) => {
+  const response = await axios.post(`${API_URL}reset-password`, payload);
+  console.log(response.data);
+
+  return response.data;
+};
+
 const userService = {
   register,
   registerWithInvite,
   login,
   invite,
+  forgotPassword,
+  resetPassword,
 };
 
 export default userService;

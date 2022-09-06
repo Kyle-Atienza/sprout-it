@@ -1,7 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  phases: ["Composting", "Bagging", "Sterilization", "Inoculation", "Fruiting"],
+  phases: [
+    "pre",
+    "composting",
+    "bagging",
+    "sterilization",
+    "inoculation",
+    "fruiting",
+    "post",
+  ],
 };
 
 export const phasesSlice = createSlice({
