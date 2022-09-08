@@ -53,6 +53,7 @@ export function TaskForm({ batch }) {
   const onCreateTask = (e) => {
     e.preventDefault();
 
+    console.log(batch);
     dispatch(
       createTask({
         batch: batch._id,

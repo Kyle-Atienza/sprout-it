@@ -18,10 +18,12 @@ import { getTasks, updateTask } from "../features/task/taskSlice";
 import { getMaterials } from "../features/inventory/inventorySlice";
 import { useState } from "react";
 import { CloseOutlined } from "@ant-design/icons";
+import { DateTime, Interval } from "luxon";
 
 export const Production = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const dt = DateTime;
 
   const [isBatchModalOpen, setIsBatchModalOpen] = useState(false);
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
@@ -66,7 +68,11 @@ export const Production = () => {
     batchError,
   ]);
 
-  const onUpdateBatch = (phase) => {
+  const onUpdateBatch = (batch) => {
+    const phase = batch.activePhase;
+
+    console.log(phase);
+
     alert("Are you sure?");
     if (phase === "post") {
       dispatch(
@@ -79,6 +85,20 @@ export const Production = () => {
         })
       );
       setIsBatchModalOpen(false);
+    } else if (phase === "fruiting") {
+      const nextPhase =
+        phases[phases.indexOf(selectedBatch.activePhase) + 1].toLowerCase();
+      dispatch(
+        updateBatch({
+          id: selectedBatch._id,
+          payload: {
+            activePhase: nextPhase,
+            [nextPhase]: {
+              startedAt: dt.now().toISODate(),
+            },
+          },
+        })
+      );
     } else {
       const nextPhase =
         phases[phases.indexOf(selectedBatch.activePhase) + 1].toLowerCase();
@@ -87,6 +107,9 @@ export const Production = () => {
           id: selectedBatch._id,
           payload: {
             activePhase: nextPhase,
+            [nextPhase]: {
+              startedAt: dt.now().toISODate(),
+            },
           },
         })
       );
@@ -99,7 +122,7 @@ export const Production = () => {
         <PrimaryButton
           name="Finish Batch"
           className=""
-          onClick={() => onUpdateBatch(selectedBatch.activePhase)}
+          onClick={() => onUpdateBatch(selectedBatch)}
         />
       );
     } else if (phase === "post") {
@@ -107,7 +130,7 @@ export const Production = () => {
         <PrimaryButton
           name="End Batch"
           className=""
-          onClick={() => onUpdateBatch(selectedBatch.activePhase)}
+          onClick={() => onUpdateBatch(selectedBatch)}
         />
       );
     } else {
@@ -115,7 +138,7 @@ export const Production = () => {
         <PrimaryButton
           name="Start Next Phase"
           className=""
-          onClick={() => onUpdateBatch(selectedBatch.activePhase)}
+          onClick={() => onUpdateBatch(selectedBatch)}
         />
       );
     }
@@ -151,6 +174,25 @@ export const Production = () => {
         return "Sun";
       default:
         return "Sun";
+    }
+  };
+
+  const getDaysCount = (batch) => {
+    const phase = batch.activePhase;
+    const currentDate = new Date(dt.now().toISODate());
+
+    if (phase === "pre") {
+      const baseDate = new Date(batch.startedAt);
+      const timeDiff = currentDate.getTime() - baseDate.getTime();
+      const dayDiff = timeDiff / (1000 * 3600 * 24) + 1;
+      return dayDiff;
+    } else if (phase === "post") {
+      return 0;
+    } else {
+      const baseDate = new Date(batch[batch.activePhase].startedAt);
+      const timeDiff = currentDate.getTime() - baseDate.getTime();
+      const dayDiff = timeDiff / (1000 * 3600 * 24) + 1;
+      return dayDiff;
     }
   };
 
@@ -285,7 +327,7 @@ export const Production = () => {
                       className=""
                       batchNumber={"Batch " + batch.name}
                       description="Lorem ipsum dolor sit amet consectetur"
-                      daysLeft="2"
+                      daysLeft={getDaysCount(batch)}
                     />
                   );
                 })}
@@ -305,7 +347,7 @@ export const Production = () => {
                       className=""
                       batchNumber={"Batch " + batch.name}
                       description="Lorem ipsum dolor sit amet consectetur"
-                      daysLeft="2"
+                      daysLeft={getDaysCount(batch)}
                     />
                   );
                 })}
@@ -325,7 +367,7 @@ export const Production = () => {
                       className=""
                       batchNumber={"Batch " + batch.name}
                       description="Lorem ipsum dolor sit amet consectetur"
-                      daysLeft="2"
+                      daysLeft={getDaysCount(batch)}
                     />
                   );
                 })}
@@ -345,7 +387,7 @@ export const Production = () => {
                       className=""
                       batchNumber={"Batch " + batch.name}
                       description="Lorem ipsum dolor sit amet consectetur"
-                      daysLeft="2"
+                      daysLeft={getDaysCount(batch)}
                     />
                   );
                 })}
@@ -365,7 +407,7 @@ export const Production = () => {
                       className=""
                       batchNumber={"Batch " + batch.name}
                       description="Lorem ipsum dolor sit amet consectetur"
-                      daysLeft="2"
+                      daysLeft={getDaysCount(batch)}
                     />
                   );
                 })}
@@ -385,7 +427,7 @@ export const Production = () => {
                       className=""
                       batchNumber={"Batch " + batch.name}
                       description="Lorem ipsum dolor sit amet consectetur"
-                      daysLeft="2"
+                      daysLeft={getDaysCount(batch)}
                     />
                   );
                 })}
@@ -405,7 +447,7 @@ export const Production = () => {
                       className=""
                       batchNumber={"Batch " + batch.name}
                       description="Lorem ipsum dolor sit amet consectetur"
-                      daysLeft="2"
+                      daysLeft={getDaysCount(batch)}
                     />
                   );
                 })}
@@ -418,6 +460,7 @@ export const Production = () => {
                 <h2 className="poppins-heading-6 text-seconday-400 mb-4">
                   Weekly Tasks
                 </h2>
+                {/* CONT: when adding task it doest not add batch of task */}
                 {tasks
                   .filter((task) => {
                     return task.status === "ongoing" && task.batch.active;
@@ -425,7 +468,6 @@ export const Production = () => {
                   .map((task) => {
                     return (
                       <>
-                        {/* {new Date(task.start)} */}
                         <WeeklyTaskCard
                           onClick={() => {
                             setIsTaskModalOpen(true);
