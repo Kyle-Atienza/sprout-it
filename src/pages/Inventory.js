@@ -43,7 +43,7 @@ export const Inventory = () => {
             />
             <PrimaryButton
               className='hidden text-xl leading-none md:flex justify-center items-center'
-              name='Start a new batch'
+              name='Add Materials'
               onClick={openModal}
             />
 
@@ -72,8 +72,8 @@ export const Inventory = () => {
                       leaveFrom='opacity-100 scale-100'
                       leaveTo='opacity-0 scale-95'
                     >
-                      <Dialog.Panel className='bg-light-100 w-full max-w-lg transform overflow-hidden rounded-2xl p-12 text-left align-middle shadow-lg transition-all'>
-                        <div className='-mb-6 flex justify-end'>
+                      <Dialog.Panel className='bg-light-100 w-full max-w-lg transform overflow-hidden rounded-2xl pl-12 pr-12 pb-12 text-left align-middle shadow-lg transition-all'>
+                        <div className='z-50 -mr-6 mb-2 mt-6 flex justify-end'>
                           <button
                             className='text-xl leading-none flex justify-center items-center hover:text-red-500'
                             onClick={closeModal}
