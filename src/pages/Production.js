@@ -179,20 +179,20 @@ export const Production = () => {
 
   const getDaysCount = (batch) => {
     const phase = batch.activePhase;
-    const currentDate = new Date(dt.now().toISODate());
+    const currentDate = new Date();
 
     if (phase === "pre") {
-      const baseDate = new Date(batch.startedAt);
+      const baseDate = new Date(batch.createdAt);
       const timeDiff = currentDate.getTime() - baseDate.getTime();
       const dayDiff = timeDiff / (1000 * 3600 * 24) + 1;
-      return dayDiff;
+      return Math.floor(dayDiff);
     } else if (phase === "post") {
       return 0;
     } else {
       const baseDate = new Date(batch[batch.activePhase].startedAt);
       const timeDiff = currentDate.getTime() - baseDate.getTime();
       const dayDiff = timeDiff / (1000 * 3600 * 24) + 1;
-      return dayDiff;
+      return Math.floor(dayDiff);
     }
   };
 
@@ -463,9 +463,13 @@ export const Production = () => {
                 {/* CONT: when adding task it doest not add batch of task */}
                 {tasks
                   .filter((task) => {
-                    return task.status === "ongoing" && task.batch.active;
+                    return task.status === "ongoing" && task.batch;
+                  })
+                  .filter((task) => {
+                    return task.batch.active;
                   })
                   .map((task) => {
+                    console.log(task.start.on);
                     return (
                       <>
                         <WeeklyTaskCard
