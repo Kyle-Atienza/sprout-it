@@ -108,7 +108,7 @@ export const Production = () => {
           payload: {
             activePhase: nextPhase,
             [nextPhase]: {
-              startedAt: dt.now().toISODate(),
+              startedAt: new Date(),
             },
           },
         })
