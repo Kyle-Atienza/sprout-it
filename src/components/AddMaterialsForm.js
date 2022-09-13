@@ -1,8 +1,46 @@
-import React from "react";
+import { React, useState } from "react";
 import { Tab } from "@headlessui/react";
 import { PrimaryButton, TextField } from "../components";
+import { useDispatch, useSelector } from "react-redux";
+import { getMaterials, postMaterial } from "../features/inventory/inventorySlice";
 
 export const AddMaterialsForm = () => {
+  const dispatch = useDispatch();
+
+  const [materialData, setMaterialData] = useState({
+    name: "",
+    altName: "",
+    unit: '',
+    quantity: 0,
+    price: 0,
+  });
+
+  const { name, altName, unit, quantity, price } = materialData;
+
+  const { materials } = useSelector((state) => state.inventory);
+
+  const onChange = (e) => {
+    setMaterialData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    dispatch(
+      postMaterial({
+        name: name,
+        altName: altName,
+        unit: unit,
+        quantity: quantity,
+        price: price,
+      })
+    );
+    dispatch(getMaterials)
+    window.location.reload();
+  };
+
   return (
     <Tab.Group>
       <Tab.List className='flex gap-2 justify-between overflow-x-auto scrollbar pb-2 flex-shrink-0'>
@@ -26,15 +64,16 @@ export const AddMaterialsForm = () => {
         </Tab>
       </Tab.List>
       <Tab.Panels className='pt-5 flex-1'>
+        {/* ADD TO EXISTING */}
         <Tab.Panel>
-          <form>
+          <form onSubmit={onSubmit}>
             <div className='mb-4'>
-              <label className='block open-button mb-2' htmlFor='username'>
+              <label className='block open-button' htmlFor='username'>
                 Material name <span className='text-red-600'>*</span>
               </label>
               <select
                 id='countries'
-                className='w-full p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
+                className='w-full p-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
                 onChange='{onChange}'
                 name='frequency'
                 required
@@ -51,7 +90,7 @@ export const AddMaterialsForm = () => {
               </select>
             </div>
             <div className='mb-4'>
-              <label className='block open-button mb-2' htmlFor='username'>
+              <label className='block open-button' htmlFor='username'>
                 Unit <span className='text-red-600'>*</span>
               </label>
               <TextField // Show unit from existing material here
@@ -66,11 +105,11 @@ export const AddMaterialsForm = () => {
               />
             </div>
             <div className='mb-4'>
-              <label className='block open-button mb-2' htmlFor='username'>
+              <label className='block open-button' htmlFor='username'>
                 Quantity <span className='text-red-600'>*</span>
               </label>
               <input
-                className='w-full p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
+                className='w-full p-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
                 name='{`${on}On`}'
                 type='number'
                 onChange='{onChange}'
@@ -78,13 +117,13 @@ export const AddMaterialsForm = () => {
               />
             </div>
             <div className='mb-4'>
-              <label className='block open-button mb-2' htmlFor='username'>
+              <label className='block open-button' htmlFor='username'>
                 Price per unit <span className='text-red-600'>*</span>
               </label>
               <div className='flex justify-center items-center'>
                 <p className='open-paragraph'>₱</p>
                 <input
-                  className='w-full p-3 ml-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
+                  className='w-full p-3 ml-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
                   name='{`${on}On`}'
                   type='number'
                   onChange='{onChange}'
@@ -101,68 +140,86 @@ export const AddMaterialsForm = () => {
             </div>
           </form>
         </Tab.Panel>
+
+        {/* ADD NEW MATERIAL */}
         <Tab.Panel>
-          <form>
+          <form onSubmit={onSubmit}>
             <div className='mb-4'>
-              <label className='block open-button mb-2' htmlFor='username'>
+              <label className='block open-button' htmlFor='item-name'>
                 Item name <span className='text-red-600'>*</span>
               </label>
               <TextField
-                className='w-full open-paragraph-sm my-0'
-                id='username'
+                className='w-full open-paragraph-sm'
+                id='material-name'
                 type='text'
                 name='name'
-                value='{value}'
-                onChange='{onChange}'
-                placeholder='Lorem ipsum dolor'
+                value={materialData.name}
+                onChange={onChange}
+                placeholder='Name of new material'
                 required
               />
             </div>
             <div className='mb-4'>
-              <label className='block open-button mb-2' htmlFor='username'>
+              <label className='block open-button' htmlFor='item-name'>
+                Item name <span className='text-red-600'>*</span>
+              </label>
+              <TextField
+                className='w-full open-paragraph-sm'
+                id='material-altName'
+                type='text'
+                name='altName'
+                value={materialData.altName}
+                onChange={onChange}
+                placeholder='Alternative name (optional)'
+                required
+              />
+            </div>
+            <div className='mb-4'>
+              <label className='block open-button' htmlFor='username'>
                 Unit <span className='text-red-600'>*</span>
               </label>
               <select
-                id='countries'
-                className='w-full p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
-                onChange='{onChange}'
-                name='frequency'
+                id='material-unit'
+                className='w-full p-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
+                onChange={onChange}
+                name='unit'
                 required
               >
                 <option hidden defaultValue>
                   Select unit
                 </option>
-                <option value='once'>kilogram (kg)</option>
-                <option value='daily'>liter (l)</option>
+                <option value='kg'>kilogram (kg)</option>
+                <option value='l'>liter (l)</option>
               </select>
             </div>
             <div className='mb-4'>
-              <label className='block open-button mb-2' htmlFor='username'>
+              <label className='block open-button' htmlFor='username'>
                 Quantity <span className='text-red-600'>*</span>
               </label>
               <TextField
                 className='w-full open-paragraph-sm my-0'
-                id='username'
+                id='material-quantity'
                 type='text'
-                name='name'
-                value='{value}'
-                onChange='{onChange}'
-                placeholder='Lorem ipsum dolor'
+                name='quantity'
+                value={materialData.quantity}
+                onChange={onChange}
+                placeholder='0'
                 required
               />
             </div>
             <div className='mb-4'>
-              <label className='block open-button mb-2' htmlFor='username'>
+              <label className='block open-button' htmlFor='username'>
                 Price per unit <span className='text-red-600'>*</span>
               </label>
               <div className='flex justify-center items-center'>
                 <p className='open-paragraph'>₱</p>
                 <input
-                  className='w-full p-3 ml-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
-                  id='username'
-                  name='{`${on}On`}'
+                  className='w-full p-3 ml-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
+                  id='material-price'
+                  name='price'
                   type='number'
-                  onChange='{onChange}'
+                  onChange={onChange}
+                  value={materialData.price}
                   required
                 />
               </div>
@@ -171,8 +228,10 @@ export const AddMaterialsForm = () => {
               <PrimaryButton
                 name='Add to Inventory'
                 className='mt-4'
-                onClick=''
-              />
+                onClick={onSubmit}
+              >
+                <input type='submit' value='Submit' />
+              </PrimaryButton>
             </div>
           </form>
         </Tab.Panel>
