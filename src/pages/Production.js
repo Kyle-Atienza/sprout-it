@@ -20,9 +20,17 @@ import { getMaterials } from "../features/inventory/inventorySlice";
 import { useState } from "react";
 import { CloseOutlined } from "@ant-design/icons";
 
+const useForceUpdate = () => {
+  const [value, setValue] = useState(0); // integer state
+  return () => setValue((value) => value + 1); // update state to force render
+  // An function that increment 👆🏻 the previous state like here
+  // is better than directly setting `value + 1`
+};
+
 export const Production = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const forceUpdate = useForceUpdate();
 
   const [isBatchModalOpen, setIsBatchModalOpen] = useState(false);
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
@@ -505,6 +513,11 @@ export const Production = () => {
     }
   };
 
+  const handleSubmitTask = () => {
+    setIsBatchModalOpen(false);
+    forceUpdate();
+  };
+
   return (
     <>
       <Transition appear show={isBatchModalOpen} as={Fragment}>
@@ -554,7 +567,10 @@ export const Production = () => {
                       Add Task
                     </Disclosure.Button>
                     <Disclosure.Panel className="text-gray-500">
-                      <TaskForm batch={selectedBatch} />
+                      <TaskForm
+                        batch={selectedBatch}
+                        closeModal={handleSubmitTask}
+                      />
                     </Disclosure.Panel>
                   </Disclosure>
                   {mapButtonByPhase(selectedBatch.activePhase)}
@@ -875,8 +891,10 @@ export const Production = () => {
                   .filter((task) => {
                     return task.batch.active;
                   })
+                  .sort((prevTask, currTask) => {
+                    return new Date(prevTask.next) - new Date(currTask.next);
+                  })
                   .map((task) => {
-                    console.log(task.start.on);
                     return (
                       <>
                         <WeeklyTaskCard
@@ -899,6 +917,7 @@ export const Production = () => {
                                 task.for.slice(1)
                             ]
                           }
+                          next={task.next}
                         />
                       </>
                     );
