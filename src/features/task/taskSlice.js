@@ -86,9 +86,10 @@ export const taskSlice = createSlice({
       .addCase(createTask.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(createTask.fulfilled, (state) => {
+      .addCase(createTask.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
+        state.tasks = [...state.tasks, action.payload];
       })
       .addCase(createTask.rejected, (state, action) => {
         state.isLoading = false;
@@ -98,9 +99,16 @@ export const taskSlice = createSlice({
       .addCase(updateTask.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(updateTask.fulfilled, (state) => {
+      .addCase(updateTask.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
+
+        const replaceIndex = state.tasks.indexOf(
+          state.tasks.find((task) => {
+            return task._id === action.payload._id;
+          })
+        );
+        state.tasks[replaceIndex] = action.payload;
       })
       .addCase(updateTask.rejected, (state, action) => {
         state.isLoading = false;

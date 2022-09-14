@@ -1,5 +1,5 @@
 import React from "react";
-import { SideNavBar, TopNavBar } from "../components";
+import { SideNavBar, TopNavBar, BatchDetails } from "../components";
 import { Dialog, Transition, Tab } from "@headlessui/react";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
 import { useState, Fragment } from "react";
@@ -75,106 +75,7 @@ export const Records = () => {
                       </h6>
                     </div>
                   </div>
-                  <Tab.Group>
-                    <Tab.List className="flex gap-2 mt-7 overflow-x-scroll pb-2">
-                      <Tab className="poppins-paragraph px-4 py-3 bg-primary-200 rounded-xl">
-                        Materials
-                      </Tab>
-                      <Tab className="poppins-paragraph px-4 py-3 bg-primary-200 rounded-xl">
-                        Composting
-                      </Tab>
-                      <Tab className="poppins-paragraph px-4 py-3 bg-primary-200 rounded-xl">
-                        Bagging
-                      </Tab>
-                      <Tab className="poppins-paragraph px-4 py-3 bg-primary-200 rounded-xl">
-                        Sterilizing
-                      </Tab>
-                      <Tab className="poppins-paragraph px-4 py-3 bg-primary-200 rounded-xl">
-                        Inoculation
-                      </Tab>
-                      <Tab className="poppins-paragraph px-4 py-3 bg-primary-200 rounded-xl">
-                        Fruiting
-                      </Tab>
-                    </Tab.List>
-                    <Tab.Panels className="py-5 flex-1">
-                      <Tab.Panel>
-                        <div>
-                          <table className="w-full text-sm text-left">
-                            <thead className=" poppins-paragraph ">
-                              <tr>
-                                <th scope="col" className="py-2">
-                                  Material
-                                </th>
-                                <th scope="col" className="py-2">
-                                  Quantity
-                                </th>
-                              </tr>
-                            </thead>
-                            <tbody className="poppins-paragraph-sm ">
-                              <tr className="transition-all duration-300 ease-in-out cursor-pointer">
-                                <td className="py-2">Kusot</td>
-                                <td className="py-2">12 kg</td>
-                              </tr>
-                              <tr className="transition-all duration-300 ease-in-out cursor-pointer">
-                                <td className="py-2">Kusot</td>
-                                <td className="py-2">12 kg</td>
-                              </tr>
-                              <tr className="transition-all duration-300 ease-in-out cursor-pointer">
-                                <td className="py-2">Kusot</td>
-                                <td className="py-2">12 kg</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </Tab.Panel>
-                      <Tab.Panel>
-                        <div>
-                          <p className="poppins-paragraph">
-                            27 days composting
-                          </p>
-                        </div>
-                      </Tab.Panel>
-                      <Tab.Panel>
-                        <div className="">
-                          <p className="poppins-paragraph">
-                            200 days composting
-                          </p>
-                          <p className="poppins-paragraph">1kg bag weight</p>
-                        </div>
-                      </Tab.Panel>
-                      <Tab.Panel>
-                        <div className="">
-                          <p className="poppins-paragraph">
-                            8 hours Sterilization
-                          </p>
-                        </div>
-                        <div className="mt-auto">
-                          <p className="poppins-paragraph">2 defects</p>
-                        </div>
-                      </Tab.Panel>
-                      <Tab.Panel>
-                        <div className="">
-                          <p className="poppins-paragraph">
-                            198 Total Inoculated
-                          </p>
-                          <p className="poppins-paragraph">F2 Sorgum Spawn</p>
-                        </div>
-                        <div className="mt-auto">
-                          <p className="poppins-paragraph">4 defects</p>
-                        </div>
-                      </Tab.Panel>
-                      <Tab.Panel>
-                        <div className="">
-                          <p className="poppins-paragraph">
-                            194 total bags for fruiting
-                          </p>
-                          <p className="poppins-paragraph">
-                            2 weeks waiting time
-                          </p>
-                        </div>
-                      </Tab.Panel>
-                    </Tab.Panels>
-                  </Tab.Group>
+                  <BatchDetails batch={selectedBatch} />
                 </Dialog.Panel>
               </Transition.Child>
             </div>
@@ -219,12 +120,6 @@ export const Records = () => {
                   <th scope="col" className="py-4 px-6">
                     Loss
                   </th>
-                  <th scope="col" className="py-4 px-6 text-center w-[1%]">
-                    Edit
-                  </th>
-                  <th scope="col" className="py-4 px-6 text-center w-[1%]">
-                    Delete
-                  </th>
                 </tr>
               </thead>
               <tbody className="poppins-paragraph-sm ">
@@ -243,18 +138,10 @@ export const Records = () => {
                         {new Date(batch.createdAt).toLocaleDateString("en-ph")}
                       </td>
                       <td className="py-4 px-6">
-                        {new Date(selectedBatch.finishedAt).toLocaleDateString(
-                          "en-ph"
-                        )}
+                        {new Date(batch.finishedAt).toLocaleDateString("en-ph")}
                       </td>
                       <td className="py-4 px-6">$2999</td>
                       <td className="py-4 px-6">$2999</td>
-                      <td className="py-4 px-6 text-center">
-                        <EditFilled className="text-lg cursor-pointer text-blue-400" />
-                      </td>
-                      <td className="py-4 px-6 text-center">
-                        <DeleteFilled className="text-lg cursor-pointer text-red-400" />
-                      </td>
                     </tr>
                   );
                 })}

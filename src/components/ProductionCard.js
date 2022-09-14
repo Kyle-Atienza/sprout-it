@@ -4,6 +4,7 @@ export const ProductionCard = ({
   batchNumber,
   description,
   daysLeft,
+  countDays = true,
 }) => {
   const getBgByDays = (days) => {
     const week = days / 7;
@@ -32,13 +33,15 @@ export const ProductionCard = ({
           </h5>
           <p className="open-paragraph-sm">{description}</p>
         </div>
-        <div
-          className="h-auto w-1/4 flex flex-col justify-center items-center rounded-r-lg"
-          style={{ background: getBgByDays(daysLeft) }}
-        >
-          <p className="open-button text">{daysLeft > 1 ? "days" : "day"}</p>
-          <p className="poppins-heading-6">{daysLeft}</p>
-        </div>
+        {countDays ? (
+          <div
+            className="h-auto w-1/4 flex flex-col justify-center items-center rounded-r-lg"
+            style={{ background: getBgByDays(daysLeft) }}
+          >
+            <p className="open-button text">{daysLeft > 1 ? "days" : "day"}</p>
+            <p className="poppins-heading-6">{daysLeft}</p>
+          </div>
+        ) : null}
       </div>
     </>
   );
