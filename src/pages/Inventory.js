@@ -12,9 +12,22 @@ import { useState, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getBatches } from "../features/batch/batchSlice";
+import { getMaterials } from '../features/inventory/inventorySlice';
 
 export const Inventory = () => {
+  const dispatch = useDispatch();
+
   let [isOpen, setIsOpen] = useState(false);
+
+  const { user, isSuccess, isLoading, isError, message } = useSelector(
+    (state) => state.user
+  );
+
+  const { materials } = useSelector((state) => state.inventory);
+
+  useEffect(() => {
+    dispatch(getMaterials());
+  }, [user, isSuccess, isLoading, isError, message, dispatch]);
 
   function closeModal() {
     setIsOpen(false);
@@ -43,7 +56,7 @@ export const Inventory = () => {
             />
             <PrimaryButton
               className='hidden text-xl leading-none md:flex justify-center items-center'
-              name='Start a new batch'
+              name='Add Materials'
               onClick={openModal}
             />
 
@@ -72,8 +85,8 @@ export const Inventory = () => {
                       leaveFrom='opacity-100 scale-100'
                       leaveTo='opacity-0 scale-95'
                     >
-                      <Dialog.Panel className='bg-light-100 w-full max-w-lg transform overflow-hidden rounded-2xl p-12 text-left align-middle shadow-lg transition-all'>
-                        <div className='-mb-6 flex justify-end'>
+                      <Dialog.Panel className='bg-light-100 w-full max-w-lg transform overflow-hidden rounded-2xl pl-12 pr-12 pb-12 text-left align-middle shadow-lg transition-all'>
+                        <div className='z-50 -mr-6 mb-2 mt-6 flex justify-end'>
                           <button
                             className='text-xl leading-none flex justify-center items-center hover:text-red-500'
                             onClick={closeModal}
@@ -98,6 +111,9 @@ export const Inventory = () => {
                     Item Name
                   </th>
                   <th scope='col' className='py-4 px-6'>
+                    Alt Name
+                  </th>
+                  <th scope='col' className='py-4 px-6'>
                     Unit
                   </th>
                   <th scope='col' className='py-4 px-6'>
@@ -109,12 +125,24 @@ export const Inventory = () => {
                 </tr>
               </thead>
               <tbody className='poppins-paragraph-sm '>
-                <tr>
-                  <td className='py-4 px-6'>Lorem ipsum</td>
-                  <td className='py-4 px-6'>Lorem ipsum</td>
-                  <td className='py-4 px-6'>Lorem ipsum</td>
-                  <td className='py-4 px-6'>Lorem ipsum</td>
-                </tr>
+                {materials.map((material) => {
+                  return (
+                    <tr
+                      key={material.name}
+                      className='bg-light-100 hover:bg-light-200 border-b dark:bg-gray-800 dark:border-gray-700 transition-all duration-300 ease-in-out cursor-pointer'
+                      // onClick={() => {
+                      //   setIsOpen(true);
+                      //   setSelectedBatch(material);
+                      // }}
+                    >
+                      <td className='py-4 px-6'>{material.name}</td>
+                      <td className='py-4 px-6'>{material.altName}</td>
+                      <td className='py-4 px-6'>{material.unit}</td>
+                      <td className='py-4 px-6'>{material.quantity}</td>
+                      <td className='py-4 px-6'>{material.price}</td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

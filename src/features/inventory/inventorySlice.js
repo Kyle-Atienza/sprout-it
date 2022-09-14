@@ -28,6 +28,23 @@ export const getMaterials = createAsyncThunk(
   }
 );
 
+export const postMaterial = createAsyncThunk(
+  "inventory/postMaterial",
+  async (materialData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().user.user.token;
+      return await materialService.postMaterial(materialData, token);
+    } catch (error) {
+      const message = {
+        status: error.message,
+        response: error.response.data.message,
+      };
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const inventorySlice = createSlice({
   name: "inventory",
   initialState,
@@ -45,11 +62,24 @@ export const inventorySlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getMaterials.fulfilled, (state, action) => {
-        state.materials = action.payload;
         state.isLoading = false;
         state.isSuccess = true;
+        state.materials = action.payload;
       })
       .addCase(getMaterials.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(postMaterial.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(postMaterial.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.inventory = action.payload;
+      })
+      .addCase(postMaterial.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
