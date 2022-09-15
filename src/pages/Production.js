@@ -293,6 +293,7 @@ export const Production = () => {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="overflow-y-scroll bg-primary-100 w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-lg transition-all h-[40rem] flex flex-col">
+                  {/* TODO: Stylize task card */}
                   <pre>{JSON.stringify(selectedTask, null, 2)}</pre>
                   <button
                     onClick={() => onEndTask()}
