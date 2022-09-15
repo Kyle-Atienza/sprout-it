@@ -32,8 +32,6 @@ export const RegisterUser = () => {
     if (decodedToken) {
       const { firstName, lastName, email } = decodedToken;
 
-      console.log(decodedToken);
-
       setFormData({
         ...formData,
         email: email,
@@ -64,7 +62,6 @@ export const RegisterUser = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log("register");
 
     if (password !== confirmPassword) {
       alert("Password didn't match");

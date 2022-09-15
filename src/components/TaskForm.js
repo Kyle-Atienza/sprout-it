@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { createTask, getTasks } from "../features/task/taskSlice";
 import { PrimaryButton, TextField } from "../components";
 
-export function TaskForm({ batch }) {
+export function TaskForm({ batch, closeModal }) {
   const dispatch = useDispatch();
 
   const [task, setTask] = useState({
@@ -50,10 +50,16 @@ export function TaskForm({ batch }) {
     }));
   };
 
+  const datePickerMin = (on) => {
+    if (startOn && on === "end") {
+      return startOn;
+    } else if (on === "start") {
+      return new Date().toISOString().split("T")[0];
+    }
+  };
+
   const onCreateTask = (e) => {
     e.preventDefault();
-
-    console.log(batch);
     dispatch(
       createTask({
         batch: batch._id,
@@ -72,7 +78,7 @@ export function TaskForm({ batch }) {
         time: time,
       })
     );
-    dispatch(getTasks());
+    closeModal();
   };
 
   const getInputByType = (on, type) => {
@@ -105,6 +111,7 @@ export function TaskForm({ batch }) {
           type="date"
           onChange={onChange}
           required
+          min={datePickerMin(on)}
         />
       );
     }

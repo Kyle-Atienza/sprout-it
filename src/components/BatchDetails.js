@@ -27,15 +27,20 @@ export function BatchDetails({ batch }) {
         break;
     }
   };
+  const [totalDefects, setTotalDefects] = useState(0);
+
+  useEffect(() => {
+    let defectsSum = 0;
+    const defectedPhase = Object.keys(batch).filter(
+      (key) => batch[key].defects
+    );
+    defectedPhase.forEach((phase) => {
+      defectsSum += batch[phase].defects;
+    });
+    setTotalDefects(defectsSum);
+  }, []);
 
   return (
-    /* disabled={
-      index >
-      phases.indexOf(
-        batch.activePhase.slice(0, 1).toUpperCase() +
-          batch.activePhase.slice(1)
-      )
-    } */
     <Tab.Group
       selectedIndex={phases.indexOf(
         batch.activePhase.slice(0, 1).toUpperCase() + batch.activePhase.slice(1)
@@ -72,18 +77,19 @@ export function BatchDetails({ batch }) {
                 </tr>
               </thead>
               <tbody className="poppins-paragraph-sm ">
-                <tr className="transition-all duration-300 ease-in-out cursor-pointer">
-                  <td className="py-2">Kusot</td>
-                  <td className="py-2">12 kg</td>
-                </tr>
-                <tr className="transition-all duration-300 ease-in-out cursor-pointer">
-                  <td className="py-2">Kusot</td>
-                  <td className="py-2">12 kg</td>
-                </tr>
-                <tr className="transition-all duration-300 ease-in-out cursor-pointer">
-                  <td className="py-2">Kusot</td>
-                  <td className="py-2">12 kg</td>
-                </tr>
+                {batch.materials.map((material, index) => {
+                  return (
+                    <tr
+                      className="transition-all duration-300 ease-in-out cursor-pointer"
+                      key={index}
+                    >
+                      <td className="py-2">{material.material.name}</td>
+                      <td className="py-2">
+                        {material.weight} {material.material.unit}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
@@ -91,35 +97,70 @@ export function BatchDetails({ batch }) {
         <Tab.Panel>
           <div>
             <p className="poppins-paragraph">27 days composting</p>
+            <p>
+              {batch.hasOwnProperty("composting")
+                ? batch.composting.defects
+                : null}
+            </p>
           </div>
         </Tab.Panel>
         <Tab.Panel>
           <div className="">
             <p className="poppins-paragraph">200 days composting</p>
             <p className="poppins-paragraph">1kg bag weight</p>
+            <p>
+              {batch.hasOwnProperty("bagging")
+                ? batch.composting.defects
+                : null}
+            </p>
           </div>
         </Tab.Panel>
         <Tab.Panel>
           <div className="">
             <p className="poppins-paragraph">8 hours Sterilization</p>
           </div>
-          <div className="mt-auto">
-            <p className="poppins-paragraph">2 defects</p>
-          </div>
+          <p>
+            {batch.hasOwnProperty("sterilization")
+              ? batch.composting.defects
+              : null}
+          </p>
         </Tab.Panel>
         <Tab.Panel>
           <div className="">
             <p className="poppins-paragraph">198 Total Inoculated</p>
             <p className="poppins-paragraph">F2 Sorgum Spawn</p>
           </div>
-          <div className="mt-auto">
-            <p className="poppins-paragraph">4 defects</p>
-          </div>
+          <p>
+            {batch.hasOwnProperty("inoculation")
+              ? batch.composting.defects
+              : null}
+          </p>
         </Tab.Panel>
         <Tab.Panel>
           <div className="">
             <p className="poppins-paragraph">194 total bags for fruiting</p>
             <p className="poppins-paragraph">2 weeks waiting time</p>
+            <p>
+              {batch.hasOwnProperty("fruiting")
+                ? batch.composting.defects
+                : null}
+            </p>
+          </div>
+        </Tab.Panel>
+        <Tab.Panel>
+          <div className="">
+            <p className="poppins-paragraph">Total Number of defects</p>
+            <p className="poppins-paragraph">{totalDefects}</p>
+            {phases.map((phase) => {
+              if (!batch[phase]) return null;
+              // console.log(batch[phase]);
+              return (
+                <div className="flex justify-between" key={phase}>
+                  <p>{phase}</p>
+                  <p>{batch[phase].defects}</p>
+                </div>
+              );
+            })}
           </div>
         </Tab.Panel>
       </Tab.Panels>

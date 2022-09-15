@@ -38,8 +38,6 @@ export const ResetPassword = () => {
 
       setId(id);
       setEmail(email);
-
-      console.log(decodedToken);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [decodedToken]);
