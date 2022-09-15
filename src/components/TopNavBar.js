@@ -17,20 +17,15 @@ import {
   HelpButton,
   PreProductionForm,
 } from "../components";
-import { messaging } from "../../firebase";
+import { getToken } from "../firebase";
 
 export const TopNavBar = ({ pageName }) => {
   const onClickNotification = () => {
     Notification.requestPermission().then((permission) => {
       if (permission === "granted") {
-        messaging
-          .getToken({
-            vapidKey:
-              "BONzIT54VoJu5HmbEDPXzSdqf6pyIIWkabSpb76w6xyPTZDUzdf0OLUkzmc0Od2px47nI9mbpe0_SFspnAM3x_0",
-          })
-          .then((token) => {
-            console.log(token);
-          });
+        getToken().then((token) => {
+          console.log(token);
+        });
       }
     });
   };

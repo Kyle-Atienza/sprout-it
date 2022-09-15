@@ -20,13 +20,11 @@ export function InviteForm() {
   };
 
   const onCreateInvite = () => {
-    // console.log(invitedUser);
     dispatch(invite(invitedUser));
   };
 
   useEffect(() => {
     setInviteToken(generatedToken);
-    console.log(inviteToken);
   }, [dispatch, generatedToken, inviteToken]);
 
   useEffect(() => {
