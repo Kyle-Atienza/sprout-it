@@ -5,7 +5,7 @@ import { SideNavBar, TopNavBar, TextField } from "../components";
 export function Settings() {
   return (
     <>
-      <div className="flex flex-row w-screen">
+      <div className="flex flex-row w-screen min-h-screen">
         <div className="w-0 lg:w-1/6">
           <SideNavBar />
         </div>

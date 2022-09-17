@@ -96,7 +96,7 @@ export const Analytics = () => {
 
         <div className="flex flex-col w-full lg:w-5/6 min-h-screen">
           <div className="w-full">
-            <TopNavBar pageName="Records" />
+            <TopNavBar pageName="Reports" />
           </div>
           <div className="charts d-flex flex-wrap">
             <div className="flex m-5 gap-5 h-[40vh]">
