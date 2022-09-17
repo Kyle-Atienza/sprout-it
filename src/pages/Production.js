@@ -8,6 +8,7 @@ import {
   BatchDetails,
   PrimaryButton,
   TextField,
+  PhasesCarousel,
 } from "../components";
 import { Images } from "../core";
 import { useSelector, useDispatch } from "react-redux";
@@ -26,13 +27,6 @@ const useForceUpdate = () => {
   // An function that increment 👆🏻 the previous state like here
   // is better than directly setting `value + 1`
 };
-
-
-
-
-
-
-
 
 export const Production = () => {
   const navigate = useNavigate();
@@ -885,7 +879,9 @@ export const Production = () => {
               </div>
             </section>
           </div>
-          <div className="w-full my-4 py-4 px-4 md:px-6 lg:px-9">
+          <div className="w-full my-4 py-4 px-4 md:px-6 lg:px-9 flex gap-12">
+            <PhasesCarousel />
+
             <section className="w-full lg:w-1/2 flex flex-col lg:flex-row">
               <div className="w-full text-left">
                 <h2 className="poppins-heading-6 text-seconday-400 mb-4">
