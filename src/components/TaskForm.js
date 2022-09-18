@@ -79,6 +79,7 @@ export function TaskForm({ batch, closeModal }) {
       })
     );
     closeModal();
+    window.location.reload();
   };
 
   const getInputByType = (on, type) => {

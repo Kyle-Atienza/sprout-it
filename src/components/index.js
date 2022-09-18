@@ -13,3 +13,4 @@ export * from "./BatchDetails";
 export * from "./InviteForm";
 export * from "./SecondaryButton";
 export * from "./AddMaterialsForm";
+export * from "./PhasesCarousel";

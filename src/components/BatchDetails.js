@@ -153,7 +153,6 @@ export function BatchDetails({ batch }) {
             <p className="poppins-paragraph">{totalDefects}</p>
             {phases.map((phase) => {
               if (!batch[phase]) return null;
-              // console.log(batch[phase]);
               return (
                 <div className="flex justify-between" key={phase}>
                   <p>{phase}</p>
