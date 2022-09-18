@@ -2,9 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import materialService from "./materialService";
 
 const initialState = {
-  inventory: {},
   materials: [],
-  finished: [],
   isSuccess: false,
   isError: false,
   isLoading: false,
@@ -107,7 +105,13 @@ export const inventorySlice = createSlice({
       .addCase(putMaterial.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.materials = action.payload;
+        // state.materials = action.payload;
+        const replaceIndex = state.materials.indexOf(
+          state.materials.find((material) => {
+            return material._id === action.payload._id;
+          })
+        );
+        state.materials[replaceIndex] = action.payload;
       })
       .addCase(putMaterial.rejected, (state, action) => {
         state.isLoading = false;

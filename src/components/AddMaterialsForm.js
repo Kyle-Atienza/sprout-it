@@ -21,26 +21,15 @@ export const AddMaterialsForm = () => {
     dispatch(getMaterials());
   }, [user, isSuccess, isLoading, isError, message, dispatch]);
 
-  const [materialData, setMaterialData] = useState({
-    _id: "",
-    name: "",
-    altName: "",
-    unit: "",
-    quantity: 0,
-    oldPrice: 0,
-    price: 0,
-  });
+  const [selectedMaterial, setSelectedMaterial] = useState({});
+  const [materialData, setMaterialData] = useState({});
 
   const { id, name, altName, unit, quantity, oldPrice, price } = materialData;
 
   const onChange = (e) => {
     if (e.target.name === "material") {
-      setMaterialData((prevState) => ({
-        ...prevState,
-        _id: materials.find((material) => material.name === e.target.value)._id,
-      }));
-      console.log(
-        materials.find((material) => material.name === e.target.value)._id
+      setSelectedMaterial(
+        materials.find((material) => material.name === e.target.value)
       );
     } else {
       setMaterialData((prevState) => ({
@@ -49,27 +38,6 @@ export const AddMaterialsForm = () => {
       }));
     }
   };
-
-  // const handlecountry = (event) => {
-  //   const getCountryid = event.target.value;
-  //   setMaterialData(getCountryid);
-  //   materialData.filter(material => material.name.includes(getCountryid)).map(result => {
-  //     return setMaterialData
-  //   })
-  //   console.log(getCountryid.toString());
-  // };
-
-  // const onDropDownChange = (name) => {
-  //   const getName = name.target.value;
-  //   this.setMaterialData({[name]: getName})
-  //   console.log(name.toString());
-  //   //setMaterialData(getName);
-
-  //   // const newUnit = unit[val];
-  //   // if (newUnit) {
-  //   //   setMaterialData(newUnit.unit);
-  //   // }
-  // };
 
   const onSubmitNewMaterial = (e) => {
     e.preventDefault();
@@ -88,12 +56,13 @@ export const AddMaterialsForm = () => {
 
   const onSubmitExistingMaterial = (e) => {
     e.preventDefault();
+    // console.log(selectedMaterial._id);
     dispatch(
       putMaterial({
-        name: name,
-        quantity: quantity,
-        oldPrice: materialData.oldPrice,
-        price: price,
+        id: selectedMaterial._id,
+        data: {
+          ...materialData,
+        },
       })
     );
     dispatch(getMaterials);
@@ -102,7 +71,7 @@ export const AddMaterialsForm = () => {
 
   return (
     <Tab.Group>
-      <Tab.List className='flex gap-2 justify-between overflow-x-auto scrollbar pb-2 flex-shrink-0'>
+      <Tab.List className="flex gap-2 justify-between overflow-x-auto scrollbar pb-2 flex-shrink-0">
         <Tab
           className={({ selected }) =>
             selected
@@ -122,21 +91,20 @@ export const AddMaterialsForm = () => {
           Add New Material
         </Tab>
       </Tab.List>
-      <Tab.Panels className='pt-5 flex-1'>
+      <Tab.Panels className="pt-5 flex-1">
         {/* ADD TO EXISTING */}
         <Tab.Panel>
-          <form onSubmitNewMaterial={onSubmitNewMaterial}>
-            <div className='mb-4'>
-              <label className='block open-button' htmlFor='username'>
+          <form onSubmit={onSubmitNewMaterial}>
+            <div className="mb-4">
+              <label className="block open-button" htmlFor="username">
                 Material name
-                <span className='text-red-600'>*</span>
+                <span className="text-red-600">*</span>
               </label>
               <select
-                id='material'
-                className='w-full p-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
+                id="material"
+                className="w-full p-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400"
                 onChange={onChange}
-                // {(e) => handlecountry(e)}
-                name='material'
+                name="material"
                 required
               >
                 <option hidden defaultValue>
@@ -144,17 +112,11 @@ export const AddMaterialsForm = () => {
                 </option>
                 {materials.map((material, index) => {
                   return (
-                    <option value={materialData.name} key={index}>
+                    <option value={material.name} key={index}>
                       {material.name}
                     </option>
                   );
                 })}
-                {/* <option value=''>Lorem ipsum dolor</option>
-                <option value=''>Lorem ipsum dolor</option>
-                <option value=''>Lorem ipsum dolor</option>
-                <option value=''>Lorem ipsum dolor</option>
-                <option value=''>Lorem ipsum dolor</option>
-                <option value=''>Lorem ipsum dolor</option> */}
               </select>
             </div>
             {/* <div className='mb-4'>
@@ -171,45 +133,43 @@ export const AddMaterialsForm = () => {
                 onChange={(e) => setMaterialData(e.target.value)}
               />
             </div> */}
-            <div className='mb-4'>
-              <label className='block open-button' htmlFor='username'>
-                Quantity <span className='text-red-600'>*</span>
+            <div className="mb-4">
+              <label className="block open-button" htmlFor="username">
+                Quantity <span className="text-red-600">*</span>
               </label>
-              <div className='flex justify-center items-center'>
+              <div className="flex justify-center items-center">
                 <input
-                  className='w-full p-3 mr-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
-                  name='quantity'
-                  type='number'
-                  value={materialData.quantity}
+                  className="w-full p-3 mr-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400"
+                  name="quantity"
+                  type="number"
                   onChange={onChange}
                   required
                 />
-                <p className='open-paragraph'>kg/l</p>
+                <p className="open-paragraph">kg/l</p>
               </div>
             </div>
-            <div className='mb-4'>
-              <label className='block open-button' htmlFor='username'>
-                Price per unit <span className='text-red-600'>*</span>
+            <div className="mb-4">
+              <label className="block open-button" htmlFor="username">
+                Price per unit <span className="text-red-600">*</span>
               </label>
-              <div className='flex justify-center items-center'>
-                <p className='open-paragraph'>₱</p>
+              <div className="flex justify-center items-center">
+                <p className="open-paragraph">₱</p>
                 <input
-                  className='w-full p-3 ml-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
-                  name='price'
-                  type='number'
+                  className="w-full p-3 ml-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400"
+                  name="price"
+                  type="number"
                   onChange={onChange}
-                  value={materialData.price}
                   required
                 />
               </div>
             </div>
-            <div className='flex justify-end'>
+            <div className="flex justify-end">
               <PrimaryButton
-                name='Add to Inventory'
-                className='mt-4'
+                name="Add to Inventory"
+                className="mt-4"
                 onClick={onSubmitExistingMaterial}
               >
-                <input type='submit' value='Submit' />
+                <input type="submit" value="Submit" />
               </PrimaryButton>
             </div>
           </form>
@@ -217,94 +177,94 @@ export const AddMaterialsForm = () => {
 
         {/* ADD NEW MATERIAL */}
         <Tab.Panel>
-          <form onSubmitNewMaterial={onSubmitNewMaterial}>
-            <div className='mb-4'>
-              <label className='block open-button' htmlFor='item-name'>
-                Item name <span className='text-red-600'>*</span>
+          <form onSubmit={onSubmitNewMaterial}>
+            <div className="mb-4">
+              <label className="block open-button" htmlFor="item-name">
+                Item name <span className="text-red-600">*</span>
               </label>
               <TextField
-                className='w-full open-paragraph-sm'
-                id='material-name'
-                type='text'
-                name='name'
+                className="w-full open-paragraph-sm"
+                id="material-name"
+                type="text"
+                name="name"
                 value={materialData.name}
                 onChange={onChange}
-                placeholder='Name of new material'
+                placeholder="Name of new material"
                 required
               />
             </div>
-            <div className='mb-4'>
-              <label className='block open-button' htmlFor='item-name'>
+            <div className="mb-4">
+              <label className="block open-button" htmlFor="item-name">
                 Alternative Item Name
               </label>
               <TextField
-                className='w-full open-paragraph-sm'
-                id='material-altName'
-                type='text'
-                name='altName'
+                className="w-full open-paragraph-sm"
+                id="material-altName"
+                type="text"
+                name="altName"
                 value={materialData.altName}
                 onChange={onChange}
-                placeholder='Alternative name (optional)'
+                placeholder="Alternative name (optional)"
                 required
               />
             </div>
-            <div className='mb-4'>
-              <label className='block open-button' htmlFor='username'>
-                Unit <span className='text-red-600'>*</span>
+            <div className="mb-4">
+              <label className="block open-button" htmlFor="username">
+                Unit <span className="text-red-600">*</span>
               </label>
               <select
-                id='material-unit'
-                className='w-full p-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
+                id="material-unit"
+                className="w-full p-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400"
                 onChange={onChange}
-                name='unit'
+                name="unit"
                 required
               >
                 <option hidden defaultValue>
                   Select unit
                 </option>
-                <option value='kg'>kilogram (kg)</option>
-                <option value='l'>liter (l)</option>
+                <option value="kg">kilogram (kg)</option>
+                <option value="l">liter (l)</option>
               </select>
             </div>
-            <div className='mb-4'>
-              <label className='block open-button' htmlFor='username'>
-                Quantity <span className='text-red-600'>*</span>
+            <div className="mb-4">
+              <label className="block open-button" htmlFor="username">
+                Quantity <span className="text-red-600">*</span>
               </label>
               <TextField
-                className='w-full open-paragraph-sm my-0'
-                id='material-quantity'
-                type='text'
-                name='quantity'
+                className="w-full open-paragraph-sm my-0"
+                id="material-quantity"
+                type="text"
+                name="quantity"
                 value={materialData.quantity}
                 onChange={onChange}
-                placeholder='0'
+                placeholder="0"
                 required
               />
             </div>
-            <div className='mb-4'>
-              <label className='block open-button' htmlFor='username'>
-                Price per unit <span className='text-red-600'>*</span>
+            <div className="mb-4">
+              <label className="block open-button" htmlFor="username">
+                Price per unit <span className="text-red-600">*</span>
               </label>
-              <div className='flex justify-center items-center'>
-                <p className='open-paragraph'>₱</p>
+              <div className="flex justify-center items-center">
+                <p className="open-paragraph">₱</p>
                 <input
-                  className='w-full p-3 ml-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
-                  id='material-price'
-                  name='price'
-                  type='number'
+                  className="w-full p-3 ml-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400"
+                  id="material-price"
+                  name="price"
+                  type="number"
                   onChange={onChange}
                   value={materialData.price}
                   required
                 />
               </div>
             </div>
-            <div className='flex justify-end'>
+            <div className="flex justify-end">
               <PrimaryButton
-                name='Add to Inventory'
-                className='mt-4'
+                name="Add to Inventory"
+                className="mt-4"
                 onClick={onSubmitNewMaterial}
               >
-                <input type='submit' value='Submit' />
+                <input type="submit" value="Submit" />
               </PrimaryButton>
             </div>
           </form>
