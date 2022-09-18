@@ -28,9 +28,26 @@ const postMaterial = async (materialData, token) => {
   return response.data;
 }
 
+const putMaterial = async ({ id, data }, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.put(
+    `${`${API_URL}batch`}/${id}`,
+    data,
+    config
+  );
+
+  return response.data;
+};
+
 const materialService = {
   getMaterials,
-  postMaterial
+  postMaterial,
+  putMaterial,
 };
 
 export default materialService;
