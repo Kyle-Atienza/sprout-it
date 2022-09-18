@@ -27,13 +27,6 @@ const useForceUpdate = () => {
   // is better than directly setting `value + 1`
 };
 
-
-
-
-
-
-
-
 export const Production = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -218,24 +211,24 @@ export const Production = () => {
     if (phase === "fruiting") {
       return (
         <PrimaryButton
-          name="Finish Batch"
-          className=""
+          name='Finish Batch'
+          className=''
           onClick={() => setIsConfirmBatchModalOpen(true)}
         />
       );
     } else if (phase === "post") {
       return (
         <PrimaryButton
-          name="End Batch"
-          className=""
+          name='End Batch'
+          className=''
           onClick={() => setIsConfirmBatchModalOpen(true)}
         />
       );
     } else {
       return (
         <PrimaryButton
-          name="Start Next Phase"
-          className=""
+          name='Start Next Phase'
+          className=''
           onClick={() => setIsConfirmBatchModalOpen(true)}
         />
       );
@@ -300,10 +293,10 @@ export const Production = () => {
           <h1>For Next Phase</h1>
           <h1>How Long will be the composting time be?</h1>
           <TextField
-            className="w-full open-paragraph-sm mt-0"
-            id="username"
-            type="text"
-            name="defects"
+            className='w-full open-paragraph-sm mt-0'
+            id='username'
+            type='text'
+            name='defects'
             value={phaseDetails.period}
             onChange={(e) =>
               setPhaseDetails((prevState) => ({
@@ -311,7 +304,7 @@ export const Production = () => {
                 waiting: e.target.value,
               }))
             }
-            placeholder="1 week, 3 weeks..."
+            placeholder='1 week, 3 weeks...'
             required
           />
         </>
@@ -322,21 +315,21 @@ export const Production = () => {
           <h1>For Current Phase</h1>
           <h1>How many defects where there at phase</h1>
           <TextField
-            className="w-full open-paragraph-sm mt-0"
-            id="username"
-            type="text"
-            name="defects"
+            className='w-full open-paragraph-sm mt-0'
+            id='username'
+            type='text'
+            name='defects'
             value={defects}
             onChange={(e) => setDefects(e.target.value)}
-            placeholder="Lorem ipsum dolor"
+            placeholder='Lorem ipsum dolor'
             required
           />
           <h1>What is the moisture content</h1>
           <TextField
-            className="w-full open-paragraph-sm mt-0"
-            id="username"
-            type="text"
-            name="defects"
+            className='w-full open-paragraph-sm mt-0'
+            id='username'
+            type='text'
+            name='defects'
             value={phaseDetails.moisture}
             onChange={(e) =>
               setPhaseDetails((prevState) => ({
@@ -344,16 +337,16 @@ export const Production = () => {
                 moisture: e.target.value,
               }))
             }
-            placeholder="Lorem ipsum dolor"
+            placeholder='Lorem ipsum dolor'
             required
           />
           <h1>For Next Phase</h1>
           <h1>Weight per bags (kg)</h1>
           <TextField
-            className="w-full open-paragraph-sm mt-0"
-            id="username"
-            type="text"
-            name="defects"
+            className='w-full open-paragraph-sm mt-0'
+            id='username'
+            type='text'
+            name='defects'
             value={phaseDetails.bagWeight}
             onChange={(e) =>
               setPhaseDetails((prevState) => ({
@@ -361,7 +354,7 @@ export const Production = () => {
                 bagWeight: e.target.value,
               }))
             }
-            placeholder="1"
+            placeholder='1'
             required
           />
         </>
@@ -372,21 +365,21 @@ export const Production = () => {
           <h1>For Current Phase</h1>
           <h1>How many defects where there at phase</h1>
           <TextField
-            className="w-full open-paragraph-sm mt-0"
-            id="username"
-            type="text"
-            name="defects"
+            className='w-full open-paragraph-sm mt-0'
+            id='username'
+            type='text'
+            name='defects'
             value={defects}
             onChange={(e) => setDefects(e.target.value)}
-            placeholder="Lorem ipsum dolor"
+            placeholder='Lorem ipsum dolor'
             required
           />
           <h1>Total Number of bags</h1>
           <TextField
-            className="w-full open-paragraph-sm mt-0"
-            id="username"
-            type="text"
-            name="defects"
+            className='w-full open-paragraph-sm mt-0'
+            id='username'
+            type='text'
+            name='defects'
             value={phaseDetails.total}
             onChange={(e) =>
               setPhaseDetails((prevState) => ({
@@ -394,16 +387,16 @@ export const Production = () => {
                 total: e.target.value,
               }))
             }
-            placeholder="Lorem ipsum dolor"
+            placeholder='Lorem ipsum dolor'
             required
           />
           <h1>For Next Phase</h1>
           <h1>How long will be the sterilization</h1>
           <TextField
-            className="w-full open-paragraph-sm mt-0"
-            id="username"
-            type="text"
-            name="defects"
+            className='w-full open-paragraph-sm mt-0'
+            id='username'
+            type='text'
+            name='defects'
             value={phaseDetails.waiting}
             onChange={(e) =>
               setPhaseDetails((prevState) => ({
@@ -411,7 +404,7 @@ export const Production = () => {
                 waiting: e.target.value,
               }))
             }
-            placeholder="Lorem ipsum dolor"
+            placeholder='Lorem ipsum dolor'
             required
           />
         </>
@@ -422,22 +415,22 @@ export const Production = () => {
           <h1>For Current Phase</h1>
           <h1>How many defects where there at phase</h1>
           <TextField
-            className="w-full open-paragraph-sm mt-0"
-            id="username"
-            type="text"
-            name="defects"
+            className='w-full open-paragraph-sm mt-0'
+            id='username'
+            type='text'
+            name='defects'
             value={defects}
             onChange={(e) => setDefects(e.target.value)}
-            placeholder="Lorem ipsum dolor"
+            placeholder='Lorem ipsum dolor'
             required
           />
           <h1>For Next Phase</h1>
           <h1>What is the spawn that will be used</h1>
           <TextField
-            className="w-full open-paragraph-sm mt-0"
-            id="username"
-            type="text"
-            name="defects"
+            className='w-full open-paragraph-sm mt-0'
+            id='username'
+            type='text'
+            name='defects'
             value={phaseDetails.spawn}
             onChange={(e) =>
               setPhaseDetails((prevState) => ({
@@ -445,7 +438,7 @@ export const Production = () => {
                 spawn: e.target.value,
               }))
             }
-            placeholder="Lorem ipsum dolor"
+            placeholder='Lorem ipsum dolor'
             required
           />
         </>
@@ -457,21 +450,21 @@ export const Production = () => {
 
           <h1>How many defects where there at phase</h1>
           <TextField
-            className="w-full open-paragraph-sm mt-0"
-            id="username"
-            type="text"
-            name="defects"
+            className='w-full open-paragraph-sm mt-0'
+            id='username'
+            type='text'
+            name='defects'
             value={defects}
             onChange={(e) => setDefects(e.target.value)}
-            placeholder="Lorem ipsum dolor"
+            placeholder='Lorem ipsum dolor'
             required
           />
           <h1>What is the total number of bags inoculated</h1>
           <TextField
-            className="w-full open-paragraph-sm mt-0"
-            id="username"
-            type="text"
-            name="defects"
+            className='w-full open-paragraph-sm mt-0'
+            id='username'
+            type='text'
+            name='defects'
             value={phaseDetails.total}
             onChange={(e) =>
               setPhaseDetails((prevState) => ({
@@ -479,16 +472,16 @@ export const Production = () => {
                 total: e.target.value,
               }))
             }
-            placeholder="Lorem ipsum dolor"
+            placeholder='Lorem ipsum dolor'
             required
           />
           <h1>For Next Phase</h1>
           <h1>How long is waiting period</h1>
           <TextField
-            className="w-full open-paragraph-sm mt-0"
-            id="username"
-            type="text"
-            name="defects"
+            className='w-full open-paragraph-sm mt-0'
+            id='username'
+            type='text'
+            name='defects'
             value={phaseDetails.waiting}
             onChange={(e) =>
               setPhaseDetails((prevState) => ({
@@ -496,7 +489,7 @@ export const Production = () => {
                 waiting: e.target.value,
               }))
             }
-            placeholder="Lorem ipsum dolor"
+            placeholder='Lorem ipsum dolor'
             required
           />
         </>
@@ -506,13 +499,13 @@ export const Production = () => {
         <>
           <h1>How many defects where there at phase</h1>
           <TextField
-            className="w-full open-paragraph-sm mt-0"
-            id="username"
-            type="text"
-            name="defects"
+            className='w-full open-paragraph-sm mt-0'
+            id='username'
+            type='text'
+            name='defects'
             value={defects}
             onChange={(e) => setDefects(e.target.value)}
-            placeholder="Lorem ipsum dolor"
+            placeholder='Lorem ipsum dolor'
             required
           />
         </>
@@ -617,12 +610,49 @@ export const Production = () => {
                 leaveFrom='opacity-100 scale-100'
                 leaveTo='opacity-0 scale-95'
               >
-                <Dialog.Panel className='overflow-y-scroll bg-primary-100 w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-lg transition-all h-[40rem] flex flex-col'>
-                  {/* TODO: Stylize task card */}
-                  <pre>{JSON.stringify(selectedTask, null, 2)}</pre>
+                <Dialog.Panel className='overflow-y-scroll scrollbar-hidden bg-light-100 w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-lg transition-all  flex flex-col'>
+                  <div className='w-full flex items-center justify-start mb-6'>
+                    <Dialog.Title as='h3' className='poppins-heading-6 w-full'>
+                      {selectedTask.name}
+                    </Dialog.Title>
+                    <button
+                      className='hover:text-red-700 flex items-center'
+                      onClick={() => setIsTaskModalOpen(false)}
+                    >
+                      <CloseOutlined />
+                    </button>
+                  </div>
+                  <div className='h-full mb-8'>
+                    <p className='open-paragraph-sm'>
+                      <span className='font-bold'>Phase: </span>
+                      {selectedTask.for}
+                    </p>
+                    <p className='open-paragraph-sm'>
+                      <span className='font-bold'>Description: </span>
+                      {selectedTask.description}
+                    </p>
+                    <p className='open-paragraph-sm'>
+                      <span className='font-bold'>Status: </span>
+                      {selectedTask.status}
+                    </p>
+                    <p className='open-paragraph-sm'>
+                      <span className='font-bold'>Frequency: </span>
+                      {selectedTask.frequency}
+                    </p>
+                    <p className='open-paragraph-sm'>
+                      <span className='font-bold'>Time: </span>
+                      {selectedTask.time}
+                    </p>
+                    <p className='open-paragraph-sm'>
+                      <span className='font-bold'>Occurence: </span>
+                      {selectedTask.occurence}
+                    </p>
+                    {/* <pre>{JSON.stringify(selectedTask, null, 2)}</pre> */}
+                  </div>
                   <button
+                    type='button'
+                    className={`py-4 px-6 rounded-full poppins-button bg-red-500 hover:bg-red-700 text-light-100 shadow transition-all `}
                     onClick={() => onEndTask()}
-                    className='bg-red-500 hover:bg-red-700 text-white poppins-button font-bold py-2 px-4 rounded'
                   >
                     End Task
                   </button>
@@ -744,7 +774,7 @@ export const Production = () => {
           <div className='my-4 py-4 px-4 md:px-6 lg:px-9 overflow-x-scroll scrollbar'>
             <section className='w-max flex flex-row space-x-4 pt-4'>
               <div className='w-80 text-center'>
-                <h2 className='poppins-heading-6 text-seconday-400 mb-4'>
+                <h2 className='poppins-heading-6 text-dark-500 mb-4'>
                   Pre-production
                 </h2>
                 {batches["pre"]?.map((batch) => {
@@ -765,7 +795,7 @@ export const Production = () => {
                 })}
               </div>
               <div className='w-80 text-center'>
-                <h2 className='poppins-heading-6 text-seconday-400 mb-4'>
+                <h2 className='poppins-heading-6 text-dark-500 mb-4'>
                   Composting
                 </h2>
                 {batches["composting"]?.map((batch) => {
@@ -785,7 +815,7 @@ export const Production = () => {
                 })}
               </div>
               <div className='w-80 text-center'>
-                <h2 className='poppins-heading-6 text-seconday-400 mb-4'>
+                <h2 className='poppins-heading-6 text-dark-500 mb-4'>
                   Bagging
                 </h2>
                 {batches["bagging"]?.map((batch) => {
@@ -805,7 +835,7 @@ export const Production = () => {
                 })}
               </div>
               <div className='w-80 text-center'>
-                <h2 className='poppins-heading-6 text-seconday-400 mb-4'>
+                <h2 className='poppins-heading-6 text-dark-500 mb-4'>
                   Sterilization
                 </h2>
                 {batches["sterilization"]?.map((batch) => {
@@ -825,7 +855,7 @@ export const Production = () => {
                 })}
               </div>
               <div className='w-80 text-center'>
-                <h2 className='poppins-heading-6 text-seconday-400 mb-4'>
+                <h2 className='poppins-heading-6 text-dark-500 mb-4'>
                   Inoculation
                 </h2>
                 {batches["inoculation"]?.map((batch) => {
@@ -845,7 +875,7 @@ export const Production = () => {
                 })}
               </div>
               <div className='w-80 text-center'>
-                <h2 className='poppins-heading-6 text-seconday-400 mb-4'>
+                <h2 className='poppins-heading-6 text-dark-500 mb-4'>
                   Fruiting
                 </h2>
                 {batches["fruiting"]?.map((batch) => {
@@ -865,7 +895,7 @@ export const Production = () => {
                 })}
               </div>
               <div className='w-80 text-center'>
-                <h2 className='poppins-heading-6 text-seconday-400 mb-4'>
+                <h2 className='poppins-heading-6 text-dark-500 mb-4'>
                   Post-production
                 </h2>
                 {batches["post"]?.map((batch) => {
@@ -886,10 +916,10 @@ export const Production = () => {
               </div>
             </section>
           </div>
-          <div className='w-full my-4 py-4 px-4 md:px-6 lg:px-9'>
+          <div className='w-full my-4 py-4 px-4 md:px-6 lg:px-9 flex flex-col lg:flex-row gap-4'>
             <section className='w-full lg:w-1/2 flex flex-col lg:flex-row'>
               <div className='w-full text-left'>
-                <h2 className='poppins-heading-6 text-seconday-400 mb-4'>
+                <h2 className='poppins-heading-6 text-dark-500 mb-4'>
                   Weekly Tasks
                 </h2>
                 {tasks
@@ -932,7 +962,218 @@ export const Production = () => {
                   })}
               </div>
             </section>
-            <section className='w-full lg:w-1/2 flex flex-col lg:flex-row'></section>
+            <section className='w-full lg:w-1/2 flex flex-col lg:flex-row'>
+              <div
+                className='carousel slide carousel-dark relative w-full overflow-hidden object-cover rounded-lg bg-light-100 shadow'
+                data-bs-ride='carousel'
+                id='carouselDarkVariant'
+              >
+                <div className='carousel-indicators absolute right-0 bottom-0 left-0 flex justify-center p-0 mb-2 opacity-50'>
+                  <button
+                    aria-current='true'
+                    aria-label='Slide 1'
+                    className='active'
+                    data-bs-slide-to='0'
+                    data-bs-target='#carouselDarkVariant'
+                    type='button'
+                  />
+                  <button
+                    aria-label='Slide 2'
+                    data-bs-slide-to='1'
+                    data-bs-target='#carouselDarkVariant'
+                    type='button'
+                  />
+                  <button
+                    aria-label='Slide 3'
+                    data-bs-slide-to='2'
+                    data-bs-target='#carouselDarkVariant'
+                    type='button'
+                  />
+                  <button
+                    aria-label='Slide 4'
+                    data-bs-slide-to='3'
+                    data-bs-target='#carouselDarkVariant'
+                    type='button'
+                  />
+
+                  <button
+                    aria-label='Slide 5'
+                    data-bs-slide-to='4'
+                    data-bs-target='#carouselDarkVariant'
+                    type='button'
+                  />
+
+                  <button
+                    aria-label='Slide 6'
+                    data-bs-slide-to='5'
+                    data-bs-target='#carouselDarkVariant'
+                    type='button'
+                  />
+
+                  <button
+                    aria-label='Slide 7'
+                    data-bs-slide-to='6'
+                    data-bs-target='#carouselDarkVariant'
+                    type='button'
+                  />
+                </div>
+                <div className='carousel-inner overflow-hidden h-full w-full'>
+                  <div className='bg-white carousel-item active relative float-left w-full h-full flex flex-col'>
+                    <img
+                      className='block h-1/2 w-full overflow-hidden object-cover'
+                      src='https://images.unsplash.com/photo-1622370387370-3eec28a387c0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80'
+                      alt=''
+                    />
+                    <div className='flex flex-col p-4'>
+                      <h3 className='poppins-heading-5 mb-4 text-dark-500'>
+                        Pre-Production
+                      </h3>
+                      <p className='open-paragraph-sm'>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat. Duis aute irure dolor in
+                        reprehenderit in voluptate velit esse cillum dolore eu
+                        fugiat nulla pariatur.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className='bg-white carousel-item relative float-left w-full h-full'>
+                    <img
+                      className='block h-1/2 w-full overflow-hidden object-cover'
+                      src='https://images.unsplash.com/photo-1545433539-aa8270f71a54?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
+                      alt=''
+                    />
+                    <div className='flex flex-col p-4'>
+                      <h3 className='poppins-heading-5 mb-4 text-dark-500'>
+                        Composting
+                      </h3>
+                      <p className='open-paragraph-sm'>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat. Duis aute irure dolor in
+                        reprehenderit in voluptate velit esse cillum dolore eu
+                        fugiat nulla pariatur.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className='bg-white carousel-item relative float-left w-full h-full'>
+                    <img
+                      className='block h-1/2 w-full overflow-hidden object-cover'
+                      src='https://images.unsplash.com/photo-1579742627217-9f8bda40080e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1267&q=80'
+                      alt=''
+                    />
+                    <div className='flex flex-col p-4'>
+                      <h3 className='poppins-heading-5 mb-4 text-dark-500'>
+                        Bagging
+                      </h3>
+                      <p className='open-paragraph-sm'>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat. Duis aute irure dolor in
+                        reprehenderit in voluptate velit esse cillum dolore eu
+                        fugiat nulla pariatur.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className='bg-white carousel-item relative float-left w-full h-full'>
+                    <img
+                      className='block h-1/2 w-full overflow-hidden object-cover'
+                      src='https://images.unsplash.com/photo-1611938700738-9228b326cf38?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
+                      alt=''
+                    />
+                    <div className='flex flex-col p-4'>
+                      <h3 className='poppins-heading-5 mb-4 text-dark-500'>
+                        Sterilization
+                      </h3>
+                      <p className='open-paragraph-sm'>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat. Duis aute irure dolor in
+                        reprehenderit in voluptate velit esse cillum dolore eu
+                        fugiat nulla pariatur.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className='bg-white carousel-item relative float-left w-full h-full'>
+                    <img
+                      className='block h-1/2 w-full overflow-hidden object-cover'
+                      src='https://images.unsplash.com/photo-1575454125289-efff09c1f04f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80'
+                      alt=''
+                    />
+                    <div className='flex flex-col p-4'>
+                      <h3 className='poppins-heading-5 mb-4 text-dark-500'>
+                        Inoculation
+                      </h3>
+                      <p className='open-paragraph-sm'>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat. Duis aute irure dolor in
+                        reprehenderit in voluptate velit esse cillum dolore eu
+                        fugiat nulla pariatur.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className='bg-white carousel-item relative float-left w-full h-full'>
+                    <img
+                      className='block h-1/2 w-full overflow-hidden object-cover'
+                      src='https://images.unsplash.com/photo-1630286057323-905c2a21941f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
+                      alt=''
+                    />
+                    <div className='flex flex-col p-4'>
+                      <h3 className='poppins-heading-5 mb-4 text-dark-500'>
+                        Fruiting
+                      </h3>
+                      <p className='open-paragraph-sm'>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat. Duis aute irure dolor in
+                        reprehenderit in voluptate velit esse cillum dolore eu
+                        fugiat nulla pariatur.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className='bg-white carousel-item relative float-left w-full h-full'>
+                    <img
+                      className='block h-1/2 w-full overflow-hidden object-cover'
+                      src='https://images.unsplash.com/photo-1615382596404-fbce9f0fdd6a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1172&q=80'
+                      alt=''
+                    />
+                    <div className='flex flex-col p-4'>
+                      <h3 className='poppins-heading-5 mb-4 text-dark-500'>
+                        Post-Production
+                      </h3>
+                      <p className='open-paragraph-sm'>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat. Duis aute irure dolor in
+                        reprehenderit in voluptate velit esse cillum dolore eu
+                        fugiat nulla pariatur.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
           </div>
         </div>
       </div>
