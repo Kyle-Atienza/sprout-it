@@ -8,6 +8,7 @@ import {
   BatchDetails,
   PrimaryButton,
   TextField,
+  PhasesCarousel,
 } from "../components";
 import { Images } from "../core";
 import { useSelector, useDispatch } from "react-redux";
@@ -522,40 +523,40 @@ export const Production = () => {
     <>
       <Transition appear show={isBatchModalOpen} as={Fragment}>
         <Dialog
-          as='div'
-          className='relative z-20'
+          as="div"
+          className="relative z-20"
           onClose={() => setIsBatchModalOpen(false)}
         >
           <Transition.Child
             as={Fragment}
-            enter='ease-out duration-300'
-            enterFrom='opacity-0'
-            enterTo='opacity-100'
-            leave='ease-in duration-200'
-            leaveFrom='opacity-100'
-            leaveTo='opacity-0'
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
           >
-            <div className='fixed inset-0 bg-dark-700 bg-opacity-25' />
+            <div className="fixed inset-0 bg-dark-700 bg-opacity-25" />
           </Transition.Child>
 
-          <div className='fixed inset-0 overflow-y-auto'>
-            <div className='flex min-h-full items-center justify-center p-4 text-center'>
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
               <Transition.Child
                 as={Fragment}
-                enter='ease-out duration-300'
-                enterFrom='opacity-0 scale-95'
-                enterTo='opacity-100 scale-100'
-                leave='ease-in duration-200'
-                leaveFrom='opacity-100 scale-100'
-                leaveTo='opacity-0 scale-95'
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className='overflow-y-scroll scrollbar-hidden bg-light-100 w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-lg transition-all h-[40rem] flex flex-col'>
-                  <div className='w-full flex items-center justify-start mb-6'>
-                    <Dialog.Title as='h3' className='poppins-heading-6 w-full'>
+                <Dialog.Panel className="overflow-y-scroll scrollbar-hidden bg-light-100 w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-lg transition-all h-[40rem] flex flex-col">
+                  <div className="w-full flex items-center justify-start mb-6">
+                    <Dialog.Title as="h3" className="poppins-heading-6 w-full">
                       Batch 7 Details
                     </Dialog.Title>
                     <button
-                      className='hover:text-red-700 flex items-center'
+                      className="hover:text-red-700 flex items-center"
                       onClick={() => setIsBatchModalOpen(false)}
                     >
                       <CloseOutlined />
@@ -563,10 +564,10 @@ export const Production = () => {
                   </div>
                   <BatchDetails batch={selectedBatch} />
                   <Disclosure>
-                    <Disclosure.Button className='mb-4 py-4 px-6 rounded-full poppins-button bg-transparent text-primary-500 hover:text-light-100 border-primary-400 hover:border-primary-500 border-2 hover:bg-primary-500 shadow transition-all disabled:opacity-50'>
+                    <Disclosure.Button className="mb-4 py-4 px-6 rounded-full poppins-button bg-transparent text-primary-500 hover:text-light-100 border-primary-400 hover:border-primary-500 border-2 hover:bg-primary-500 shadow transition-all disabled:opacity-50">
                       Add Task
                     </Disclosure.Button>
-                    <Disclosure.Panel className='text-gray-500'>
+                    <Disclosure.Panel className="text-gray-500">
                       <TaskForm
                         batch={selectedBatch}
                         closeModal={handleSubmitTask}
@@ -583,32 +584,32 @@ export const Production = () => {
 
       <Transition appear show={isTaskModalOpen} as={Fragment}>
         <Dialog
-          as='div'
-          className='relative z-20'
+          as="div"
+          className="relative z-20"
           onClose={() => setIsTaskModalOpen(false)}
         >
           <Transition.Child
             as={Fragment}
-            enter='ease-out duration-300'
-            enterFrom='opacity-0'
-            enterTo='opacity-100'
-            leave='ease-in duration-200'
-            leaveFrom='opacity-100'
-            leaveTo='opacity-0'
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
           >
-            <div className='fixed inset-0 bg-dark-700 bg-opacity-25' />
+            <div className="fixed inset-0 bg-dark-700 bg-opacity-25" />
           </Transition.Child>
 
-          <div className='fixed inset-0 overflow-y-auto'>
-            <div className='flex min-h-full items-center justify-center p-4 text-center'>
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
               <Transition.Child
                 as={Fragment}
-                enter='ease-out duration-300'
-                enterFrom='opacity-0 scale-95'
-                enterTo='opacity-100 scale-100'
-                leave='ease-in duration-200'
-                leaveFrom='opacity-100 scale-100'
-                leaveTo='opacity-0 scale-95'
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className='overflow-y-scroll scrollbar-hidden bg-light-100 w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-lg transition-all  flex flex-col'>
                   <div className='w-full flex items-center justify-start mb-6'>
@@ -665,41 +666,41 @@ export const Production = () => {
 
       <Transition appear show={isConfirmBatchModalOpen} as={Fragment}>
         <Dialog
-          as='div'
-          className='relative z-20'
+          as="div"
+          className="relative z-20"
           onClose={() => setIsTaskModalOpen(false)}
         >
           <Transition.Child
             as={Fragment}
-            enter='ease-out duration-300'
-            enterFrom='opacity-0'
-            enterTo='opacity-100'
-            leave='ease-in duration-200'
-            leaveFrom='opacity-100'
-            leaveTo='opacity-0'
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
           >
-            <div className='fixed inset-0 bg-dark-700 bg-opacity-25' />
+            <div className="fixed inset-0 bg-dark-700 bg-opacity-25" />
           </Transition.Child>
 
-          <div className='fixed inset-0 overflow-y-auto'>
-            <div className='flex min-h-full items-center justify-center p-4 text-center'>
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
               <Transition.Child
                 as={Fragment}
-                enter='ease-out duration-300'
-                enterFrom='opacity-0 scale-95'
-                enterTo='opacity-100 scale-100'
-                leave='ease-in duration-200'
-                leaveFrom='opacity-100 scale-100'
-                leaveTo='opacity-0 scale-95'
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className='overflow-y-scroll bg-primary-100 w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-lg transition-all h-[20rem] flex flex-col'>
+                <Dialog.Panel className="overflow-y-scroll bg-primary-100 w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-lg transition-all h-[20rem] flex flex-col">
                   <h1>Are you sure you want to go to the next phase</h1>
                   <h1>
                     Doing so, you wont able to go bakc to the previous phase
                   </h1>
                   <PrimaryButton
-                    name='Yes'
-                    className=''
+                    name="Yes"
+                    className=""
                     onClick={() =>
                       selectedBatch.activePhase === "post"
                         ? onUpdateBatch(selectedBatch)
@@ -707,8 +708,8 @@ export const Production = () => {
                     }
                   />
                   <PrimaryButton
-                    name='No'
-                    className=''
+                    name="No"
+                    className=""
                     onClick={() => setIsConfirmBatchModalOpen(false)}
                   />
                 </Dialog.Panel>
@@ -720,38 +721,38 @@ export const Production = () => {
 
       <Transition appear show={isPhaseFormModal} as={Fragment}>
         <Dialog
-          as='div'
-          className='relative z-20'
+          as="div"
+          className="relative z-20"
           onClose={() => setIsTaskModalOpen(false)}
         >
           <Transition.Child
             as={Fragment}
-            enter='ease-out duration-300'
-            enterFrom='opacity-0'
-            enterTo='opacity-100'
-            leave='ease-in duration-200'
-            leaveFrom='opacity-100'
-            leaveTo='opacity-0'
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
           >
-            <div className='fixed inset-0 bg-dark-700 bg-opacity-25' />
+            <div className="fixed inset-0 bg-dark-700 bg-opacity-25" />
           </Transition.Child>
 
-          <div className='fixed inset-0 overflow-y-auto'>
-            <div className='flex min-h-full items-center justify-center p-4 text-center'>
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
               <Transition.Child
                 as={Fragment}
-                enter='ease-out duration-300'
-                enterFrom='opacity-0 scale-95'
-                enterTo='opacity-100 scale-100'
-                leave='ease-in duration-200'
-                leaveFrom='opacity-100 scale-100'
-                leaveTo='opacity-0 scale-95'
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className='overflow-y-scroll bg-primary-100 w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-lg transition-all h-[20rem] flex flex-col'>
+                <Dialog.Panel className="overflow-y-scroll bg-primary-100 w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-lg transition-all h-[20rem] flex flex-col">
                   {mapFormByPhase(selectedBatch.activePhase)}
                   <PrimaryButton
-                    name='Submit'
-                    className=''
+                    name="Submit"
+                    className=""
                     onClick={() => onUpdateBatch(selectedBatch)}
                   />
                 </Dialog.Panel>
@@ -761,14 +762,14 @@ export const Production = () => {
         </Dialog>
       </Transition>
 
-      <div className='flex flex-row w-screen'>
-        <div className='w-0 lg:w-1/6'>
+      <div className="flex flex-row w-screen">
+        <div className="w-0 lg:w-1/6">
           <SideNavBar />
         </div>
 
-        <div className='flex flex-col w-full lg:w-5/6 min-h-screen'>
-          <div className='w-full'>
-            <TopNavBar pageName='Production' />
+        <div className="flex flex-col w-full lg:w-5/6 min-h-screen">
+          <div className="w-full">
+            <TopNavBar pageName="Production" />
           </div>
 
           <div className='my-4 py-4 px-4 md:px-6 lg:px-9 overflow-x-scroll scrollbar'>
@@ -785,9 +786,9 @@ export const Production = () => {
                         setSelectedBatch(batch);
                       }}
                       key={batch.name}
-                      className=''
+                      className=""
                       batchNumber={"Batch " + batch.name}
-                      description='Lorem ipsum dolor sit amet consectetur'
+                      description="Lorem ipsum dolor sit amet consectetur"
                       daysLeft={getDaysCount(batch)}
                       countDays={false}
                     />
@@ -806,9 +807,9 @@ export const Production = () => {
                         setSelectedBatch(batch);
                       }}
                       key={batch.name}
-                      className=''
+                      className=""
                       batchNumber={"Batch " + batch.name}
-                      description='Lorem ipsum dolor sit amet consectetur'
+                      description="Lorem ipsum dolor sit amet consectetur"
                       daysLeft={getDaysCount(batch)}
                     />
                   );
@@ -826,9 +827,9 @@ export const Production = () => {
                         setSelectedBatch(batch);
                       }}
                       key={batch.name}
-                      className=''
+                      className=""
                       batchNumber={"Batch " + batch.name}
-                      description='Lorem ipsum dolor sit amet consectetur'
+                      description="Lorem ipsum dolor sit amet consectetur"
                       daysLeft={getDaysCount(batch)}
                     />
                   );
@@ -846,9 +847,9 @@ export const Production = () => {
                         setSelectedBatch(batch);
                       }}
                       key={batch.name}
-                      className=''
+                      className=""
                       batchNumber={"Batch " + batch.name}
-                      description='Lorem ipsum dolor sit amet consectetur'
+                      description="Lorem ipsum dolor sit amet consectetur"
                       daysLeft={getDaysCount(batch)}
                     />
                   );
@@ -866,9 +867,9 @@ export const Production = () => {
                         setSelectedBatch(batch);
                       }}
                       key={batch.name}
-                      className=''
+                      className=""
                       batchNumber={"Batch " + batch.name}
-                      description='Lorem ipsum dolor sit amet consectetur'
+                      description="Lorem ipsum dolor sit amet consectetur"
                       daysLeft={getDaysCount(batch)}
                     />
                   );
@@ -886,9 +887,9 @@ export const Production = () => {
                         setSelectedBatch(batch);
                       }}
                       key={batch.name}
-                      className=''
+                      className=""
                       batchNumber={"Batch " + batch.name}
-                      description='Lorem ipsum dolor sit amet consectetur'
+                      description="Lorem ipsum dolor sit amet consectetur"
                       daysLeft={getDaysCount(batch)}
                     />
                   );
@@ -906,9 +907,9 @@ export const Production = () => {
                         setSelectedBatch(batch);
                       }}
                       key={batch.name}
-                      className=''
+                      className=""
                       batchNumber={"Batch " + batch.name}
-                      description='Lorem ipsum dolor sit amet consectetur'
+                      description="Lorem ipsum dolor sit amet consectetur"
                       daysLeft={getDaysCount(batch)}
                     />
                   );
@@ -926,9 +927,6 @@ export const Production = () => {
                   .filter((task) => {
                     return task.status === "ongoing" && task.batch;
                   })
-                  .filter((task) => {
-                    return task.batch.active;
-                  })
                   .sort((prevTask, currTask) => {
                     return new Date(prevTask.next) - new Date(currTask.next);
                   })
@@ -942,7 +940,7 @@ export const Production = () => {
                           }}
                           day={mapDateDay(new Date(task.start.on).getDay())}
                           key={task._id}
-                          className=''
+                          className=""
                           task={task.name}
                           batch={task.batch.name}
                           phase={

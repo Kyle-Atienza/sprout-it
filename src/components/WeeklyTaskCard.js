@@ -29,8 +29,6 @@ export const WeeklyTaskCard = ({
     }
   };
 
-  console.log(next);
-
   return (
     <>
       <div
