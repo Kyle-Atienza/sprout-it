@@ -61,6 +61,22 @@ export const login = createAsyncThunk("user/login", async (user, thunkAPI) => {
   }
 });
 
+export const updateUser = createAsyncThunk(
+  "user/update",
+  async (payload, thunkAPI) => {
+    try {
+      return await userService.updateUser(payload);
+    } catch (error) {
+      const message = {
+        status: error.message,
+        response: error.response.data.message,
+      };
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const invite = createAsyncThunk(
   "user/invite",
   async (invitedUser, thunkAPI) => {
@@ -210,6 +226,20 @@ export const userSlice = createSlice({
         state.resetLink = action.payload;
       })
       .addCase(resetPassword.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        console.log(action.payload);
+        state.user = action.payload; //return user
+      })
+      .addCase(updateUser.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

@@ -27,13 +27,6 @@ const useForceUpdate = () => {
   // is better than directly setting `value + 1`
 };
 
-
-
-
-
-
-
-
 export const Production = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -894,9 +887,6 @@ export const Production = () => {
                 {tasks
                   .filter((task) => {
                     return task.status === "ongoing" && task.batch;
-                  })
-                  .filter((task) => {
-                    return task.batch.active;
                   })
                   .sort((prevTask, currTask) => {
                     return new Date(prevTask.next) - new Date(currTask.next);

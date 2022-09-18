@@ -35,6 +35,16 @@ const login = async (user) => {
   return response.data;
 };
 
+const updateUser = async (payload) => {
+  const response = await axios.put(`${API_URL}/${payload.id}`, payload.data);
+
+  if (response.data) {
+    localStorage.setItem("sproutItUser", JSON.stringify(response.data));
+  }
+
+  return response.data;
+};
+
 const invite = async (invitedUser) => {
   const response = await axios.post(`${API_URL}invite`, invitedUser);
 
@@ -57,6 +67,7 @@ const userService = {
   register,
   registerWithInvite,
   login,
+  updateUser,
   invite,
   forgotPassword,
   resetPassword,

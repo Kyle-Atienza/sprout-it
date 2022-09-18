@@ -18,14 +18,29 @@ import {
   PreProductionForm,
 } from "../components";
 import { getToken } from "../firebase";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUser } from "../features/user/userSlice";
 
 export const TopNavBar = ({ pageName }) => {
+  const dispatch = useDispatch();
+
+  const { user } = useSelector((state) => state.user);
+
   const onClickNotification = () => {
     Notification.requestPermission().then((permission) => {
       if (permission === "granted") {
-        getToken().then((token) => {
-          console.log(token);
-        });
+        if (!user.fcmToken) {
+          getToken().then((token) => {
+            dispatch(
+              updateUser({
+                id: user._id,
+                data: {
+                  fcmToken: token,
+                },
+              })
+            );
+          });
+        }
       }
     });
   };

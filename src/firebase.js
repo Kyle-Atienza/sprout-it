@@ -50,3 +50,19 @@ export const onMessageListener = () => {
     });
   });
 };
+
+messaging.onMessage(function (payload) {
+  console.log("Received message ", payload);
+
+  const notificationTitle = payload.notification.title;
+  const notificationOptions = {
+    body: payload.notification.body,
+  };
+
+  // eslint-disable-next-line no-restricted-globals
+  /* return self.registration.showNotification(
+    notificationTitle,
+    notificationOptions
+  ); */
+  new Notification(notificationTitle, notificationOptions);
+});
