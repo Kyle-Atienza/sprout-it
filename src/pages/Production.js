@@ -8,6 +8,7 @@ import {
   BatchDetails,
   PrimaryButton,
   TextField,
+  PhasesCarousel,
 } from "../components";
 import { Images } from "../core";
 import { useSelector, useDispatch } from "react-redux";
@@ -551,9 +552,9 @@ export const Production = () => {
               >
                 <Dialog.Panel className="overflow-y-scroll scrollbar-hidden bg-light-100 w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-lg transition-all h-[40rem] flex flex-col">
                   <div className="w-full flex items-center justify-start mb-6">
-                    <h4 className="poppins-heading-6 w-full">
+                    <Dialog.Title as="h3" className="poppins-heading-6 w-full">
                       Batch 7 Details
-                    </h4>
+                    </Dialog.Title>
                     <button
                       className="hover:text-red-700 flex items-center"
                       onClick={() => setIsBatchModalOpen(false)}
@@ -611,6 +612,7 @@ export const Production = () => {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="overflow-y-scroll bg-primary-100 w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-lg transition-all h-[40rem] flex flex-col">
+                  {/* TODO: Stylize task card */}
                   <pre>{JSON.stringify(selectedTask, null, 2)}</pre>
                   <button
                     onClick={() => onEndTask()}
@@ -728,7 +730,7 @@ export const Production = () => {
           <SideNavBar />
         </div>
 
-        <div className="flex flex-col w-full lg:w-5/6">
+        <div className="flex flex-col w-full lg:w-5/6 min-h-screen">
           <div className="w-full">
             <TopNavBar pageName="Production" />
           </div>

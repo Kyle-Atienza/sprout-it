@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { TextField } from "./TextField";
+import { PrimaryButton } from "./PrimaryButton";
 import { useSelector, useDispatch } from "react-redux";
 import { invite, clearInviteToken } from "../features/user/userSlice";
 import { useState } from "react";
@@ -36,18 +37,20 @@ export function InviteForm() {
 
   return (
     <>
-      <h2>Invite Worker</h2>
-      <form className="flex flex-col" action="">
-        <div className="flex flex-1">
+      <h2 className='poppins-heading-6'>Invite Worker</h2>
+      <form className='flex flex-col' action=''>
+        <div className='flex gap-4 w-full'>
           <TextField
             name={"firstName"}
             placeholder={"First Name"}
             onChange={onChange}
+            className='w-1/2'
           />
           <TextField
             name={"lastName"}
             placeholder={"Last Name"}
             onChange={onChange}
+            className='w-1/2'
           />
         </div>
         <TextField
@@ -56,16 +59,19 @@ export function InviteForm() {
           placeholder={"Email"}
           onChange={onChange}
         />
-        <button
+        <PrimaryButton
+          name='Generate Token'
+          className='my-4'
           onClick={onCreateInvite}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          type="button"
-        >
-          Generate Token
-        </button>
+        />
       </form>
-      <h2>Generated Link</h2>
-      <p>{inviteToken ? inviteToken.inviteToken : ""}</p>
+      <h2 className='poppins-heading-6 mt-6'>Generated Link</h2>
+      <TextField
+        className="w-full"
+        value={inviteToken ? inviteToken.inviteToken : ""}
+        type='text'
+        readonly
+      />
     </>
   );
 }

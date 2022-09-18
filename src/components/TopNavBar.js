@@ -163,7 +163,7 @@ export const TopNavBar = ({ pageName }) => {
           {/* <!-- Collapsible wrapper --> */}
         </div>
       </nav>
-      <div className="z-30 flex flex-row h-20 items-center justify-between px-4 md:px-6 lg:px-9">
+      <div className="w-full z-30 flex flex-row h-20 items-center justify-between px-4 md:px-6 lg:px-9">
         <h1 className="ml-8 md:ml-10 lg:ml-0 md:block poppins-paragraph font-semibold md:poppins-heading-4 lg:poppins-heading-3 text-primary-400">
           {pageName}
         </h1>
