@@ -35,7 +35,7 @@ const putMaterial = async ({ id, data }, token) => {
     },
   };
 
-  const response = await axios.put(`${`${API_URL}`}/${id}`, data, config);
+  const response = await axios.put(`${`${API_URL}`}${id}`, data, config);
 
   return response.data;
 };
