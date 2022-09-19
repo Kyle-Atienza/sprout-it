@@ -55,7 +55,7 @@ export const Inventory = () => {
               placeholder="Search Inventory"
             />
             <PrimaryButton
-              className="hidden text-xl leading-none md:flex justify-center items-center"
+              className="text-xl leading-none flex justify-center items-center"
               name="Add Materials"
               onClick={openModal}
             />

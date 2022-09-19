@@ -51,7 +51,7 @@ export const AddMaterialsForm = () => {
       })
     );
     dispatch(getMaterials);
-    //window.location.reload();
+    window.location.reload();
   };
 
   const onSubmitExistingMaterial = (e) => {
@@ -66,7 +66,7 @@ export const AddMaterialsForm = () => {
       })
     );
     dispatch(getMaterials);
-    //window.location.reload();
+    window.location.reload();
   };
 
   return (

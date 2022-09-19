@@ -22,7 +22,7 @@ export const SideNavBar = (className) => {
 
   return (
     <aside
-      className={`lg:flex fixed flex-col p-4 bg-white shadow w-72 h-screen bg-light-100 justify-between hidden ${className}`}
+      className={`lg:flex fixed flex-col p-4 shadow w-64 h-screen bg-light-100 justify-between hidden ${className}`}
     >
       <div className="p-4">
         <img src={Images.EandBLogo} alt="E and B logo" />

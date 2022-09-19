@@ -9,7 +9,7 @@ export function BatchDetails({ batch }) {
   const mappedPhases = (phase) => {
     switch (phase) {
       case "pre":
-        return "Pre-production";
+        return "Pre-Production";
       case "composting":
         return "Composting";
       case "bagging":
@@ -21,7 +21,7 @@ export function BatchDetails({ batch }) {
       case "fruiting":
         return "Fruiting";
       case "post":
-        return "Post-production";
+        return "Post-Production";
 
       default:
         break;
@@ -46,14 +46,14 @@ export function BatchDetails({ batch }) {
         batch.activePhase.slice(0, 1).toUpperCase() + batch.activePhase.slice(1)
       )}
     >
-      <Tab.List className="flex gap-2 overflow-x-scroll scrollbar pb-2 flex-shrink-0">
+      <Tab.List className='flex gap-2 overflow-x-scroll scrollbar pb-2 flex-shrink-0'>
         {phases.map((phase, index) => {
           return (
             <Tab
               className={({ selected }) =>
                 selected
-                  ? "poppins-paragraph px-4 py-3 bg-primary-200 rounded-xl disabled:opacity-50 whitespace-nowrap"
-                  : "poppins-paragraph px-4 py-3 bg-light-100 hover:bg-primary-100 rounded-xl disabled:opacity-50 whitespace-nowrap"
+                  ? "open-paragraph px-4 py-3 bg-primary-200 rounded-xl disabled:opacity-50 whitespace-nowrap"
+                  : "open-paragraph px-4 py-3 bg-light-100 hover:bg-primary-100 rounded-xl disabled:opacity-50 whitespace-nowrap"
               }
               key={phase}
             >
@@ -62,29 +62,29 @@ export function BatchDetails({ batch }) {
           );
         })}
       </Tab.List>
-      <Tab.Panels className="py-5 flex-1">
+      <Tab.Panels className='py-5 flex-1'>
         <Tab.Panel>
           <div>
-            <table className="w-full text-sm text-left">
-              <thead className=" poppins-paragraph ">
+            <table className='w-full text-sm text-left'>
+              <thead className=' poppins-paragraph '>
                 <tr>
-                  <th scope="col" className="py-2">
+                  <th scope='col' className='py-2'>
                     Material
                   </th>
-                  <th scope="col" className="py-2">
+                  <th scope='col' className='py-2'>
                     Quantity
                   </th>
                 </tr>
               </thead>
-              <tbody className="poppins-paragraph-sm ">
+              <tbody className='open-paragraph'>
                 {batch.materials.map((material, index) => {
                   return (
                     <tr
-                      className="transition-all duration-300 ease-in-out cursor-pointer"
+                      className='transition-all duration-300 ease-in-out cursor-pointer'
                       key={index}
                     >
-                      <td className="py-2">{material.material.name}</td>
-                      <td className="py-2">
+                      <td className='py-2'>{material.material.name}</td>
+                      <td className='py-2'>
                         {material.weight} {material.material.unit}
                       </td>
                     </tr>
@@ -96,70 +96,163 @@ export function BatchDetails({ batch }) {
         </Tab.Panel>
         <Tab.Panel>
           <div>
-            <p className="poppins-paragraph">27 days composting</p>
-            <p>
+            <p className='open-paragraph my-1'>
+              <span className='font-semibold'>Date Started: </span>
+              {batch.hasOwnProperty("composting")
+                ? batch.composting.startedAt
+                : null}
+            </p>
+            <p className='open-paragraph my-1'>
+              <span className='font-semibold'>Waiting Period: </span>
+              {batch.hasOwnProperty("composting")
+                ? batch.composting.waiting
+                : null}{" "}
+              week/s
+            </p>
+            <p className='open-paragraph my-1'>
+              <span className='font-semibold'>Mix Frequency: </span>
+              {batch.hasOwnProperty("composting")
+                ? batch.composting.mixFrequency
+                : null}{" "}
+            </p>
+            <p className='open-paragraph my-1'>
+              <span className='font-semibold'>Moisture Level: </span>
+              {batch.hasOwnProperty("composting")
+                ? batch.composting.moisture
+                : null}{" "}
+            </p>
+            <p className='open-paragraph my-1'>
+              <span className='font-semibold'>Defects: </span>
               {batch.hasOwnProperty("composting")
                 ? batch.composting.defects
-                : null}
+                : null}{" "}
+              kg
             </p>
           </div>
         </Tab.Panel>
         <Tab.Panel>
-          <div className="">
-            <p className="poppins-paragraph">200 days composting</p>
-            <p className="poppins-paragraph">1kg bag weight</p>
-            <p>
+          <div className=''>
+            <p className='open-paragraph my-1'>
+              <span className='font-semibold'>Date Started: </span>
               {batch.hasOwnProperty("bagging")
-                ? batch.composting.defects
-                : null}
+                ? batch.bagging.startedAt
+                : null}{" "}
+              kg
+            </p>
+            <p className='open-paragraph my-1'>
+              <span className='font-semibold'>Bag Weight: </span>
+              {batch.hasOwnProperty("bagging")
+                ? batch.bagging.bagWeight
+                : null}{" "}
+              kg
+            </p>
+            <p className='open-paragraph my-1'>
+              <span className='font-semibold'>Number of Bags: </span>
+              {batch.hasOwnProperty("bagging") ? batch.bagging.total : null} kg
+            </p>
+            <p className='open-paragraph my-1'>
+              <span className='font-semibold'>Defects: </span>
+              {batch.hasOwnProperty("bagging")
+                ? batch.bagging.defects
+                : null}{" "}
+              kg
             </p>
           </div>
         </Tab.Panel>
         <Tab.Panel>
-          <div className="">
-            <p className="poppins-paragraph">8 hours Sterilization</p>
-          </div>
-          <p>
+          <p className='open-paragraph my-1'>
+            <span className='font-semibold'>Date Started: </span>
             {batch.hasOwnProperty("sterilization")
-              ? batch.composting.defects
+              ? batch.sterilization.startedAt
               : null}
+          </p>
+          <p className='open-paragraph my-1'>
+            <span className='font-semibold'>Waiting Period: </span>
+            {batch.hasOwnProperty("sterilization")
+              ? batch.sterilization.waiting
+              : null}{" "}
+            hour/s
+          </p>
+          <p className='open-paragraph my-1'>
+            <span className='font-semibold'>Defects: </span>
+            {batch.hasOwnProperty("sterilization")
+              ? batch.sterilization.defects
+              : null}{" "}
+            kg
           </p>
         </Tab.Panel>
         <Tab.Panel>
-          <div className="">
-            <p className="poppins-paragraph">198 Total Inoculated</p>
-            <p className="poppins-paragraph">F2 Sorgum Spawn</p>
-          </div>
-          <p>
+          <p className='open-paragraph my-1'>
+            <span className='font-semibold'>Date Started: </span>
             {batch.hasOwnProperty("inoculation")
-              ? batch.composting.defects
+              ? batch.inoculation.startedAt
               : null}
+          </p>
+          <p className='open-paragraph my-1'>
+            <span className='font-semibold'>Spawn Type: </span>
+            {batch.hasOwnProperty("inoculation")
+              ? batch.inoculation.spawn
+              : null}
+          </p>
+          <p className='open-paragraph my-1'>
+            <span className='font-semibold'>Total: </span>
+            {batch.hasOwnProperty("inoculation")
+              ? batch.inoculation.total
+              : null}
+          </p>
+          <p className='open-paragraph my-1'>
+            <span className='font-semibold'>Defects: </span>
+            {batch.hasOwnProperty("inoculation")
+              ? batch.inoculation.defects
+              : null}{" "}
+            kg
           </p>
         </Tab.Panel>
         <Tab.Panel>
-          <div className="">
-            <p className="poppins-paragraph">194 total bags for fruiting</p>
-            <p className="poppins-paragraph">2 weeks waiting time</p>
-            <p>
+          <div className=''>
+            <p className='open-paragraph my-1'>
+              <span className='font-semibold'>Date Started: </span>
               {batch.hasOwnProperty("fruiting")
-                ? batch.composting.defects
+                ? batch.fruiting.startedAt
                 : null}
+            </p>
+            <p className='open-paragraph my-1'>
+              <span className='font-semibold'>Waiting Period: </span>
+              {batch.hasOwnProperty("fruiting")
+                ? batch.fruiting.waiting
+                : null} week/s
+            </p>
+            <p className='open-paragraph my-1'>
+              <span className='font-semibold'>Defects: </span>
+              {batch.hasOwnProperty("fruiting")
+                ? batch.fruiting.defects
+                : null}{" "}
+              kg
             </p>
           </div>
         </Tab.Panel>
         <Tab.Panel>
-          <div className="">
-            <p className="poppins-paragraph">Total Number of defects</p>
-            <p className="poppins-paragraph">{totalDefects}</p>
+          <div className=''>
             {phases.map((phase) => {
               if (!batch[phase]) return null;
               return (
-                <div className="flex justify-between" key={phase}>
-                  <p>{phase}</p>
-                  <p>{batch[phase].defects}</p>
+                <div className='flex justify-between' key={phase}>
+                  <p className='open-paragraph my-1'>
+                    <span className='font-semibold'>
+                      {phase.charAt(0).toUpperCase() +
+                        phase.slice(1).toLowerCase()}
+                      :&nbsp;
+                    </span>
+                    {batch[phase].defects} kg
+                  </p>
                 </div>
               );
             })}
+            <hr className='my-1' />
+            <p className='open-paragraph my-1'>
+              <span className='font-semibold'>Total Number of defects: </span>
+              {totalDefects} kg
+            </p>
           </div>
         </Tab.Panel>
       </Tab.Panels>
