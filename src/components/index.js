@@ -14,3 +14,4 @@ export * from "./InviteForm";
 export * from "./SecondaryButton";
 export * from "./AddMaterialsForm";
 export * from "./PhasesCarousel";
+export * from "./WeeklyTaskList";
