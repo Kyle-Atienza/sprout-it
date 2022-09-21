@@ -3,7 +3,6 @@ import {
   SideNavBar,
   TopNavBar,
   ProductionCard,
-  WeeklyTaskCard,
   TaskForm,
   BatchDetails,
   PrimaryButton,
@@ -12,7 +11,6 @@ import {
   SecondaryButton,
   WeeklyTaskList,
 } from "../components";
-import { Images } from "../core";
 import { useSelector, useDispatch } from "react-redux";
 import { Dialog, Transition, Disclosure } from "@headlessui/react";
 import { useEffect, Fragment } from "react";
@@ -56,7 +54,6 @@ export const Production = () => {
     isLoading: batchLoading,
     isError: batchError,
   } = useSelector((state) => state.batch);
-  const { tasks } = useSelector((state) => state.task);
   const { phases } = useSelector((state) => state.phases);
 
   useEffect(() => {
@@ -265,27 +262,6 @@ export const Production = () => {
       const timeDiff = currentDate.getTime() - baseDate.getTime();
       const dayDiff = timeDiff / (1000 * 3600 * 24) + 1;
       return Math.floor(dayDiff);
-    }
-  };
-
-  const mapDateDay = (day) => {
-    switch (day) {
-      case 1:
-        return "Mon";
-      case 2:
-        return "Tue";
-      case 3:
-        return "Wed";
-      case 4:
-        return "Thu";
-      case 5:
-        return "Fri";
-      case 6:
-        return "Sat";
-      case 0:
-        return "Sun";
-      default:
-        return "Sun";
     }
   };
 
