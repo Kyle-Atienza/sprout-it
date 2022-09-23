@@ -57,6 +57,7 @@ messaging.onMessage(function (payload) {
   const notificationTitle = payload.notification.title;
   const notificationOptions = {
     body: payload.notification.body,
+    requireInteraction: true,
   };
 
   // eslint-disable-next-line no-restricted-globals
@@ -64,5 +65,5 @@ messaging.onMessage(function (payload) {
     notificationTitle,
     notificationOptions
   ); */
-  new Notification(notificationTitle, notificationOptions);
+  // new Notification(notificationTitle, notificationOptions);
 });
