@@ -28,6 +28,23 @@ export const getBatches = createAsyncThunk(
   }
 );
 
+export const getBatch = createAsyncThunk(
+  "batches/getOne",
+  async (id, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().user.user.token;
+      return await batchService.getBatch(id, token);
+    } catch (error) {
+      const message = {
+        status: error.message,
+        response: error.response.data.message,
+      };
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const createBatch = createAsyncThunk(
   "batches/create",
   async (batchData, thunkAPI) => {
@@ -102,6 +119,19 @@ export const batchSlice = createSlice({
         });
       })
       .addCase(getBatches.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(getBatch.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getBatch.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        console.log(action.payload);
+      })
+      .addCase(getBatch.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

@@ -46,7 +46,7 @@ export function BatchDetails({ batch }) {
         batch.activePhase.slice(0, 1).toUpperCase() + batch.activePhase.slice(1)
       )}
     >
-      <Tab.List className='flex gap-2 overflow-x-scroll scrollbar pb-2 flex-shrink-0'>
+      <Tab.List className="flex gap-2 overflow-x-scroll scrollbar pb-2 flex-shrink-0">
         {phases.map((phase, index) => {
           return (
             <Tab
@@ -62,29 +62,29 @@ export function BatchDetails({ batch }) {
           );
         })}
       </Tab.List>
-      <Tab.Panels className='py-5 flex-1'>
+      <Tab.Panels className="py-5 flex-1">
         <Tab.Panel>
           <div>
-            <table className='w-full text-sm text-left'>
-              <thead className=' poppins-paragraph '>
+            <table className="w-full text-sm text-left">
+              <thead className=" poppins-paragraph ">
                 <tr>
-                  <th scope='col' className='py-2'>
+                  <th scope="col" className="py-2">
                     Material
                   </th>
-                  <th scope='col' className='py-2'>
+                  <th scope="col" className="py-2">
                     Quantity
                   </th>
                 </tr>
               </thead>
-              <tbody className='open-paragraph'>
+              <tbody className="open-paragraph">
                 {batch.materials.map((material, index) => {
                   return (
                     <tr
-                      className='transition-all duration-300 ease-in-out cursor-pointer'
+                      className="transition-all duration-300 ease-in-out cursor-pointer"
                       key={index}
                     >
-                      <td className='py-2'>{material.material.name}</td>
-                      <td className='py-2'>
+                      <td className="py-2">{material.material.name}</td>
+                      <td className="py-2">
                         {material.weight} {material.material.unit}
                       </td>
                     </tr>
@@ -96,33 +96,33 @@ export function BatchDetails({ batch }) {
         </Tab.Panel>
         <Tab.Panel>
           <div>
-            <p className='open-paragraph my-1'>
-              <span className='font-semibold'>Date Started: </span>
+            <p className="open-paragraph my-1">
+              <span className="font-semibold">Date Started: </span>
               {batch.hasOwnProperty("composting")
                 ? batch.composting.startedAt
                 : null}
             </p>
-            <p className='open-paragraph my-1'>
-              <span className='font-semibold'>Waiting Period: </span>
+            <p className="open-paragraph my-1">
+              <span className="font-semibold">Waiting Period: </span>
               {batch.hasOwnProperty("composting")
                 ? batch.composting.waiting
                 : null}{" "}
               week/s
             </p>
-            <p className='open-paragraph my-1'>
-              <span className='font-semibold'>Mix Frequency: </span>
+            <p className="open-paragraph my-1">
+              <span className="font-semibold">Mix Frequency: </span>
               {batch.hasOwnProperty("composting")
                 ? batch.composting.mixFrequency
                 : null}{" "}
             </p>
-            <p className='open-paragraph my-1'>
-              <span className='font-semibold'>Moisture Level: </span>
+            <p className="open-paragraph my-1">
+              <span className="font-semibold">Moisture Level: </span>
               {batch.hasOwnProperty("composting")
                 ? batch.composting.moisture
                 : null}{" "}
             </p>
-            <p className='open-paragraph my-1'>
-              <span className='font-semibold'>Defects: </span>
+            <p className="open-paragraph my-1">
+              <span className="font-semibold">Defects: </span>
               {batch.hasOwnProperty("composting")
                 ? batch.composting.defects
                 : null}{" "}
@@ -131,27 +131,27 @@ export function BatchDetails({ batch }) {
           </div>
         </Tab.Panel>
         <Tab.Panel>
-          <div className=''>
-            <p className='open-paragraph my-1'>
-              <span className='font-semibold'>Date Started: </span>
+          <div className="">
+            <p className="open-paragraph my-1">
+              <span className="font-semibold">Date Started: </span>
               {batch.hasOwnProperty("bagging")
                 ? batch.bagging.startedAt
                 : null}{" "}
               kg
             </p>
-            <p className='open-paragraph my-1'>
-              <span className='font-semibold'>Bag Weight: </span>
+            <p className="open-paragraph my-1">
+              <span className="font-semibold">Bag Weight: </span>
               {batch.hasOwnProperty("bagging")
                 ? batch.bagging.bagWeight
                 : null}{" "}
               kg
             </p>
-            <p className='open-paragraph my-1'>
-              <span className='font-semibold'>Number of Bags: </span>
+            <p className="open-paragraph my-1">
+              <span className="font-semibold">Number of Bags: </span>
               {batch.hasOwnProperty("bagging") ? batch.bagging.total : null} kg
             </p>
-            <p className='open-paragraph my-1'>
-              <span className='font-semibold'>Defects: </span>
+            <p className="open-paragraph my-1">
+              <span className="font-semibold">Defects: </span>
               {batch.hasOwnProperty("bagging")
                 ? batch.bagging.defects
                 : null}{" "}
@@ -160,21 +160,21 @@ export function BatchDetails({ batch }) {
           </div>
         </Tab.Panel>
         <Tab.Panel>
-          <p className='open-paragraph my-1'>
-            <span className='font-semibold'>Date Started: </span>
+          <p className="open-paragraph my-1">
+            <span className="font-semibold">Date Started: </span>
             {batch.hasOwnProperty("sterilization")
               ? batch.sterilization.startedAt
               : null}
           </p>
-          <p className='open-paragraph my-1'>
-            <span className='font-semibold'>Waiting Period: </span>
+          <p className="open-paragraph my-1">
+            <span className="font-semibold">Waiting Period: </span>
             {batch.hasOwnProperty("sterilization")
               ? batch.sterilization.waiting
               : null}{" "}
             hour/s
           </p>
-          <p className='open-paragraph my-1'>
-            <span className='font-semibold'>Defects: </span>
+          <p className="open-paragraph my-1">
+            <span className="font-semibold">Defects: </span>
             {batch.hasOwnProperty("sterilization")
               ? batch.sterilization.defects
               : null}{" "}
@@ -182,26 +182,26 @@ export function BatchDetails({ batch }) {
           </p>
         </Tab.Panel>
         <Tab.Panel>
-          <p className='open-paragraph my-1'>
-            <span className='font-semibold'>Date Started: </span>
+          <p className="open-paragraph my-1">
+            <span className="font-semibold">Date Started: </span>
             {batch.hasOwnProperty("inoculation")
               ? batch.inoculation.startedAt
               : null}
           </p>
-          <p className='open-paragraph my-1'>
-            <span className='font-semibold'>Spawn Type: </span>
+          <p className="open-paragraph my-1">
+            <span className="font-semibold">Spawn Type: </span>
             {batch.hasOwnProperty("inoculation")
               ? batch.inoculation.spawn
               : null}
           </p>
-          <p className='open-paragraph my-1'>
-            <span className='font-semibold'>Total: </span>
+          <p className="open-paragraph my-1">
+            <span className="font-semibold">Total: </span>
             {batch.hasOwnProperty("inoculation")
               ? batch.inoculation.total
               : null}
           </p>
-          <p className='open-paragraph my-1'>
-            <span className='font-semibold'>Defects: </span>
+          <p className="open-paragraph my-1">
+            <span className="font-semibold">Defects: </span>
             {batch.hasOwnProperty("inoculation")
               ? batch.inoculation.defects
               : null}{" "}
@@ -209,21 +209,22 @@ export function BatchDetails({ batch }) {
           </p>
         </Tab.Panel>
         <Tab.Panel>
-          <div className=''>
-            <p className='open-paragraph my-1'>
-              <span className='font-semibold'>Date Started: </span>
+          <div className="">
+            <p className="open-paragraph my-1">
+              <span className="font-semibold">Date Started: </span>
               {batch.hasOwnProperty("fruiting")
                 ? batch.fruiting.startedAt
                 : null}
             </p>
-            <p className='open-paragraph my-1'>
-              <span className='font-semibold'>Waiting Period: </span>
+            <p className="open-paragraph my-1">
+              <span className="font-semibold">Waiting Period: </span>
               {batch.hasOwnProperty("fruiting")
                 ? batch.fruiting.waiting
-                : null} week/s
+                : null}{" "}
+              week/s
             </p>
-            <p className='open-paragraph my-1'>
-              <span className='font-semibold'>Defects: </span>
+            <p className="open-paragraph my-1">
+              <span className="font-semibold">Defects: </span>
               {batch.hasOwnProperty("fruiting")
                 ? batch.fruiting.defects
                 : null}{" "}
@@ -232,13 +233,13 @@ export function BatchDetails({ batch }) {
           </div>
         </Tab.Panel>
         <Tab.Panel>
-          <div className=''>
+          <div className="">
             {phases.map((phase) => {
               if (!batch[phase]) return null;
               return (
-                <div className='flex justify-between' key={phase}>
-                  <p className='open-paragraph my-1'>
-                    <span className='font-semibold'>
+                <div className="flex justify-between" key={phase}>
+                  <p className="open-paragraph my-1">
+                    <span className="font-semibold">
                       {phase.charAt(0).toUpperCase() +
                         phase.slice(1).toLowerCase()}
                       :&nbsp;
@@ -248,9 +249,9 @@ export function BatchDetails({ batch }) {
                 </div>
               );
             })}
-            <hr className='my-1' />
-            <p className='open-paragraph my-1'>
-              <span className='font-semibold'>Total Number of defects: </span>
+            <hr className="my-1" />
+            <p className="open-paragraph my-1">
+              <span className="font-semibold">Total Number of defects: </span>
               {totalDefects} kg
             </p>
           </div>

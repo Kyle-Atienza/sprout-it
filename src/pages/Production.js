@@ -10,6 +10,8 @@ import {
   PhasesCarousel,
   SecondaryButton,
   WeeklyTaskList,
+  HarvestForm,
+  BatchHarvests,
 } from "../components";
 import { useSelector, useDispatch } from "react-redux";
 import { Dialog, Transition, Disclosure } from "@headlessui/react";
@@ -33,10 +35,12 @@ export const Production = () => {
   const dispatch = useDispatch();
   const forceUpdate = useForceUpdate();
 
+  //TODO: These long ass variables annoy me - Kyle (who started this)
   const [isBatchModalOpen, setIsBatchModalOpen] = useState(false);
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
   const [isConfirmBatchModalOpen, setIsConfirmBatchModalOpen] = useState(false);
   const [isPhaseFormModal, setIsPhaseFormModal] = useState(false);
+  const [isBatchHarvestModalOpen, setIsBatchHarvestModalOpen] = useState(false);
   const [selectedBatch, setSelectedBatch] = useState({});
   const [selectedTask, setSelectedTask] = useState({});
   const [phaseDetails, setPhaseDetails] = useState({});
@@ -278,7 +282,6 @@ export const Production = () => {
             id="username"
             type="text"
             name="defects"
-            value={phaseDetails.period}
             onChange={(e) =>
               setPhaseDetails((prevState) => ({
                 ...prevState,
@@ -300,7 +303,6 @@ export const Production = () => {
             id="username"
             type="text"
             name="defects"
-            value={defects}
             onChange={(e) => setDefects(e.target.value)}
             placeholder="Lorem ipsum dolor"
             required
@@ -311,7 +313,6 @@ export const Production = () => {
             id="username"
             type="text"
             name="defects"
-            value={phaseDetails.moisture}
             onChange={(e) =>
               setPhaseDetails((prevState) => ({
                 ...prevState,
@@ -330,7 +331,6 @@ export const Production = () => {
             id="username"
             type="text"
             name="defects"
-            value={phaseDetails.bagWeight}
             onChange={(e) =>
               setPhaseDetails((prevState) => ({
                 ...prevState,
@@ -352,7 +352,6 @@ export const Production = () => {
             id="username"
             type="text"
             name="defects"
-            value={defects}
             onChange={(e) => setDefects(e.target.value)}
             placeholder="Lorem ipsum dolor"
             required
@@ -363,7 +362,6 @@ export const Production = () => {
             id="username"
             type="text"
             name="defects"
-            value={phaseDetails.total}
             onChange={(e) =>
               setPhaseDetails((prevState) => ({
                 ...prevState,
@@ -382,7 +380,6 @@ export const Production = () => {
             id="username"
             type="text"
             name="defects"
-            value={phaseDetails.waiting}
             onChange={(e) =>
               setPhaseDetails((prevState) => ({
                 ...prevState,
@@ -404,7 +401,6 @@ export const Production = () => {
             id="username"
             type="text"
             name="defects"
-            value={defects}
             onChange={(e) => setDefects(e.target.value)}
             placeholder="Lorem ipsum dolor"
             required
@@ -418,7 +414,6 @@ export const Production = () => {
             id="username"
             type="text"
             name="defects"
-            value={phaseDetails.spawn}
             onChange={(e) =>
               setPhaseDetails((prevState) => ({
                 ...prevState,
@@ -440,7 +435,6 @@ export const Production = () => {
             id="username"
             type="text"
             name="defects"
-            value={defects}
             onChange={(e) => setDefects(e.target.value)}
             placeholder="Lorem ipsum dolor"
             required
@@ -451,7 +445,6 @@ export const Production = () => {
             id="username"
             type="text"
             name="defects"
-            value={phaseDetails.total}
             onChange={(e) =>
               setPhaseDetails((prevState) => ({
                 ...prevState,
@@ -470,7 +463,6 @@ export const Production = () => {
             id="username"
             type="text"
             name="defects"
-            value={phaseDetails.waiting}
             onChange={(e) =>
               setPhaseDetails((prevState) => ({
                 ...prevState,
@@ -491,7 +483,6 @@ export const Production = () => {
             id="username"
             type="text"
             name="defects"
-            value={defects}
             onChange={(e) => setDefects(e.target.value)}
             placeholder="Lorem ipsum dolor"
             required
@@ -508,6 +499,55 @@ export const Production = () => {
 
   return (
     <>
+      <Transition appear show={isBatchHarvestModalOpen} as={Fragment}>
+        <Dialog
+          as="div"
+          className="relative z-20"
+          onClose={() => setIsBatchHarvestModalOpen(false)}
+        >
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-dark-700 bg-opacity-25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="overflow-y-scroll scrollbar-hidden bg-light-100 w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-lg transition-all h-[40rem] flex flex-col">
+                  <div className="w-full flex items-center justify-start mb-6">
+                    <Dialog.Title as="h3" className="poppins-heading-6 w-full">
+                      Batch {selectedBatch.name} Details
+                    </Dialog.Title>
+                    <button
+                      className="hover:text-red-700 flex items-center"
+                      onClick={() => setIsBatchHarvestModalOpen(false)}
+                    >
+                      <CloseOutlined />
+                    </button>
+                  </div>
+                  <BatchHarvests selectedBatch={selectedBatch} />
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
+
       <Transition appear show={isBatchModalOpen} as={Fragment}>
         <Dialog
           as="div"
@@ -540,7 +580,7 @@ export const Production = () => {
                 <Dialog.Panel className="overflow-y-scroll scrollbar-hidden bg-light-100 w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-lg transition-all h-[40rem] flex flex-col">
                   <div className="w-full flex items-center justify-start mb-6">
                     <Dialog.Title as="h3" className="poppins-heading-6 w-full">
-                      Batch 7 Details
+                      Batch {selectedBatch.name} Details
                     </Dialog.Title>
                     <button
                       className="hover:text-red-700 flex items-center"
@@ -550,6 +590,21 @@ export const Production = () => {
                     </button>
                   </div>
                   <BatchDetails batch={selectedBatch} />
+                  {selectedBatch.activePhase === "fruiting" ? (
+                    <Disclosure>
+                      <Disclosure.Button className="mb-4 py-4 px-6 rounded-full poppins-button bg-transparent text-primary-500 hover:text-light-100 border-primary-400 hover:border-primary-500 border-2 hover:bg-primary-500 shadow transition-all disabled:opacity-50">
+                        Record Harvest
+                      </Disclosure.Button>
+                      <Disclosure.Panel className="text-gray-500">
+                        <HarvestForm
+                          selectedBatch={selectedBatch}
+                          setIsBatchHarvestModalOpen={(state) =>
+                            setIsBatchHarvestModalOpen(state)
+                          }
+                        />
+                      </Disclosure.Panel>
+                    </Disclosure>
+                  ) : null}
                   <Disclosure>
                     <Disclosure.Button className="mb-4 py-4 px-6 rounded-full poppins-button bg-transparent text-primary-500 hover:text-light-100 border-primary-400 hover:border-primary-500 border-2 hover:bg-primary-500 shadow transition-all disabled:opacity-50">
                       Add Task
@@ -900,6 +955,7 @@ export const Production = () => {
                       batchNumber={"Batch " + batch.name}
                       description="Lorem ipsum dolor sit amet consectetur"
                       daysLeft={getDaysCount(batch)}
+                      countDays={false}
                     />
                   );
                 })}

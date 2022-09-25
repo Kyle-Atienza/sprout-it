@@ -5,6 +5,7 @@ import batchReducer from "../features/batch/batchSlice";
 import inventoryReducer from "../features/inventory/inventorySlice";
 import phasesReducer from "../features/batch/phasesSlice";
 import taskReducer from "../features/task/taskSlice";
+import harvestReducer from "../features/harvest/harvestSlice";
 
 export const store = configureStore({
   reducer: {
@@ -13,5 +14,6 @@ export const store = configureStore({
     inventory: inventoryReducer,
     phases: phasesReducer,
     task: taskReducer,
+    harvest: harvestReducer,
   },
 });

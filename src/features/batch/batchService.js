@@ -22,6 +22,12 @@ const getBatches = async (token) => {
   return response.data;
 };
 
+const getBatch = async (id, token) => {
+  const response = await axios.get(`${API_URL}batch/${id}`, config(token));
+
+  return response.data;
+};
+
 const createBatch = async (batchData, token) => {
   const config = {
     headers: {
