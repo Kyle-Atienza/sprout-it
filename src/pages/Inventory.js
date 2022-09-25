@@ -120,7 +120,7 @@ export const Inventory = () => {
                     Quantity
                   </th>
                   <th scope="col" className="py-4 px-6">
-                    Price Per Unit
+                    Supplier
                   </th>
                 </tr>
               </thead>
