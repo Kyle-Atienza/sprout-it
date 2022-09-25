@@ -900,6 +900,7 @@ export const Production = () => {
                       batchNumber={"Batch " + batch.name}
                       description="Lorem ipsum dolor sit amet consectetur"
                       daysLeft={getDaysCount(batch)}
+                      countDays={false}
                     />
                   );
                 })}
