@@ -17,4 +17,5 @@ export * from "./PhasesCarousel";
 export * from "./WeeklyTaskList";
 export * from "./BatchModal";
 export * from "./HarvestForm";
-export * from "./BatchHarvests";
+export * from "./HarvestTable";
+export * from "./HarvestTableRow";
