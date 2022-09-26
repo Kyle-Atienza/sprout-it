@@ -40,10 +40,10 @@ const putMaterial = async ({ id, data }, token) => {
   return response.data;
 };
 
-const materialService = {
+const inventoryService = {
   getMaterials,
   postMaterial,
   putMaterial,
 };
 
-export default materialService;
+export default inventoryService;

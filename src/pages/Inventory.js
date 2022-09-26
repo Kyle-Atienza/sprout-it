@@ -11,7 +11,6 @@ import { DeleteFilled, EditFilled, CloseOutlined } from "@ant-design/icons";
 import { useState, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getBatches } from "../features/batch/batchSlice";
 import { getMaterials } from "../features/inventory/inventorySlice";
 
 export const Inventory = () => {
@@ -19,15 +18,11 @@ export const Inventory = () => {
 
   let [isOpen, setIsOpen] = useState(false);
 
-  const { user, isSuccess, isLoading, isError, message } = useSelector(
-    (state) => state.user
-  );
-
   const { materials } = useSelector((state) => state.inventory);
 
   useEffect(() => {
     dispatch(getMaterials());
-  }, [user, isSuccess, isLoading, isError, message, dispatch]);
+  }, []);
 
   function closeModal() {
     setIsOpen(false);
@@ -130,10 +125,6 @@ export const Inventory = () => {
                     <tr
                       key={index}
                       className="bg-light-100 hover:bg-light-200 border-b dark:bg-gray-800 dark:border-gray-700 transition-all duration-300 ease-in-out cursor-pointer"
-                      // onClick={() => {
-                      //   setIsOpen(true);
-                      //   setSelectedBatch(material);
-                      // }}
                     >
                       <td className="py-4 px-6">{material.name}</td>
                       <td className="py-4 px-6">{material.altName}</td>

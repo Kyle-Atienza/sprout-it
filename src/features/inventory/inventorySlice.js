@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import materialService from "./materialService";
+import inventoryService from "./inventoryService";
 
 const initialState = {
   materials: [],
@@ -14,7 +14,7 @@ export const getMaterials = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().user.user.token;
-      return await materialService.getMaterials(token);
+      return await inventoryService.getMaterials(token);
     } catch (error) {
       const message = {
         status: error.message,
@@ -31,7 +31,7 @@ export const postMaterial = createAsyncThunk(
   async (materialData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().user.user.token;
-      return await materialService.postMaterial(materialData, token);
+      return await inventoryService.postMaterial(materialData, token);
     } catch (error) {
       const message = {
         status: error.message,
@@ -48,7 +48,7 @@ export const putMaterial = createAsyncThunk(
   async (materialData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().user.user.token;
-      return await materialService.putMaterial(materialData, token);
+      return await inventoryService.putMaterial(materialData, token);
     } catch (error) {
       const message = {
         status: error.message,
