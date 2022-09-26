@@ -56,31 +56,6 @@ export const BatchHarvests = ({ selectedBatch }) => {
               </tr>
             );
           })}
-          {/* {Object.keys(groupedHarvests).map((harvestsPerDay, index) => {
-            return (
-              <tr
-                className="transition-all duration-300 ease-in-out cursor-pointer"
-                key={index}
-              >
-                <td className="py-2">{harvestsPerDay}</td>
-                <td className="py-2">
-                  <input
-                    type="number"
-                    value={groupedHarvests[harvestsPerDay].reduce(
-                      (total, harvest) => harvest.weight + total,
-                      0
-                    )}
-                  />
-                </td>
-                <td>
-                  <button>Edit</button>
-                </td>
-                <td>
-                  <button>Delete</button>
-                </td>
-              </tr>
-            );
-          })} */}
         </tbody>
       </table>
     </div>
