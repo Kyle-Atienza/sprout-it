@@ -2,7 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import harvestService from "./harvestService";
 
 const initialState = {
-  harvests: [], // group harvests by batch
+  harvests: {}, // group harvests by batch
+  batchHarvests: [],
   isSuccess: false,
   isError: false,
   isLoading: false,
@@ -10,11 +11,11 @@ const initialState = {
 };
 
 export const getHarvests = createAsyncThunk(
-  "harvest/create",
-  async (_, thunkAPI) => {
+  "harvest/getAll",
+  async (id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().user.user.token;
-      return await harvestService.createHarves(token);
+      return await harvestService.getHarvests(id, token);
     } catch (error) {
       const message = {
         status: error.message,
@@ -28,10 +29,10 @@ export const getHarvests = createAsyncThunk(
 
 export const createHarvest = createAsyncThunk(
   "harvest/create",
-  async (payload, thunkAPI) => {
+  async (harvestData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().user.user.token;
-      return await harvestService.createHarvest(payload, token);
+      return await harvestService.createHarvest(harvestData, token);
     } catch (error) {
       const message = {
         status: error.message,
@@ -44,11 +45,11 @@ export const createHarvest = createAsyncThunk(
 );
 
 export const updateHarvest = createAsyncThunk(
-  "harvest/create",
-  async (payload, thunkAPI) => {
+  "harvest/update",
+  async (updatedHarvestData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().user.user.token;
-      return await harvestService.updateHarvest(payload, token);
+      return await harvestService.updateHarvest(updatedHarvestData, token);
     } catch (error) {
       const message = {
         status: error.message,
@@ -61,7 +62,7 @@ export const updateHarvest = createAsyncThunk(
 );
 
 export const deleteHarvest = createAsyncThunk(
-  "harvest/create",
+  "harvest/delete",
   async (payload, thunkAPI) => {
     try {
       const token = thunkAPI.getState().user.user.token;
@@ -80,21 +81,30 @@ export const deleteHarvest = createAsyncThunk(
 export const harvestSlice = createSlice({
   name: "harvest",
   initialState,
+  reducers: {
+    resetHarvests: (state) => {
+      state.batchHarvests = [];
+      state.isSuccess = false;
+      state.isError = false;
+      state.isLoading = false;
+      state.message = "";
+    },
+  },
   extraReducers: (builder) => {
     builder
-      /* .addCase(getHarvests.pending, (state) => {
+      .addCase(getHarvests.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(getHarvests.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.harvests = action.payload;
+        state.batchHarvests = action.payload;
       })
       .addCase(getHarvests.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
-      }) */
+      })
       .addCase(createHarvest.pending, (state) => {
         state.isLoading = true;
       })
@@ -104,6 +114,26 @@ export const harvestSlice = createSlice({
         state.harvests = [...state.harvests, action.payload];
       })
       .addCase(createHarvest.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(updateHarvest.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateHarvest.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        // state.batchHarvests = action.payload;
+        const replaceIndex = state.batchHarvests.indexOf(
+          state.batchHarvests.find((harvest) => {
+            return harvest._id === action.payload._id;
+          })
+        );
+
+        state.batchHarvests[replaceIndex] = action.payload;
+      })
+      .addCase(updateHarvest.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
@@ -149,4 +179,5 @@ export const harvestSlice = createSlice({
   },
 });
 
+export const { resetHarvests } = harvestSlice.actions;
 export default harvestSlice.reducer;

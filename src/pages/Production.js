@@ -11,7 +11,7 @@ import {
   SecondaryButton,
   WeeklyTaskList,
   HarvestForm,
-  BatchHarvests,
+  HarvestTable,
 } from "../components";
 import { useSelector, useDispatch } from "react-redux";
 import { Dialog, Transition, Disclosure } from "@headlessui/react";
@@ -540,7 +540,7 @@ export const Production = () => {
                       <CloseOutlined />
                     </button>
                   </div>
-                  <BatchHarvests selectedBatch={selectedBatch} />
+                  <HarvestTable />
                 </Dialog.Panel>
               </Transition.Child>
             </div>

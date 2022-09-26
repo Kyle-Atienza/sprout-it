@@ -11,13 +11,7 @@ const config = (token) => {
 };
 
 const getBatches = async (token) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
-  const response = await axios.get(`${API_URL}batch/`, config);
+  const response = await axios.get(`${API_URL}batch/`, config(token));
 
   return response.data;
 };
@@ -29,28 +23,20 @@ const getBatch = async (id, token) => {
 };
 
 const createBatch = async (batchData, token) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
-  const response = await axios.post(`${API_URL}batch/`, batchData, config);
+  const response = await axios.post(
+    `${API_URL}batch/`,
+    batchData,
+    config(token)
+  );
 
   return response.data;
 };
 
 const updateBatch = async ({ id, payload }, token) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
   const response = await axios.put(
     `${`${API_URL}batch/`}/${id}`,
     payload,
-    config
+    config(token)
   );
 
   return response.data;
@@ -70,6 +56,7 @@ const createTask = async (taskData, token) => {
 
 const batchService = {
   getBatches,
+  getBatch,
   createBatch,
   updateBatch,
   getTasks,
