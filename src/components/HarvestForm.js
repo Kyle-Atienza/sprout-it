@@ -1,50 +1,90 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createHarvest } from "../features/harvest/harvestSlice";
-import { getBatches } from "../features/batch/batchSlice";
+import { EditFilled, CheckCircleFilled } from "@ant-design/icons";
+import {
+  createHarvest,
+  getHarvests,
+  updateHarvest,
+  resetHarvests,
+} from "../features/harvest/harvestSlice";
 
 import { PrimaryButton } from "../components";
 
 export const HarvestForm = ({ selectedBatch, setIsBatchHarvestModalOpen }) => {
-  // TODO: update total harvest on submit
-
   const dispatch = useDispatch();
 
-  const [weight, setWeight] = useState(0);
-  const [total, setTotal] = useState(0);
+  const { batchHarvests } = useSelector((state) => state.harvest);
+
+  const [todaysHarvest, setTodaysHarvest] = useState(0);
+  const [updatedHarvest, setUpdatedHarvest] = useState(0);
+  const [inputHarvest, setInputHarvest] = useState(false);
 
   const onSubmitHarvest = () => {
-    dispatch(
-      createHarvest({
-        batchId: selectedBatch._id,
-        weight: weight,
-      })
-    );
-    setWeight(0);
+    if (!todaysHarvest) {
+      dispatch(
+        createHarvest({
+          id: selectedBatch._id,
+          payload: {
+            weight: todaysHarvest,
+          },
+        })
+      );
+    } else {
+      dispatch(
+        updateHarvest({
+          id: todaysHarvest._id,
+          payload: {
+            weight: updatedHarvest,
+          },
+        })
+      );
+    }
   };
 
   useEffect(() => {
-    setTotal(selectedBatch.harvests.reduce((n, { weight }) => n + weight, 0));
+    dispatch(getHarvests(selectedBatch._id));
+
+    return () => {
+      dispatch(resetHarvests());
+    };
   }, []);
+
+  useEffect(() => {
+    const todaysHarvest = batchHarvests.find((harvest) => {
+      return (
+        new Date(harvest.createdAt).toDateString() === new Date().toDateString()
+      );
+    });
+
+    setTodaysHarvest(!!todaysHarvest ? todaysHarvest : 0);
+    setUpdatedHarvest(!!todaysHarvest ? todaysHarvest.weight : 0);
+  }, [batchHarvests]);
 
   return (
     <div>
-      <p>Total Harvests: {total} </p>
-      <input
-        className="w-full p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm my-2 focus:ring-primary-500 focus:border-primary-400"
-        id="username"
-        name="time"
-        type="text"
-        required
-        value={weight}
-        onChange={(e) => setWeight(e.target.value)}
-        placeholder="Weight"
-      />
-      <PrimaryButton onClick={onSubmitHarvest} name="Submit Harvest" />
-      <PrimaryButton
-        onClick={() => setIsBatchHarvestModalOpen(true)}
-        name="View All Harvest"
-      />
+      <p>Todays Harvests {todaysHarvest.weight} kg</p>
+      <button onClick={() => setInputHarvest(!inputHarvest)}>
+        {inputHarvest ? <CheckCircleFilled /> : <EditFilled />}
+      </button>
+      {inputHarvest ? (
+        <>
+          <input
+            className="w-full p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm my-2 focus:ring-primary-500 focus:border-primary-400"
+            id="todaysHarvest"
+            name="todaysHarvest"
+            type="number"
+            required
+            value={updatedHarvest}
+            onChange={(e) => setUpdatedHarvest(e.target.value)}
+            placeholder={!todaysHarvest ? 0 : null}
+          />
+          <PrimaryButton onClick={onSubmitHarvest} name="Submit Harvest" />
+          <PrimaryButton
+            onClick={() => setIsBatchHarvestModalOpen(true)}
+            name="View All Harvest"
+          />
+        </>
+      ) : null}
     </div>
   );
 };
