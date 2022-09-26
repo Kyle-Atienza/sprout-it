@@ -27,11 +27,11 @@ export const getPurchases = createAsyncThunk(
 );
 
 export const createPurchase = createAsyncThunk(
-  "financial/getPurchases",
-  async (_, thunkAPI) => {
+  "financial/createPurchase",
+  async (purchaseData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().user.user.token;
-      return await financialService.createPurchase(token);
+      return await financialService.createPurchase(purchaseData, token);
     } catch (error) {
       const message = {
         status: error.message,
@@ -44,7 +44,7 @@ export const createPurchase = createAsyncThunk(
 );
 
 export const updatePurchase = createAsyncThunk(
-  "financial/getPurchases",
+  "financial/updatePurchase",
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().user.user.token;
@@ -61,7 +61,7 @@ export const updatePurchase = createAsyncThunk(
 );
 
 export const deletePurchase = createAsyncThunk(
-  "financial/getPurchases",
+  "financial/deletePurchase",
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().user.user.token;
@@ -99,6 +99,19 @@ export const financialSlice = createSlice({
         state.purchases = action.payload;
       })
       .addCase(getPurchases.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(createPurchase.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createPurchase.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.purchases = [...state.purchases, action.payload];
+      })
+      .addCase(createPurchase.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

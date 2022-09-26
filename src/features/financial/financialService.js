@@ -16,7 +16,11 @@ const getPurchases = async (token) => {
   return response.data;
 };
 
-const createPurchase = async (token) => {};
+const createPurchase = async (payload, token) => {
+  const response = await axios.post(API_URL, payload, config(token));
+
+  return response.data;
+};
 
 const updatePurchase = async (token) => {};
 
