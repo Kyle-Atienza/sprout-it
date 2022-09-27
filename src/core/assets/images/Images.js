@@ -15,6 +15,7 @@ import InoculationOverview from "./inoculation-overview.png";
 import FruitingOverview from "./fruiting-overview.png";
 import PostProductionOverview from "./post-production-overview.png";
 import MushroomProductionOverview from "./mushroom-production-overview.png";
+import OysterMushroomOverview from "./oyster-mushroom-overview.png";
 
 export const Images = {
   LoginRegisterBg,
@@ -34,4 +35,5 @@ export const Images = {
   FruitingOverview,
   PostProductionOverview,
   MushroomProductionOverview,
+  OysterMushroomOverview,
 };

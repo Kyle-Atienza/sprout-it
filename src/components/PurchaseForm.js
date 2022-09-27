@@ -39,55 +39,85 @@ export const PurchaseForm = () => {
 
   return (
     <>
-      <select
-        id="supplier"
-        className="w-full p-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400"
-        name="supplier"
-        onChange={onChange}
-        required
-      >
-        <option hidden defaultValue>
-          Select Supplier
-        </option>
-        {suppliers.map((supplier, index) => {
-          return (
-            <option value={supplier._id} key={index}>
-              {supplier.name}
-            </option>
-          );
-        })}
-      </select>
-      <select
-        id="material"
-        className="w-full p-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400"
-        name="material"
-        onChange={onChange}
-        required
-      >
-        <option hidden defaultValue>
-          Select Material
-        </option>
-        {materials.map((material, index) => {
-          return (
-            <option value={material._id} key={index}>
-              {material.name}
-            </option>
-          );
-        })}
-      </select>
-      <input
-        onChange={onChange}
-        name="quantity"
-        placeholder="quantity"
-        type="number"
-      />
-      <input
-        onChange={onChange}
-        name="price"
-        placeholder="price"
-        type="number"
-      />
-      <PrimaryButton onClick={submitPurchase} name="Submit Purchase" />
+      <div className='mb-4'>
+        <label className='block open-button' htmlFor='username'>
+          Supplier
+          <span className='text-red-600'>*</span>
+        </label>
+        <select
+          id='supplier'
+          className='w-full p-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
+          name='supplier'
+          onChange={onChange}
+          required
+        >
+          <option hidden defaultValue>
+            Select Supplier
+          </option>
+          {suppliers.map((supplier, index) => {
+            return (
+              <option value={supplier._id} key={index}>
+                {supplier.name}
+              </option>
+            );
+          })}
+        </select>
+      </div>
+      <div className='mb-4'>
+        <label className='block open-button' htmlFor='username'>
+          Material
+          <span className='text-red-600'>*</span>
+        </label>
+        <select
+          id='material'
+          className='w-full p-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
+          name='material'
+          onChange={onChange}
+          required
+        >
+          <option hidden defaultValue>
+            Select Material
+          </option>
+          {materials.map((material, index) => {
+            return (
+              <option value={material._id} key={index}>
+                {material.name}
+              </option>
+            );
+          })}
+        </select>
+      </div>
+      <div className='mb-4'>
+        <label className='block open-button' htmlFor='username'>
+          Quantity <span className='text-red-600'>*</span>
+        </label>
+        <div className='flex justify-center items-center'>
+          <input
+            className='w-full p-3 mr-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
+            name='quantity'
+            type='number'
+            onChange={onChange}
+            required
+          />
+          <p className='open-paragraph'>kg/l</p>
+        </div>
+      </div>
+      <div className='mb-4'>
+        <label className='block open-button' htmlFor='username'>
+          Price per unit <span className='text-red-600'>*</span>
+        </label>
+        <div className='flex justify-center items-center'>
+          <p className='open-paragraph'>₱</p>
+          <input
+            className='w-full p-3 ml-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
+            name='price'
+            type='number'
+            onChange={onChange}
+            required
+          />
+        </div>
+      </div>
+      <PrimaryButton onClick={submitPurchase} name='Submit Purchase' />
     </>
   );
 };

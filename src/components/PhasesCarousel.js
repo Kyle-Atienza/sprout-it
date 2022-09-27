@@ -63,6 +63,12 @@ export const PhasesCarousel = () => {
           data-bs-target='#carouselDarkVariant'
           type='button'
         />
+        <button
+          aria-label='Slide 9'
+          data-bs-slide-to='8'
+          data-bs-target='#carouselDarkVariant'
+          type='button'
+        />
       </div>
       <div className='carousel-inner overflow-hidden h-full w-full'>
         <div className='bg-white carousel-item active relative float-left w-full h-full'>
@@ -80,6 +86,30 @@ export const PhasesCarousel = () => {
               Cultivating fungi can yield food, medicine, construction materials
               and other products. A mushroom farm is in the business of growing
               fungi.
+            </p>
+          </div>
+        </div>
+
+        <div className='bg-white carousel-item relative float-left w-full h-full'>
+          <img
+            className='block h-1/2 w-full overflow-hidden object-cover'
+            src={Images.OysterMushroomOverview}
+            alt=''
+          />
+          <div className='flex flex-col p-4'>
+            <h3 className='poppins-heading-5 mb-4 text-dark-500'>
+              Oyster Mushroom
+            </h3>
+            <p className='open-paragraph-sm'>
+              Oyster mushrooms, the common name for the species Pleurotus
+              ostreatus, are one of the most common types of cultivated
+              mushrooms in the world. They're also known as pearl oyster
+              mushrooms or tree oyster mushrooms. The funghi grow naturally on
+              and near trees in temperate and subtropic forests around the
+              world, and they're grown commercially in many countries. Oyster
+              mushrooms are eaten in a variety of cuisines and are especially
+              popular in Chinese, Japanese, and Korean cooking. They can be
+              dried and are typically eaten cooked.
             </p>
           </div>
         </div>
