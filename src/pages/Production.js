@@ -45,19 +45,8 @@ export const Production = () => {
   const [selectedTask, setSelectedTask] = useState({});
   const [phaseDetails, setPhaseDetails] = useState({});
   const [defects, setDefects] = useState(0);
-  const {
-    user,
-    isSuccess: userSuccess,
-    isLoading: userLoading,
-    isError: userError,
-    message: userMessage,
-  } = useSelector((state) => state.user);
-  const {
-    batches,
-    isSuccess: batchSuccess,
-    isLoading: batchLoading,
-    isError: batchError,
-  } = useSelector((state) => state.batch);
+  const { user } = useSelector((state) => state.user);
+  const { initialBatches, batches } = useSelector((state) => state.batch);
   const { phases } = useSelector((state) => state.phases);
 
   useEffect(() => {
@@ -70,18 +59,7 @@ export const Production = () => {
     if (!user) {
       navigate("/");
     }
-  }, [
-    user,
-    userSuccess,
-    userLoading,
-    userError,
-    userMessage,
-    dispatch,
-    navigate,
-    batchSuccess,
-    batchLoading,
-    batchError,
-  ]);
+  }, [user, dispatch, navigate]);
 
   const onUpdateBatch = (batch) => {
     const phase = batch.activePhase;

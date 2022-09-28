@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useEffect } from "react";
 import { PrimaryButton, TextField } from "../components";
 import { useDispatch, useSelector } from "react-redux";
 import { createBatch } from "../features/batch/batchSlice";
@@ -9,6 +9,13 @@ export const PreProductionForm = () => {
 
   const [formData, setFormData] = useState({});
   const { materials } = useSelector((state) => state.inventory);
+  const { isError, isLoading, message } = useSelector((state) => state.batch);
+
+  useEffect(() => {
+    if (isError && !isLoading) {
+      alert(message.response);
+    }
+  }, [isLoading, isError, message]);
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -32,8 +39,6 @@ export const PreProductionForm = () => {
         }),
       })
     );
-
-    window.location.reload();
   };
 
   return (
