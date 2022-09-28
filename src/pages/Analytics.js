@@ -4,6 +4,7 @@ import { useState, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getBatches } from "../features/batch/batchSlice";
+import { getHarvests } from "../features/harvest/harvestSlice";
 import { Bar, Line, Doughnut } from "react-chartjs-2";
 import { CaretUpFilled, CaretDownFilled } from "@ant-design/icons";
 import { Chart, registerables } from "chart.js";
@@ -20,8 +21,11 @@ export const Analytics = () => {
   );
   const { batches, finished } = useSelector((state) => state.batch);
 
+  const { batchHarvests } = useSelector((state) => state.harvest);
+
   useEffect(() => {
     dispatch(getBatches());
+    dispatch(getHarvests());
   }, [user, isSuccess, isLoading, isError, message, dispatch]);
 
   const barData = {
@@ -45,8 +49,13 @@ export const Analytics = () => {
     ],
   };
 
+  const lineLabels = [];
+  lineLabels.pushValues(batchHarvests.map(value => value.createdAt.toString()));
+  console.log(lineLabels);
+
   const lineData = {
-    labels: [
+    labels: 
+      [
       "Batch 1",
       "Batch 2",
       "Batch 3",

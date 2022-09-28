@@ -38,11 +38,14 @@ export const Help = () => {
                           />
                         </Disclosure.Button>
                         <Disclosure.Panel className='p-4 transition-all open-paragraph-sm text-dark-700 bg-light-100 shadow rounded-lg'>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Ut enim ad minim veniam, quis
-                          nostrud exercitation ullamco laboris nisi ut aliquip
-                          ex ea commodo consequat.
+                          You can start a new production batch by clicking the
+                          "Start a new batch" button on the right side of the
+                          top navigation bar. A modal will then appear where you
+                          can fill up the necessary details when starting a
+                          mushroom production. The data that you will input will
+                          be crucial as analytics and information will be based
+                          on it, so align it with actual numbers as much as
+                          possible.
                         </Disclosure.Panel>
                       </>
                     )}
@@ -62,11 +65,16 @@ export const Help = () => {
                           />
                         </Disclosure.Button>
                         <Disclosure.Panel className='p-4 transition-all open-paragraph-sm text-dark-700 bg-light-100 shadow rounded-lg'>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Ut enim ad minim veniam, quis
-                          nostrud exercitation ullamco laboris nisi ut aliquip
-                          ex ea commodo consequat.
+                          If you think that the current phase of the production
+                          batch is now over, you can complete the current phase
+                          and proceed to the next one by opening the production
+                          batch details and clicking "Start Next Phase" and an
+                          alert dialog box will appear. ONCE YOU PROCEED TO THE
+                          NEXT PHASE, YOU CANNOT GO BACK, so be sure if you
+                          really want to proceed. If so, just click "Yes" and
+                          start to fill the results of the current phase and
+                          fill the details of the materials that will be used in
+                          the next phase.
                         </Disclosure.Panel>
                       </>
                     )}
@@ -87,16 +95,16 @@ export const Help = () => {
                           />
                         </Disclosure.Button>
                         <Disclosure.Panel className='p-4 transition-all open-paragraph-sm text-dark-700 bg-light-100 shadow rounded-lg'>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Ut enim ad minim veniam, quis
-                          nostrud exercitation ullamco laboris nisi ut aliquip
-                          ex ea commodo consequat.
+                          If a production batch is now at the Post-Production
+                          phase, just click the production batch and click "End
+                          Production". ONCE YOU PROCEED END PRODUCTION, YOU
+                          CANNOT GO BACK and all the information about the
+                          production batch will be stored in the Records page.
                         </Disclosure.Panel>
                       </>
                     )}
                   </Disclosure>
-                  <Disclosure>
+                  {/* <Disclosure>
                     {({ open }) => (
                       <>
                         <Disclosure.Button className='flex mt-4 w-full transition-all justify-between rounded-lg bg-secondary-100 p-4 text-left text-sm font-medium text-secondary-600 hover:bg-secondary-200 focus:outline-none focus-visible:ring focus-visible:ring-accent-400 focus-visible:ring-opacity-75'>
@@ -119,7 +127,7 @@ export const Help = () => {
                         </Disclosure.Panel>
                       </>
                     )}
-                  </Disclosure>
+                  </Disclosure> */}
                 </div>
 
                 <div className='mt-14'>
@@ -139,11 +147,11 @@ export const Help = () => {
                           />
                         </Disclosure.Button>
                         <Disclosure.Panel className='p-4 transition-all open-paragraph-sm text-dark-700 bg-light-100 shadow rounded-lg'>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Ut enim ad minim veniam, quis
-                          nostrud exercitation ullamco laboris nisi ut aliquip
-                          ex ea commodo consequat.
+                          To invite a new user, go to Settings tab and type in
+                          the details of the user you want to invite, the
+                          invited user will then be sent with an invite and the
+                          text box below will contain a similar link that leads
+                          to registraiton.
                         </Disclosure.Panel>
                       </>
                     )}
@@ -153,7 +161,8 @@ export const Help = () => {
                       <>
                         <Disclosure.Button className='flex mt-4 w-full transition-all justify-between rounded-lg bg-secondary-100 p-4 text-left text-sm font-medium text-secondary-600 hover:bg-secondary-200 focus:outline-none focus-visible:ring focus-visible:ring-accent-400 focus-visible:ring-opacity-75'>
                           <h2 className='open-heading-6'>
-                            What's the difference between the 'Owner' and 'Worker' user roles?
+                            What's the difference between the 'Owner' and
+                            'Worker' user roles?
                           </h2>
 
                           <UpOutlined
@@ -163,11 +172,10 @@ export const Help = () => {
                           />
                         </Disclosure.Button>
                         <Disclosure.Panel className='p-4 transition-all open-paragraph-sm text-dark-700 bg-light-100 shadow rounded-lg'>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Ut enim ad minim veniam, quis
-                          nostrud exercitation ullamco laboris nisi ut aliquip
-                          ex ea commodo consequat.
+                          There are two user roles when using Sprout It, the
+                          Owner and Worker. Only a user with Owner role can
+                          invite another user and grant him/her an Owner or
+                          Worker role.
                         </Disclosure.Panel>
                       </>
                     )}
@@ -187,11 +195,10 @@ export const Help = () => {
                           />
                         </Disclosure.Button>
                         <Disclosure.Panel className='p-4 transition-all open-paragraph-sm text-dark-700 bg-light-100 shadow rounded-lg'>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Ut enim ad minim veniam, quis
-                          nostrud exercitation ullamco laboris nisi ut aliquip
-                          ex ea commodo consequat.
+                          If you forgot your password, you can easily reset it
+                          in the Login page by clicking the "Forgot Password"
+                          hyperlink. Type in your email to re-generate the link
+                          that leads you to change your password.
                         </Disclosure.Panel>
                       </>
                     )}

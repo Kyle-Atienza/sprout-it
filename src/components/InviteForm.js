@@ -35,6 +35,8 @@ export function InviteForm() {
     };
   }, []);
 
+  const link = "http://localhost:3000/register/";
+
   return (
     <>
       <h2 className='poppins-heading-6'>Invite Worker</h2>
@@ -67,8 +69,8 @@ export function InviteForm() {
       </form>
       <h2 className='poppins-heading-6 mt-6'>Generated Link</h2>
       <TextField
-        className="w-full"
-        value={inviteToken ? inviteToken.inviteToken : ""}
+        className='w-full'
+        value={inviteToken ? link+inviteToken.inviteToken : ""}
         type='text'
         readonly
       />
