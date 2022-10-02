@@ -4,7 +4,6 @@ import { useState, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getBatches } from "../features/batch/batchSlice";
-import { getHarvests } from "../features/harvest/harvestSlice";
 import { Bar, Line, Doughnut } from "react-chartjs-2";
 import { CaretUpFilled, CaretDownFilled } from "@ant-design/icons";
 import { Chart, registerables } from "chart.js";
@@ -20,42 +19,88 @@ export const Analytics = () => {
     (state) => state.user
   );
   const { batches, finished } = useSelector((state) => state.batch);
-
-  const { batchHarvests } = useSelector((state) => state.harvest);
+  const [kusotBatch, setKusotBatch] = useState(null);
+  const [dayamiBatch, setDayamiBatch] = useState(null);
+  const [mixedBatch, setMixedBatch] = useState(null);
 
   useEffect(() => {
     dispatch(getBatches());
-    dispatch(getHarvests());
   }, [user, isSuccess, isLoading, isError, message, dispatch]);
 
+  const getBatchesHarvestSum = (batches) => {
+    return batches.reduce((prev, current) => {
+      return (
+        prev +
+        current.harvests.reduce((prev, current) => {
+          return prev + current.weight;
+        }, 0)
+      );
+    }, 0);
+  };
+
+  const getDefectsSum = (batch) => {
+    let defectsSum = 0;
+    const defectedPhase = Object.keys(batch).filter(
+      (key) => batch[key].defects
+    );
+    defectedPhase.forEach((phase) => {
+      defectsSum += batch[phase].defects;
+    });
+    return defectsSum;
+  };
+
+  const getBatchesDefectsSum = (batches) => {
+    return batches.reduce((prev, current) => {
+      return prev + getDefectsSum(current);
+    }, 0);
+  };
+
+  useEffect(() => {
+    setKusotBatch(
+      finished.filter((batch) => {
+        return batch.materials.some((material) => {
+          return material.material.name === "Kusot";
+        });
+      })
+    );
+    setDayamiBatch(
+      finished.filter((batch) => {
+        return batch.materials.some((material) => {
+          return material.material.name === "Dayami";
+        });
+      })
+    );
+
+    console.log(kusotBatch);
+    console.log(dayamiBatch);
+  }, [finished]);
+
   const barData = {
-    labels: [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-    ],
+    labels: ["Kusot", "Dayami", "Mixed"],
     datasets: [
       {
-        label: "Monthly Harvest",
-        backgroundColor: "rgba(75,192,192,1)",
-        data: [65, 59, 80, 81, 56, 89, 66, 53, 58],
+        label: "Total Harvests",
+        backgroundColor: "#8ABD70",
+        data: [
+          kusotBatch ? getBatchesHarvestSum(kusotBatch) : 0,
+          dayamiBatch ? getBatchesHarvestSum(dayamiBatch) : 0,
+          0,
+        ],
+      },
+      {
+        label: "Total Defects",
+        backgroundColor: "#7C6A50",
+        data: [
+          kusotBatch ? getBatchesDefectsSum(kusotBatch) : 0,
+          dayamiBatch ? getBatchesDefectsSum(dayamiBatch) : 0,
+          0,
+        ],
       },
     ],
   };
 
-  const lineLabels = [];
-  lineLabels.pushValues(batchHarvests.map(value => value.createdAt.toString()));
-  console.log(lineLabels);
-
   const lineData = {
-    labels: 
-      [
+    labels: [
       "Batch 1",
       "Batch 2",
       "Batch 3",
@@ -90,7 +135,11 @@ export const Analytics = () => {
       {
         label: "Yield Percentage for Substrate Type",
         fill: true,
-        data: [22, 9, 19],
+        data: [
+          kusotBatch ? getBatchesHarvestSum(kusotBatch) : 0,
+          dayamiBatch ? getBatchesHarvestSum(dayamiBatch) : 0,
+          0,
+        ],
         backgroundColor: ["#FC9035", "#4C8989", "#ADE3E5"],
       },
     ],
@@ -98,18 +147,18 @@ export const Analytics = () => {
 
   return (
     <>
-      <div className="flex flex-row w-screen">
-        <div className="w-0 lg:w-1/6">
+      <div className='flex flex-row w-screen'>
+        <div className='w-0 lg:w-1/6'>
           <SideNavBar />
         </div>
 
-        <div className="flex flex-col w-full lg:w-5/6 min-h-screen">
-          <div className="w-full">
-            <TopNavBar pageName="Reports" />
+        <div className='flex flex-col w-full lg:w-5/6 min-h-screen'>
+          <div className='w-full'>
+            <TopNavBar pageName='Reports' />
           </div>
-          <div className="charts d-flex flex-wrap">
-            <div className="flex m-5 gap-5 h-[40vh]">
-              <div className="p-12 w-1/2 bg-white rounded-3xl shadow">
+          <div className='charts d-flex flex-wrap'>
+            <div className='flex m-5 gap-5 h-[40vh]'>
+              <div className='p-12 w-1/2 bg-white rounded-3xl shadow'>
                 <Bar
                   data={barData}
                   options={{
@@ -127,35 +176,35 @@ export const Analytics = () => {
                   }}
                 />
               </div>
-              <div className="p-5 w-1/2 bg-secondary-100 rounded-3xl shadow flex flex-col gap-4 overflow-y-scroll">
-                <div className="flex items-center gap-4 p-5 bg-white rounded-2xl">
-                  <CaretUpFilled className="text-2xl text-primary-400" />
-                  <p className="poppins-paragraph-sm">
+              <div className='p-5 w-1/2 bg-secondary-100 rounded-3xl shadow flex flex-col gap-4 overflow-y-scroll'>
+                <div className='flex items-center gap-4 p-5 bg-white rounded-2xl'>
+                  <CaretUpFilled className='text-2xl text-primary-400' />
+                  <p className='poppins-paragraph-sm'>
                     10% more harvest from last batch
                   </p>
                 </div>
-                <div className="flex items-center gap-4 p-5 bg-white rounded-2xl">
-                  <CaretDownFilled className="text-2xl text-red-400" />
-                  <p className="poppins-paragraph-sm">
+                <div className='flex items-center gap-4 p-5 bg-white rounded-2xl'>
+                  <CaretDownFilled className='text-2xl text-red-400' />
+                  <p className='poppins-paragraph-sm'>
                     Defect rose up to 9% from last production
                   </p>
                 </div>
-                <div className="flex items-center gap-4 p-5 bg-white rounded-2xl">
-                  <CaretUpFilled className="text-2xl text-primary-400" />
-                  <p className="poppins-paragraph-sm">
+                <div className='flex items-center gap-4 p-5 bg-white rounded-2xl'>
+                  <CaretUpFilled className='text-2xl text-primary-400' />
+                  <p className='poppins-paragraph-sm'>
                     Finished 3 batches from last month
                   </p>
                 </div>
-                <div className="flex items-center gap-4 p-5 bg-white rounded-2xl">
-                  <CaretUpFilled className="text-2xl text-primary-400" />
-                  <p className="poppins-paragraph-sm">
+                <div className='flex items-center gap-4 p-5 bg-white rounded-2xl'>
+                  <CaretUpFilled className='text-2xl text-primary-400' />
+                  <p className='poppins-paragraph-sm'>
                     10% more harvest from last batch
                   </p>
                 </div>
               </div>
             </div>
-            <div className="flex m-5 gap-5">
-              <div className="p-12 w-3/5 bg-white rounded-3xl shadow">
+            <div className='flex m-5 gap-5'>
+              <div className='p-12 w-3/5 bg-white rounded-3xl shadow'>
                 <Line
                   data={lineData}
                   options={{
@@ -173,7 +222,7 @@ export const Analytics = () => {
                   }}
                 />
               </div>
-              <div className="p-12 w-2/5 bg-white rounded-3xl shadow">
+              <div className='p-12 w-2/5 bg-white rounded-3xl shadow'>
                 <Doughnut
                   data={dougnutData}
                   options={{

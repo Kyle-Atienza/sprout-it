@@ -12,6 +12,7 @@ export const Records = () => {
 
   let [isOpen, setIsOpen] = useState(false);
   let [selectedBatch, setSelectedBatch] = useState("");
+  const [totalDefects, setTotalDefects] = useState(0);
 
   const { user, isSuccess, isLoading, isError, message } = useSelector(
     (state) => state.user
@@ -21,6 +22,25 @@ export const Records = () => {
   useEffect(() => {
     dispatch(getBatches());
   }, [user, isSuccess, isLoading, isError, message, dispatch]);
+
+  const getDefectsSum = (batch) => {
+    let defectsSum = 0;
+    const defectedPhase = Object.keys(batch).filter(
+      (key) => batch[key].defects
+    );
+    defectedPhase.forEach((phase) => {
+      defectsSum += batch[phase].defects;
+    });
+    return defectsSum
+  }
+
+  const getHarvestSum = (batch) => {
+    let totalHarvest = 0;
+    batch.harvests.forEach(harvest => {
+      totalHarvest += harvest.weight 
+    })
+    return totalHarvest
+  }
 
   return (
     <>
@@ -123,10 +143,10 @@ export const Records = () => {
                     Date Finished
                   </th>
                   <th scope='col' className='py-4 px-6'>
-                    Harvests
+                    Total Harvests
                   </th>
                   <th scope='col' className='py-4 px-6'>
-                    Loss
+                    Total Defects
                   </th>
                 </tr>
               </thead>
@@ -148,8 +168,12 @@ export const Records = () => {
                       <td className='py-4 px-6'>
                         {new Date(batch.finishedAt).toLocaleDateString("en-ph")}
                       </td>
-                      <td className='py-4 px-6'>$2999</td>
-                      <td className='py-4 px-6'>$2999</td>
+                      <td className='py-4 px-6'>
+                        {getHarvestSum(batch)}
+                      </td>
+                      <td className='py-4 px-6'>
+                        {getDefectsSum(batch)}
+                      </td>
                     </tr>
                   );
                 })}
