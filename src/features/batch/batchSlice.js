@@ -5,6 +5,11 @@ const initialState = {
   initialBatches: [],
   batches: [],
   finished: [],
+  substrate: {
+    kusot: [],
+    dayami: [],
+    mixed: [],
+  },
   isSuccess: false,
   isError: false,
   isLoading: false,
@@ -88,6 +93,28 @@ export const batchSlice = createSlice({
       state.isError = false;
       state.isLoading = false;
       state.message = "";
+    },
+    loadBatchesBySubstrate: (state) => {
+      state.substrate.mixed = state.finished.filter((batch) => {
+        return !(
+          batch.materials.every((material) => {
+            return material.material.name === "Dayami";
+          }) ||
+          batch.materials.every((material) => {
+            return material.material.name === "Kusot";
+          })
+        );
+      });
+      state.substrate.dayami = state.finished.filter((batch) => {
+        return batch.materials.some((material) => {
+          return material.material.name === "Dayami";
+        });
+      });
+      state.substrate.kusot = state.finished.filter((batch) => {
+        return batch.materials.some((material) => {
+          return material.material.name === "Kusot";
+        });
+      });
     },
   },
   extraReducers: (builder) => {
@@ -187,5 +214,5 @@ export const batchSlice = createSlice({
   },
 });
 
-export const { reset } = batchSlice.actions;
+export const { reset, loadBatchesBySubstrate } = batchSlice.actions;
 export default batchSlice.reducer;
