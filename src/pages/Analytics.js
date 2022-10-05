@@ -10,6 +10,7 @@ import {
 import { Bar, Line, Doughnut } from "react-chartjs-2";
 import { CaretUpFilled, CaretDownFilled } from "@ant-design/icons";
 import { Chart, registerables } from "chart.js";
+import { getMaterials } from "../features/inventory/inventorySlice";
 Chart.register(...registerables);
 
 export const Analytics = () => {
@@ -27,6 +28,7 @@ export const Analytics = () => {
 
   useEffect(() => {
     dispatch(getBatches());
+    dispatch(getMaterials());
   }, [user, isSuccess, isLoading, isError, message, dispatch]);
 
   const getBatchesHarvestSum = (batches) => {

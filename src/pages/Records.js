@@ -6,6 +6,7 @@ import { useState, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getBatches } from "../features/batch/batchSlice";
+import { getMaterials } from "../features/inventory/inventorySlice";
 
 export const Records = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ export const Records = () => {
 
   useEffect(() => {
     dispatch(getBatches());
+    dispatch(getMaterials());
   }, [user, isSuccess, isLoading, isError, message, dispatch]);
 
   const getDefectsSum = (batch) => {

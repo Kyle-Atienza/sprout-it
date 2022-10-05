@@ -2,8 +2,17 @@ import React from "react";
 import { SideNavBar, TopNavBar } from "../components";
 import { Disclosure } from "@headlessui/react";
 import { UpOutlined } from "@ant-design/icons";
+import { useEffect } from "react";
+import { getMaterials } from "../features/inventory/inventorySlice";
+import { useDispatch } from "react-redux";
 
 export const Help = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getMaterials());
+  }, []);
+
   return (
     <>
       <div className='flex flex-row w-screen'>
@@ -33,7 +42,7 @@ export const Help = () => {
 
                           <UpOutlined
                             className={`${
-                              open ? "rotate-180 transform" : ""
+                              open ? "" : "rotate-180 transform"
                             } h-5 w-5 text-secondary-600 text-xl leading-none flex justify-center items-center`}
                           />
                         </Disclosure.Button>
@@ -60,7 +69,7 @@ export const Help = () => {
 
                           <UpOutlined
                             className={`${
-                              open ? "rotate-180 transform" : ""
+                              open ? "" : "rotate-180 transform"
                             } h-5 w-5 text-secondary-600 text-xl leading-none flex justify-center items-center`}
                           />
                         </Disclosure.Button>
@@ -90,7 +99,7 @@ export const Help = () => {
 
                           <UpOutlined
                             className={`${
-                              open ? "rotate-180 transform" : ""
+                              open ? "" : "rotate-180 transform"
                             } h-5 w-5 text-secondary-600 text-xl leading-none flex justify-center items-center`}
                           />
                         </Disclosure.Button>
@@ -114,7 +123,7 @@ export const Help = () => {
 
                           <UpOutlined
                             className={`${
-                              open ? "rotate-180 transform" : ""
+                              open ? "" : "rotate-180 transform"
                             } h-5 w-5 text-secondary-600 text-xl leading-none flex justify-center items-center`}
                           />
                         </Disclosure.Button>
@@ -142,7 +151,7 @@ export const Help = () => {
 
                           <UpOutlined
                             className={`${
-                              open ? "rotate-180 transform" : ""
+                              open ? "" : "rotate-180 transform"
                             } h-5 w-5 text-secondary-600 text-xl leading-none flex justify-center items-center`}
                           />
                         </Disclosure.Button>
@@ -167,7 +176,7 @@ export const Help = () => {
 
                           <UpOutlined
                             className={`${
-                              open ? "rotate-180 transform" : ""
+                              open ? "" : "rotate-180 transform"
                             } h-5 w-5 text-secondary-600 text-xl leading-none flex justify-center items-center`}
                           />
                         </Disclosure.Button>
@@ -190,7 +199,7 @@ export const Help = () => {
 
                           <UpOutlined
                             className={`${
-                              open ? "rotate-180 transform" : ""
+                              open ? "" : "rotate-180 transform"
                             } h-5 w-5 text-secondary-600 text-xl leading-none flex justify-center items-center`}
                           />
                         </Disclosure.Button>

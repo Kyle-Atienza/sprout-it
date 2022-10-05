@@ -9,7 +9,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 export const RegisterUser = () => {
   // Initialize a boolean state
-  const [passwordShown, setPasswordShown] = useState(false);
+  const [passwordShown, setPasswordShown] = useState(false); //change to useref
 
   // Password toggle handler
   const togglePassword = () => {

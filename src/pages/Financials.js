@@ -8,7 +8,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { Dialog, Transition } from "@headlessui/react";
 import { CloseOutlined } from "@ant-design/icons";
-
+import { getMaterials } from "../features/inventory/inventorySlice";
 import { getPurchases } from "../features/financial/financialSlice";
 
 export const Financials = () => {
@@ -19,6 +19,7 @@ export const Financials = () => {
 
   useEffect(() => {
     dispatch(getPurchases());
+    dispatch(getMaterials());
   }, []);
 
   var formatter = new Intl.NumberFormat("tl-PH", {
