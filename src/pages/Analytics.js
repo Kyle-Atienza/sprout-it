@@ -29,6 +29,12 @@ export const Analytics = () => {
     dispatch(getBatches());
   }, [user, isSuccess, isLoading, isError, message, dispatch]);
 
+  const getBatchHarvestSum = (batch) => {
+    return batch.harvests.reduce((prev, current) => {
+      return prev + current.weight;
+    }, 0);
+  };
+
   const getBatchesHarvestSum = (batches) => {
     return batches.reduce((prev, current) => {
       return (
@@ -83,6 +89,27 @@ export const Analytics = () => {
           getBatchesDefectsSum(dayami),
           getBatchesDefectsSum(mixed),
         ],
+      },
+    ],
+  };
+
+  const chartHarvestCostData = {
+    labels: finished.map((batch) => "Batch" + batch.name),
+    datasets: [
+      {
+        label: "Batch Cost",
+        backgroundColor: "#7C6A50",
+        type: "line",
+        data: finished.map((batch) => {
+          return batch.value;
+        }),
+      },
+      {
+        label: "Batch Harvests",
+        backgroundColor: "#8ABD70",
+        data: finished.map((batch) => {
+          return getBatchHarvestSum(batch) * 30;
+        }),
       },
     ],
   };
@@ -189,6 +216,26 @@ export const Analytics = () => {
                     10% more harvest from last batch
                   </p>
                 </div>
+              </div>
+            </div>
+            <div className="flex m-5 gap-5">
+              <div className="p-12 w-full bg-white rounded-3xl shadow">
+                <Bar
+                  data={chartHarvestCostData}
+                  options={{
+                    responsive: true,
+                    plugins: {
+                      legend: {
+                        position: "top",
+                      },
+                      title: {
+                        display: true,
+                        text: "Batch Cost",
+                        fontSize: 20,
+                      },
+                    },
+                  }}
+                />
               </div>
             </div>
             <div className="flex m-5 gap-5">
