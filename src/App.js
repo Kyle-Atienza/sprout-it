@@ -10,7 +10,8 @@ import {
   Inventory,
   ForgotPassword,
   ResetPassword,
-  Financials
+  Financials,
+  Home
 } from "./pages";
 
 export const App = () => {
@@ -19,6 +20,7 @@ export const App = () => {
       <Routes>
         <Route element={<LoginUser />} path='/' />
         <Route element={<RegisterUser />} path='/register/:token' />
+        <Route element={<Home />} path='/home' />
         <Route element={<Production />} path='/production' />
         <Route element={<Inventory />} path='/inventory' />
         <Route element={<Financials />} path='/financials' />

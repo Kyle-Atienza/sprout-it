@@ -160,7 +160,7 @@ export const Help = () => {
                           the details of the user you want to invite, the
                           invited user will then be sent with an invite and the
                           text box below will contain a similar link that leads
-                          to registraiton.
+                          to registration.
                         </Disclosure.Panel>
                       </>
                     )}

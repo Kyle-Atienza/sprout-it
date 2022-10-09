@@ -9,3 +9,4 @@ export * from "./ForgotPassword";
 export * from "./ResetPassword";
 export * from "./Inventory";
 export * from "./Financials";
+export * from "./Home";
