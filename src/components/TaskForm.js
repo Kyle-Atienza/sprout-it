@@ -59,6 +59,7 @@ export function TaskForm({ batch, closeModal }) {
   };
 
   const onCreateTask = (e) => {
+    console.log("create task");
     e.preventDefault();
     dispatch(
       createTask({
@@ -79,7 +80,7 @@ export function TaskForm({ batch, closeModal }) {
       })
     );
     closeModal();
-    window.location.reload();
+    // window.location.reload();
   };
 
   const getInputByType = (on, type) => {

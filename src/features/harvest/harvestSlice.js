@@ -4,6 +4,10 @@ import harvestService from "./harvestService";
 const initialState = {
   harvests: {}, // group harvests by batch
   batchHarvests: [],
+  daily: [],
+  weekly: [],
+  monthly: [],
+  yearly: [],
   isSuccess: false,
   isError: false,
   isLoading: false,
@@ -88,6 +92,37 @@ export const harvestSlice = createSlice({
       state.isError = false;
       state.isLoading = false;
       state.message = "";
+    },
+    getDailyHarvests: (state, action) => {
+      state.daily = action.payload
+        .filter((batch) => {
+          // get batch with harvests
+          return batch.harvests.length;
+        })
+        .map((batch) => {
+          // get only harvests data
+          return batch.harvests;
+        })
+        .flat() // flatten nested arrays
+        .reduce((date, currentBatch, index) => {
+          // group arrays by date
+          const { createdAt } = currentBatch;
+          const key = new Date(createdAt)
+            .toDateString()
+            .slice(4)
+            .replaceAll(" ", "-");
+          date[index] = date[index] ?? {
+            date: key,
+            harvests: [],
+          };
+          date[index].harvests.push(currentBatch);
+          return date;
+        }, [])
+        .slice() // gamitin daw pag nag ssort kase d nagana
+        .sort(function (a, b) {
+          // sort date from earliest to latest
+          return Date.parse(a.date) - Date.parse(b.date);
+        });
     },
   },
   extraReducers: (builder) => {
@@ -179,5 +214,5 @@ export const harvestSlice = createSlice({
   },
 });
 
-export const { resetHarvests } = harvestSlice.actions;
+export const { resetHarvests, getDailyHarvests } = harvestSlice.actions;
 export default harvestSlice.reducer;
