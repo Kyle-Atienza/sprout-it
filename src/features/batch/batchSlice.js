@@ -144,6 +144,27 @@ export const batchSlice = createSlice({
         state.finished = action.payload.filter((batch) => {
           return batch.activePhase === "";
         });
+
+        state.substrate.mixed = action.payload.filter((batch) => {
+          return !(
+            batch.materials.every((material) => {
+              return material.material.name === "Dayami";
+            }) ||
+            batch.materials.every((material) => {
+              return material.material.name === "Kusot";
+            })
+          );
+        });
+        state.substrate.dayami = action.payload.filter((batch) => {
+          return batch.materials.some((material) => {
+            return material.material.name === "Dayami";
+          });
+        });
+        state.substrate.kusot = action.payload.filter((batch) => {
+          return batch.materials.some((material) => {
+            return material.material.name === "Kusot";
+          });
+        });
       })
       .addCase(getBatches.rejected, (state, action) => {
         state.isLoading = false;

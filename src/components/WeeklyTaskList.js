@@ -51,10 +51,7 @@ export const WeeklyTaskList = ({ setIsTaskModalOpen, setSelectedTask }) => {
                 className=""
                 task={task.name}
                 batch={task.batch.name}
-                phase={
-                  task.batch.activePhase.slice(0, 1).toUpperCase() +
-                  task.batch.activePhase.slice(1)
-                }
+                phase={task.for.slice(0, 1).toUpperCase() + task.for.slice(1)}
                 image={
                   Images[task.for.slice(0, 1).toUpperCase() + task.for.slice(1)]
                 }

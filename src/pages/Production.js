@@ -194,7 +194,6 @@ export const Production = () => {
       return (
         <PrimaryButton
           name="Finish Batch"
-          className=""
           onClick={() => setIsConfirmBatchModalOpen(true)}
         />
       );
@@ -202,7 +201,6 @@ export const Production = () => {
       return (
         <PrimaryButton
           name="End Batch"
-          className=""
           onClick={() => setIsConfirmBatchModalOpen(true)}
         />
       );
@@ -210,7 +208,6 @@ export const Production = () => {
       return (
         <PrimaryButton
           name="Start Next Phase"
-          className=""
           onClick={() => setIsConfirmBatchModalOpen(true)}
         />
       );
@@ -226,6 +223,7 @@ export const Production = () => {
         },
       })
     );
+    setIsTaskModalOpen(false);
   };
 
   const getDaysCount = (batch) => {
@@ -808,11 +806,8 @@ export const Production = () => {
                         setSelectedBatch(batch);
                       }}
                       key={batch.name}
-                      className=""
-                      batchNumber={"Batch " + batch.name}
-                      description="Lorem ipsum dolor sit amet consectetur"
-                      daysLeft={getDaysCount(batch)}
                       countDays={false}
+                      batch={batch}
                     />
                   );
                 })}
@@ -829,10 +824,7 @@ export const Production = () => {
                         setSelectedBatch(batch);
                       }}
                       key={batch.name}
-                      className=""
-                      batchNumber={"Batch " + batch.name}
-                      description="Lorem ipsum dolor sit amet consectetur"
-                      daysLeft={getDaysCount(batch)}
+                      batch={batch}
                     />
                   );
                 })}
@@ -849,10 +841,7 @@ export const Production = () => {
                         setSelectedBatch(batch);
                       }}
                       key={batch.name}
-                      className=""
-                      batchNumber={"Batch " + batch.name}
-                      description="Lorem ipsum dolor sit amet consectetur"
-                      daysLeft={getDaysCount(batch)}
+                      batch={batch}
                     />
                   );
                 })}
@@ -869,10 +858,7 @@ export const Production = () => {
                         setSelectedBatch(batch);
                       }}
                       key={batch.name}
-                      className=""
-                      batchNumber={"Batch " + batch.name}
-                      description="Lorem ipsum dolor sit amet consectetur"
-                      daysLeft={getDaysCount(batch)}
+                      batch={batch}
                     />
                   );
                 })}
@@ -889,10 +875,7 @@ export const Production = () => {
                         setSelectedBatch(batch);
                       }}
                       key={batch.name}
-                      className=""
-                      batchNumber={"Batch " + batch.name}
-                      description="Lorem ipsum dolor sit amet consectetur"
-                      daysLeft={getDaysCount(batch)}
+                      batch={batch}
                     />
                   );
                 })}
@@ -909,10 +892,7 @@ export const Production = () => {
                         setSelectedBatch(batch);
                       }}
                       key={batch.name}
-                      className=""
-                      batchNumber={"Batch " + batch.name}
-                      description="Lorem ipsum dolor sit amet consectetur"
-                      daysLeft={getDaysCount(batch)}
+                      batch={batch}
                     />
                   );
                 })}
@@ -929,11 +909,8 @@ export const Production = () => {
                         setSelectedBatch(batch);
                       }}
                       key={batch.name}
-                      className=""
-                      batchNumber={"Batch " + batch.name}
-                      description="Lorem ipsum dolor sit amet consectetur"
-                      daysLeft={getDaysCount(batch)}
                       countDays={false}
+                      batch={batch}
                     />
                   );
                 })}

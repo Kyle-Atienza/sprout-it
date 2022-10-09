@@ -21,3 +21,4 @@ export * from "./HarvestTable";
 export * from "./HarvestTableRow";
 export * from "./PurchaseForm";
 export * from "./AnalyticsHarvestByTime";
+export * from "./AnalyticsSubstrateBatch";
