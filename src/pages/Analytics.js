@@ -1,5 +1,10 @@
 import React from "react";
-import { SideNavBar, TopNavBar } from "../components";
+import {
+  SideNavBar,
+  TopNavBar,
+  PrimaryButton,
+  AnalyticsHarvestByTime,
+} from "../components";
 import { useState, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -7,6 +12,7 @@ import {
   getBatches,
   loadBatchesBySubstrate,
 } from "../features/batch/batchSlice";
+import _ from "lodash";
 import { Bar, Line, Doughnut } from "react-chartjs-2";
 import { CaretUpFilled, CaretDownFilled } from "@ant-design/icons";
 import { Chart, registerables } from "chart.js";
@@ -16,20 +22,20 @@ Chart.register(...registerables);
 export const Analytics = () => {
   const dispatch = useDispatch();
 
-  let [isOpen, setIsOpen] = useState(false);
-  let [selectedBatch, setSelectedBatch] = useState("");
-
-  const { user, isSuccess, isLoading, isError, message } = useSelector(
-    (state) => state.user
-  );
-  const { batches, finished, substrate } = useSelector((state) => state.batch);
+  const { finished, substrate } = useSelector((state) => state.batch);
 
   const { kusot, dayami, mixed } = substrate;
 
   useEffect(() => {
     dispatch(getBatches());
     dispatch(getMaterials());
-  }, [user, isSuccess, isLoading, isError, message, dispatch]);
+  }, []);
+
+  useEffect(() => {
+    if (finished) {
+      dispatch(loadBatchesBySubstrate());
+    }
+  }, [finished]);
 
   const getBatchHarvestSum = (batch) => {
     return batch.harvests.reduce((prev, current) => {
@@ -64,12 +70,6 @@ export const Analytics = () => {
       return prev + getDefectsSum(current);
     }, 0);
   };
-
-  useEffect(() => {
-    if (finished) {
-      dispatch(loadBatchesBySubstrate());
-    }
-  }, [finished]);
 
   const barData = {
     labels: ["Kusot", "Dayami", "Mixed"],
@@ -219,6 +219,9 @@ export const Analytics = () => {
                   </p>
                 </div>
               </div>
+            </div>
+            <div className="flex m-5 gap-5 flex-col">
+              <AnalyticsHarvestByTime />
             </div>
             <div className='flex m-5 gap-5'>
               <div className='p-12 w-full bg-white rounded-3xl shadow'>
