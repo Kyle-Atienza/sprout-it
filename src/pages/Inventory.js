@@ -3,7 +3,7 @@ import {
   SideNavBar,
   TopNavBar,
   PrimaryButton,
-  AddNewMaterialForm,
+  MaterialForm,
   MaterialCard,
 } from "../components";
 import { Dialog, Transition, Tab } from "@headlessui/react";
@@ -17,7 +17,8 @@ import { getBatches } from "../features/batch/batchSlice";
 export const Inventory = () => {
   const dispatch = useDispatch();
 
-  let [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedMaterial, setSelectedMaterial] = useState({});
 
   const { materials } = useSelector((state) => state.inventory);
   const { batches } = useSelector((state) => state.batch);
@@ -35,7 +36,8 @@ export const Inventory = () => {
     setIsOpen(false);
   }
 
-  function openModal() {
+  function openModal(material = {}) {
+    setSelectedMaterial(material);
     setIsOpen(true);
   }
   return (
@@ -91,7 +93,7 @@ export const Inventory = () => {
                             <CloseOutlined />
                           </button>
                         </div>
-                        <AddNewMaterialForm />
+                        <MaterialForm material={selectedMaterial} />
                       </Dialog.Panel>
                     </Transition.Child>
                   </div>
@@ -102,7 +104,14 @@ export const Inventory = () => {
 
           <div className="w-full px-10 my-6 grid gap-4 grid-flow-col md:grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {materials.map((material, index) => {
-              return <MaterialCard material={material} index={index} />;
+              return (
+                <MaterialCard
+                  key={index}
+                  editMaterial={() => openModal(material)}
+                  material={material}
+                  index={index}
+                />
+              );
             })}
           </div>
         </div>

@@ -6,11 +6,13 @@ export const TextField = ({
   type,
   onChange,
   className,
+  defaultValue,
 }) => (
   <>
     <input
       type={type}
       value={value}
+      defaultValue={defaultValue}
       name={name}
       id={id}
       placeholder={placeholder}

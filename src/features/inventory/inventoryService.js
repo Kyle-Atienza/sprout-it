@@ -28,14 +28,26 @@ const postMaterial = async (materialData, token) => {
   return response.data;
 };
 
-const putMaterial = async ({ id, data }, token) => {
+const putMaterial = async ({ id, payload }, token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
 
-  const response = await axios.put(`${`${API_URL}`}${id}`, data, config);
+  const response = await axios.put(`${`${API_URL}`}${id}`, payload, config);
+
+  return response.data;
+};
+
+const deleteMaterial = async (id, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.delete(`${`${API_URL}`}${id}`, config);
 
   return response.data;
 };
@@ -44,6 +56,7 @@ const inventoryService = {
   getMaterials,
   postMaterial,
   putMaterial,
+  deleteMaterial,
 };
 
 export default inventoryService;
