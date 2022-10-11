@@ -4,6 +4,7 @@ import {
   TopNavBar,
   PrimaryButton,
   AddNewMaterialForm,
+  MaterialCard,
 } from "../components";
 import { Dialog, Transition, Tab } from "@headlessui/react";
 import { EditOutlined, CloseOutlined, DeleteOutlined } from "@ant-design/icons";
@@ -28,7 +29,6 @@ export const Inventory = () => {
 
   useEffect(() => {
     dispatch(getMaterials());
-    console.log("created");
   }, [batches]);
 
   function closeModal() {
@@ -100,81 +100,9 @@ export const Inventory = () => {
             </Transition>
           </div>
 
-          {/* <div className='overflow-x-auto relative harvests-table mx-10 my-6 shadow-md bg-light-100 rounded-xl'>
-            <table className='w-full text-sm text-left'>
-              <thead className=' poppins-paragraph text-secondary-300'>
-                <tr>
-                  <th scope='col' className='py-4 px-6'>
-                    Item Name
-                  </th>
-                  <th scope='col' className='py-4 px-6'>
-                    Alt Name
-                  </th>
-                  <th scope='col' className='py-4 px-6'>
-                    Unit
-                  </th>
-                  <th scope='col' className='py-4 px-6'>
-                    Quantity
-                  </th>
-                  <th scope='col' className='py-4 px-6'>
-                    Supplier
-                  </th>
-                </tr>
-              </thead>
-              <tbody className='poppins-paragraph-sm '>
-                {materials.map((material, index) => {
-                  return (
-                    <tr
-                      key={index}
-                      className='bg-light-100 hover:bg-light-200 border-b dark:bg-gray-800 dark:border-gray-700 transition-all duration-300 ease-in-out cursor-pointer'
-                    >
-                      <td className='py-4 px-6'>{material.name}</td>
-                      <td className='py-4 px-6'>{material.altName}</td>
-                      <td className='py-4 px-6'>{material.unit}</td>
-                      <td className='py-4 px-6'>{material.quantity}</td>
-                      <td className='py-4 px-6'>{material.price}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div> */}
-
           <div className="w-full px-10 my-6 grid gap-4 grid-flow-col md:grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {materials.map((material, index) => {
-              const date = new Date(material.updatedAt).toDateString();
-              return (
-                <div
-                  className="p-6 flex flex-col shadow-md bg-light-100 rounded-xl"
-                  key={index}
-                >
-                  <div className="flex flex-row justify-between items-start">
-                    <h3 className="poppins-heading-6 text-primary-500">
-                      {material.name}
-                    </h3>
-                    <div className="flex gap-4">
-                      <button className="hover:text-secondary-400 flex items-center">
-                        <EditOutlined />
-                      </button>
-                      <button className="hover:text-red-600 flex items-center">
-                        <DeleteOutlined />
-                      </button>
-                    </div>
-                  </div>
-                  <p className="text-left open-paragraph-sm">
-                    {material.altName}
-                  </p>
-                  <div className="flex justify-center items-center mx-4 my-8">
-                    <h4 className="text-center poppins-heading-3 text-secondary-400">
-                      {material.quantity}&nbsp;{material.unit}
-                    </h4>
-                  </div>
-                  <p className="text-left open-paragraph-sm">Last updated</p>
-                  <p className="text-left open-paragraph-sm font-bold">
-                    {date}
-                  </p>
-                </div>
-              );
+              return <MaterialCard material={material} index={index} />;
             })}
           </div>
         </div>
