@@ -89,6 +89,7 @@ export const LoginUser = () => {
               id="password"
               placeholder="Password"
               onChange={onChange}
+              password
             />
             <a
               className="text-right open-button text-light-700"
