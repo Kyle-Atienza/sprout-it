@@ -1,10 +1,19 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Images } from "../core";
+import { io } from "socket.io-client";
+import { getTasks } from "../features/task/taskSlice";
 
 import { WeeklyTaskCard } from "./WeeklyTaskCard";
 
 export const WeeklyTaskList = ({ setIsTaskModalOpen, setSelectedTask }) => {
+  const socket = io(
+    process.env.REACT_APP_PROXY.replace(/^http/, "ws").slice(0, -1)
+  );
+
+  const dispatch = useDispatch();
+
   const { tasks } = useSelector((state) => state.task);
 
   const mapDateDay = (day) => {
@@ -27,6 +36,12 @@ export const WeeklyTaskList = ({ setIsTaskModalOpen, setSelectedTask }) => {
         return "Sun";
     }
   };
+
+  useEffect(() => {
+    socket.on("notification-send", () => {
+      dispatch(getTasks());
+    });
+  }, []);
 
   return (
     <div className="w-full text-left">

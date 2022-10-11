@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "tw-elements";
 import {
   HomeOutlined,
@@ -9,7 +9,6 @@ import {
   SettingOutlined,
   LogoutOutlined,
   MenuOutlined,
-  PlusOutlined,
 } from "@ant-design/icons";
 import {
   NotificationButton,
@@ -182,10 +181,7 @@ export const TopNavBar = ({ pageName }) => {
           >
             <PlusOutlined />
           </button> */}
-          <NotificationButton
-            onClick={onClickNotification}
-            className="text-xl leading-none flex justify-center items-center"
-          />
+          <NotificationButton className="text-xl leading-none flex justify-center items-center" />
           <HelpButton className="text-xl leading-none flex justify-center items-center" />
         </div>
       </div>

@@ -8,6 +8,7 @@ import taskReducer from "../features/task/taskSlice";
 import harvestReducer from "../features/harvest/harvestSlice";
 import financialReducer from "../features/financial/financialSlice";
 import supplierReducer from "../features/supplier/SupplierSlice";
+import notificationReducer from "../features/notification/notificationSlice";
 
 export const store = configureStore({
   reducer: {
@@ -19,5 +20,6 @@ export const store = configureStore({
     harvest: harvestReducer,
     financial: financialReducer,
     supplier: supplierReducer,
+    notification: notificationReducer,
   },
 });
