@@ -13,22 +13,24 @@ export const AnalyticsHarvestByTime = () => {
   const { finished } = useSelector((state) => state.batch);
   const { daily: dailyHarvest } = useSelector((state) => state.harvest);
 
-  const [dates, setDates] = useState([]);
+  // const [dates, setDates] = useState([]);
   const [chartHarvestDates, setChartHarvestDates] = useState([]);
-  const [chartHarvestDateRange, setChartHarvestDateRange] = useState("weeks");
+  const [chartHarvestDateRange, setChartHarvestDateRange] = useState("months");
   const [chartHarvestDatePage, setChartHarvestDatePage] = useState(0);
 
+  let dates = [];
+
   const chartHarvestData = {
-    labels: chartHarvestDates.map((date) => date.label),
+    // labels: chartHarvestDates.map((date) => date.label),
     datasets: [
       {
         label: "Batch Harvests",
         backgroundColor: "#8ABD70",
-        data: chartHarvestDates.map((date) =>
+        /* data: chartHarvestDates.map((date) =>
           date.data.reduce((prev, curr) => {
             return prev + curr.weight;
           }, 0)
-        ),
+        ), */
       },
     ],
   };
@@ -41,20 +43,26 @@ export const AnalyticsHarvestByTime = () => {
 
   useEffect(() => {
     if (dailyHarvest.length) {
-      setDates(
-        getDatesInRange(
-          new Date(dailyHarvest[0].date),
-          new Date(dailyHarvest[dailyHarvest.length - 1].date),
-          chartHarvestDateRange
-        )[chartHarvestDatePage]
+      /* setDates(
+        () =>
+          getDatesInRange(
+            new Date(dailyHarvest[0].date),
+            new Date(dailyHarvest[dailyHarvest.length - 1].date),
+            chartHarvestDateRange
+          )[chartHarvestDatePage]
       );
-      /* const dates = getDatesInRange(
+
+      console.log(dailyHarvest.length);
+
+      */
+
+      dates = getDatesInRange(
         new Date(dailyHarvest[0].date),
         new Date(dailyHarvest[dailyHarvest.length - 1].date),
         chartHarvestDateRange
-      )[chartHarvestDatePage]; */
+      )[chartHarvestDatePage];
 
-      setChartHarvestDates(
+      setChartHarvestDates(() =>
         dates.map((date, index) => {
           return {
             date: date,
@@ -78,8 +86,48 @@ export const AnalyticsHarvestByTime = () => {
           };
         })
       );
+
+      // setChartHarvestDates((prevState) => [...prevState, 1]);
+      console.log(dates);
     }
   }, [dailyHarvest, chartHarvestDateRange, chartHarvestDatePage]);
+
+  const updateData = (range) => {
+    setChartHarvestDateRange(range, chartHarvestDates);
+
+    /* setDates(
+      getDatesInRange(
+        new Date(dailyHarvest[0].date),
+        new Date(dailyHarvest[dailyHarvest.length - 1].date),
+        chartHarvestDateRange
+      )[chartHarvestDatePage]
+    );
+
+    setChartHarvestDates(mapDatesWithHarvest); */
+  };
+
+  const mapDatesWithHarvest = () => {
+    return dates.map((date, index) => {
+      return {
+        date: date,
+        label:
+          chartHarvestDateRange === "months"
+            ? date.split("-").splice(0, 1).join(" ")
+            : date.split("-").splice(0, 2).join(" "),
+        data: dailyHarvest
+          .filter((harvest) => {
+            return (
+              new Date(harvest.date).getTime() >=
+                new Date(dates[index]).getTime() &&
+              new Date(harvest.date).getTime() <
+                new Date(dates[index + 1] ? dates[index + 1] : date).getTime()
+            );
+          })
+          .map((harvest) => harvest.harvests)
+          .flat(),
+      };
+    });
+  };
 
   const getDatesInRange = (startDate, endDate, range) => {
     let date;
@@ -107,7 +155,6 @@ export const AnalyticsHarvestByTime = () => {
         1
       );
       groups = 12;
-
       end = new Date(endDate.setMonth(endDate.getMonth() + 1));
     }
 

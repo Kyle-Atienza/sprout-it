@@ -107,6 +107,9 @@ export const Financials = () => {
                     Price
                   </th>
                   <th scope="col" className="py-4 px-6">
+                    Total
+                  </th>
+                  <th scope="col" className="py-4 px-6">
                     Supplier
                   </th>
                   <th scope="col" className="py-4 px-6">
@@ -116,6 +119,7 @@ export const Financials = () => {
               </thead>
               <tbody className="poppins-paragraph-sm ">
                 {purchases.map((purchase, index) => {
+                  console.log(purchase);
                   return (
                     <tr
                       key={index}
@@ -123,13 +127,21 @@ export const Financials = () => {
                     >
                       <td className="py-4 px-6">{purchase.material.name}</td>
                       <td className="py-4 px-6">
-                        {purchase.material.quantity}
+                        {`${purchase.quantity} ${purchase.material.unit}`}
                       </td>
                       <td className="py-4 px-6">
                         {formatter.format(
                           purchase.material.price ? purchase.material.price : 0
                         )}
                       </td>
+                      <td className="py-4 px-6">
+                        {formatter.format(
+                          (purchase.material.price
+                            ? purchase.material.price
+                            : 0) * purchase.quantity
+                        )}
+                      </td>
+
                       <td className="py-4 px-6">{purchase.supplier.name}</td>
                       <td className="py-4 px-6">
                         {new Date(purchase.createdAt).toDateString().slice(4)}

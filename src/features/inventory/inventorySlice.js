@@ -97,7 +97,9 @@ export const inventorySlice = createSlice({
       .addCase(getMaterials.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.materials = action.payload;
+        state.materials = action.payload.filter(
+          (material) => !material.isDeleted
+        );
       })
       .addCase(getMaterials.rejected, (state, action) => {
         state.isLoading = false;
