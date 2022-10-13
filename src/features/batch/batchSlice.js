@@ -84,6 +84,23 @@ export const updateBatch = createAsyncThunk(
   }
 );
 
+export const deleteBatch = createAsyncThunk(
+  "batches/delete",
+  async (id, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().user.user.token;
+      return await batchService.deleteBatch(id, token);
+    } catch (error) {
+      const message = {
+        status: error.message,
+        response: error.response.data.message,
+      };
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const batchSlice = createSlice({
   name: "batch",
   initialState,
@@ -228,6 +245,18 @@ export const batchSlice = createSlice({
           }, {});
       })
       .addCase(updateBatch.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(deleteBatch.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteBatch.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+      })
+      .addCase(deleteBatch.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

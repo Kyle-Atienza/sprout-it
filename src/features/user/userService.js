@@ -2,6 +2,18 @@ import axios from "axios";
 
 const API_URL = `${process.env.REACT_APP_PROXY}api/users/`;
 
+const getUsers = async () => {
+  const response = await axios.get(API_URL);
+
+  return response.data;
+};
+
+const deleteUser = async (id) => {
+  const response = await axios.delete(`${API_URL}${id}`);
+
+  return response.data;
+};
+
 const register = async (user) => {
   const response = await axios.post(`${API_URL}register`, user);
 
@@ -71,6 +83,8 @@ const userService = {
   invite,
   forgotPassword,
   resetPassword,
+  getUsers,
+  deleteUser,
 };
 
 export default userService;
