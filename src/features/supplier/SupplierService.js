@@ -16,7 +16,11 @@ const getSuppliers = async (token) => {
   return response.data;
 };
 
-const createSupplier = async ({ id, payload }, token) => {};
+const createSupplier = async (supplierData, token) => {
+  const response = await axios.post(`${API_URL}`, supplierData, config(token));
+
+  return response.data;
+};
 
 const updateSupplier = async ({ id, payload }, token) => {};
 

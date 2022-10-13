@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getSuppliers } from "../features/supplier/SupplierSlice";
+import { getSuppliers } from "../features/supplier/supplierSlice";
 import { getMaterials } from "../features/inventory/inventorySlice";
 import { createPurchase } from "../features/financial/financialSlice";
 
 import { PrimaryButton } from "../components";
 
-export const PurchaseForm = () => {
+export const PurchaseForm = ({ openSupplierModal }) => {
   const dispatch = useDispatch();
 
   const { suppliers } = useSelector((state) => state.supplier);
@@ -14,16 +14,23 @@ export const PurchaseForm = () => {
 
   const [purchaseData, setPurchaseData] = useState({});
 
+  const selectSupplierRef = useRef();
+
   useEffect(() => {
     dispatch(getSuppliers());
     dispatch(getMaterials());
   }, []);
 
   const onChange = (e) => {
-    setPurchaseData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
+    if (e.target.name === "supplier" && e.target.value === "add") {
+      openSupplierModal();
+      selectSupplierRef.current.value = "";
+    } else {
+      setPurchaseData((prevState) => ({
+        ...prevState,
+        [e.target.name]: e.target.value,
+      }));
+    }
   };
 
   const submitPurchase = () => {
@@ -39,17 +46,18 @@ export const PurchaseForm = () => {
 
   return (
     <>
-      <div className='mb-4'>
-        <label className='block open-button' htmlFor='username'>
+      <div className="mb-4">
+        <label className="block open-button" htmlFor="username">
           Supplier
-          <span className='text-red-600'>*</span>
+          <span className="text-red-600">*</span>
         </label>
         <select
-          id='supplier'
-          className='w-full p-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
-          name='supplier'
+          id="supplier"
+          className="w-full p-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400"
+          name="supplier"
           onChange={onChange}
           required
+          ref={selectSupplierRef}
         >
           <option hidden defaultValue>
             Select Supplier
@@ -61,17 +69,18 @@ export const PurchaseForm = () => {
               </option>
             );
           })}
+          <option value="add">Add new Supplier</option>
         </select>
       </div>
-      <div className='mb-4'>
-        <label className='block open-button' htmlFor='username'>
+      <div className="mb-4">
+        <label className="block open-button" htmlFor="username">
           Material
-          <span className='text-red-600'>*</span>
+          <span className="text-red-600">*</span>
         </label>
         <select
-          id='material'
-          className='w-full p-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
-          name='material'
+          id="material"
+          className="w-full p-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400"
+          name="material"
           onChange={onChange}
           required
         >
@@ -87,37 +96,37 @@ export const PurchaseForm = () => {
           })}
         </select>
       </div>
-      <div className='mb-4'>
-        <label className='block open-button' htmlFor='username'>
-          Quantity <span className='text-red-600'>*</span>
+      <div className="mb-4">
+        <label className="block open-button" htmlFor="username">
+          Quantity <span className="text-red-600">*</span>
         </label>
-        <div className='flex justify-center items-center'>
+        <div className="flex justify-center items-center">
           <input
-            className='w-full p-3 mr-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
-            name='quantity'
-            type='number'
+            className="w-full p-3 mr-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400"
+            name="quantity"
+            type="number"
             onChange={onChange}
             required
           />
-          <p className='open-paragraph'>kg/l</p>
+          <p className="open-paragraph">kg/l</p>
         </div>
       </div>
-      <div className='mb-4'>
-        <label className='block open-button' htmlFor='username'>
-          Price per unit <span className='text-red-600'>*</span>
+      <div className="mb-4">
+        <label className="block open-button" htmlFor="username">
+          Price per unit <span className="text-red-600">*</span>
         </label>
-        <div className='flex justify-center items-center'>
-          <p className='open-paragraph'>₱</p>
+        <div className="flex justify-center items-center">
+          <p className="open-paragraph">₱</p>
           <input
-            className='w-full p-3 ml-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
-            name='price'
-            type='number'
+            className="w-full p-3 ml-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400"
+            name="price"
+            type="number"
             onChange={onChange}
             required
           />
         </div>
       </div>
-      <PrimaryButton onClick={submitPurchase} name='Submit Purchase' />
+      <PrimaryButton onClick={submitPurchase} name="Submit Purchase" />
     </>
   );
 };

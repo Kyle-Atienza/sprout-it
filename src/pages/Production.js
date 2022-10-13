@@ -67,7 +67,6 @@ export const Production = () => {
       phase !== "post"
         ? phases[phases.indexOf(selectedBatch.activePhase) + 1].toLowerCase()
         : null;
-
     if (phase === "post") {
       dispatch(
         updateBatch({
