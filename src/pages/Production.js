@@ -17,11 +17,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { Dialog, Transition, Disclosure } from "@headlessui/react";
 import { useEffect, Fragment } from "react";
 import { useNavigate } from "react-router";
-import { getBatches, updateBatch } from "../features/batch/batchSlice";
+import {
+  getBatches,
+  updateBatch,
+  deleteBatch,
+} from "../features/batch/batchSlice";
 import { getTasks, updateTask } from "../features/task/taskSlice";
 import { getMaterials } from "../features/inventory/inventorySlice";
 import { useState } from "react";
-import { CloseOutlined } from "@ant-design/icons";
+import { CloseOutlined, DeleteFilled } from "@ant-design/icons";
 
 const useForceUpdate = () => {
   const [value, setValue] = useState(0); // integer state
@@ -67,7 +71,6 @@ export const Production = () => {
       phase !== "post"
         ? phases[phases.indexOf(selectedBatch.activePhase) + 1].toLowerCase()
         : null;
-
     if (phase === "post") {
       dispatch(
         updateBatch({
@@ -224,25 +227,6 @@ export const Production = () => {
       })
     );
     setIsTaskModalOpen(false);
-  };
-
-  const getDaysCount = (batch) => {
-    const phase = batch.activePhase;
-    const currentDate = new Date();
-
-    if (phase === "pre") {
-      const baseDate = new Date(batch.createdAt);
-      const timeDiff = currentDate.getTime() - baseDate.getTime();
-      const dayDiff = timeDiff / (1000 * 3600 * 24) + 1;
-      return Math.floor(dayDiff);
-    } else if (phase === "post") {
-      return 0;
-    } else {
-      const baseDate = new Date(batch[batch.activePhase].startedAt);
-      const timeDiff = currentDate.getTime() - baseDate.getTime();
-      const dayDiff = timeDiff / (1000 * 3600 * 24) + 1;
-      return Math.floor(dayDiff);
-    }
   };
 
   const mapFormByPhase = (phase) => {
@@ -470,7 +454,13 @@ export const Production = () => {
 
   const handleSubmitTask = () => {
     setIsBatchModalOpen(false);
-    forceUpdate();
+    // forceUpdate();
+  };
+
+  const onDeleteBatch = (id) => {
+    dispatch(deleteBatch(id));
+    setIsBatchModalOpen(false);
+    window.location.reload();
   };
 
   return (
@@ -554,10 +544,21 @@ export const Production = () => {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="overflow-y-scroll scrollbar-hidden bg-light-100 w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-lg transition-all h-[40rem] flex flex-col">
-                  <div className="w-full flex items-center justify-start mb-6">
-                    <Dialog.Title as="h3" className="poppins-heading-6 w-full">
-                      Batch {selectedBatch.name} Details
-                    </Dialog.Title>
+                  <div className="w-full flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-2">
+                      <Dialog.Title
+                        as="h3"
+                        className="poppins-heading-6 w-full"
+                      >
+                        Batch {selectedBatch.name} Details
+                      </Dialog.Title>
+                      <button
+                        className="flex"
+                        onClick={() => onDeleteBatch(selectedBatch._id)}
+                      >
+                        <DeleteFilled />
+                      </button>
+                    </div>
                     <button
                       className="hover:text-red-700 flex items-center"
                       onClick={() => setIsBatchModalOpen(false)}

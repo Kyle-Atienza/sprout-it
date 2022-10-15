@@ -7,7 +7,7 @@ import phasesReducer from "../features/batch/phasesSlice";
 import taskReducer from "../features/task/taskSlice";
 import harvestReducer from "../features/harvest/harvestSlice";
 import financialReducer from "../features/financial/financialSlice";
-import supplierReducer from "../features/supplier/SupplierSlice";
+import supplierReducer from "../features/supplier/supplierSlice";
 import notificationReducer from "../features/notification/notificationSlice";
 
 export const store = configureStore({

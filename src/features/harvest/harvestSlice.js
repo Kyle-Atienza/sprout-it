@@ -119,7 +119,7 @@ export const harvestSlice = createSlice({
           return date;
         }, [])
         .slice() // gamitin daw pag nag ssort kase d nagana
-        .sort(function (a, b) {
+        .sort((a, b) => {
           // sort date from earliest to latest
           return Date.parse(a.date) - Date.parse(b.date);
         });

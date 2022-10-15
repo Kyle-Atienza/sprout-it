@@ -42,6 +42,15 @@ const updateBatch = async ({ id, payload }, token) => {
   return response.data;
 };
 
+const deleteBatch = async (id, token) => {
+  const response = await axios.delete(
+    `${`${API_URL}batch/`}/${id}`,
+    config(token)
+  );
+
+  return response.data;
+};
+
 const getTasks = async (token) => {
   const response = await axios.get(`${API_URL}task/`, config(token));
 
@@ -59,6 +68,7 @@ const batchService = {
   getBatch,
   createBatch,
   updateBatch,
+  deleteBatch,
   getTasks,
   createTask,
 };

@@ -25,12 +25,14 @@ export const ProductionCard = ({
 
   const getMaterialSubstrate = (batch) => {
     if (
-      batch.materials.every((material) => {
-        return material.material.name === "Dayami";
-      }) ||
-      batch.materials.every((material) => {
-        return material.material.name === "Kusot";
-      })
+      !(
+        batch.materials.every((material) => {
+          return material.material.name === "Dayami";
+        }) ||
+        batch.materials.every((material) => {
+          return material.material.name === "Kusot";
+        })
+      )
     ) {
       return "Mixed";
     } else if (

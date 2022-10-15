@@ -24,6 +24,10 @@ export const NotificationButton = ({ className }) => {
   useEffect(() => {
     dispatch(getNotifications());
 
+    socket.on("connection", () => {
+      console.log("connected");
+    });
+
     socket.on("notification-send", (title) => {
       console.log(title);
       dispatch(getNotifications());

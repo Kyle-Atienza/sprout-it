@@ -39,6 +39,8 @@ export const PreProductionForm = () => {
         }),
       })
     );
+
+    window.location.reload();
   };
 
   return (

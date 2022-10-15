@@ -8,6 +8,7 @@ const user = JSON.parse(localStorage.getItem("sproutItUser"));
 //create initial state for user
 const initialState = {
   user: user ? user : null,
+  users: [],
   inviteToken: "",
   resetLink: "",
   isSuccess: false,
@@ -125,11 +126,24 @@ export const resetPassword = createAsyncThunk(
   }
 );
 
-export const getUsers = createAsyncThunk(
-  "users",
-  async (payload, thunkAPI) => {
+export const getUsers = createAsyncThunk("user/getAll", async (_, thunkAPI) => {
+  try {
+    return await userService.getUsers();
+  } catch (error) {
+    const message = {
+      status: error.message,
+      response: error.response.data.message,
+    };
+
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
+export const deleteUser = createAsyncThunk(
+  "user/delete",
+  async (id, thunkAPI) => {
     try {
-      return await userService.getUsers(payload);
+      return await userService.deleteUser(id);
     } catch (error) {
       const message = {
         status: error.message,
@@ -259,6 +273,36 @@ export const userSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
+      })
+      .addCase(getUsers.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getUsers.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.users = action.payload;
+      })
+      .addCase(getUsers.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        state.user = null;
+      })
+      .addCase(deleteUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.users = state.users.filter((user) => {
+          return user._id !== action.payload._id;
+        });
+      })
+      .addCase(deleteUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        state.user = null;
       });
   },
 });

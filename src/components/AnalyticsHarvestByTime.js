@@ -13,14 +13,14 @@ export const AnalyticsHarvestByTime = () => {
   const { finished } = useSelector((state) => state.batch);
   const { daily: dailyHarvest } = useSelector((state) => state.harvest);
 
+  // const [dates, setDates] = useState([]);
+  let dates = [];
   const [chartHarvestDates, setChartHarvestDates] = useState([]);
   const [chartHarvestDateRange, setChartHarvestDateRange] = useState("days");
   const [chartHarvestDatePage, setChartHarvestDatePage] = useState(0);
 
   const chartHarvestData = {
-    labels: chartHarvestDates.map((date) =>
-      date.date.split("-").splice(0, 2).join(" ")
-    ),
+    labels: chartHarvestDates.map((date) => date.label),
     datasets: [
       {
         label: "Batch Harvests",
@@ -42,22 +42,30 @@ export const AnalyticsHarvestByTime = () => {
 
   useEffect(() => {
     if (dailyHarvest.length) {
-      const dates = getDatesInRange(
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      dates = getDatesInRange(
         new Date(dailyHarvest[0].date),
         new Date(dailyHarvest[dailyHarvest.length - 1].date),
         chartHarvestDateRange
       )[chartHarvestDatePage];
 
-      setChartHarvestDates(
+      setChartHarvestDates(() =>
         dates.map((date, index) => {
           return {
             date: date,
+            label:
+              chartHarvestDateRange === "months"
+                ? date.split("-").splice(0, 1).join(" ")
+                : date.split("-").splice(0, 2).join(" "),
             data: dailyHarvest
               .filter((harvest) => {
-                // TODO: condition is still not perfect
                 return (
-                  harvest.date >= date &&
-                  harvest.date < (dates[index + 1] ? dates[index + 1] : date)
+                  new Date(harvest.date).getTime() >=
+                    new Date(dates[index]).getTime() &&
+                  new Date(harvest.date).getTime() <
+                    new Date(
+                      dates[index + 1] ? dates[index + 1] : date
+                    ).getTime()
                 );
               })
               .map((harvest) => harvest.harvests)
@@ -72,11 +80,13 @@ export const AnalyticsHarvestByTime = () => {
     let date;
     let interval;
     let groups;
+    let end;
 
     if (range === "days") {
       date = new Date(startDate.getTime());
       interval = 1;
-      groups = 30;
+      groups = 15;
+      end = new Date(endDate.setDate(endDate.getDate() + 1));
     } else if (range === "weeks") {
       const day = new Date(startDate).getDay();
       const diff = new Date(startDate).getDate() - day + (day === 0 ? -6 : 1);
@@ -84,6 +94,7 @@ export const AnalyticsHarvestByTime = () => {
       date = new Date(new Date(startDate).setDate(diff));
       interval = 7;
       groups = 8;
+      end = new Date(endDate.setDate(endDate.getDate() + 7));
     } else if (range === "months") {
       date = new Date(
         new Date(startDate).getFullYear(),
@@ -91,24 +102,42 @@ export const AnalyticsHarvestByTime = () => {
         1
       );
       groups = 12;
+      end = new Date(endDate.setMonth(endDate.getMonth() + 1));
     }
 
     const dates = [];
 
-    if (range !== "months") {
-      while (date <= endDate) {
+    if (range === "days") {
+      while (date <= end) {
         dates.push(new Date(date).toDateString().slice(4).replaceAll(" ", "-"));
         date.setDate(date.getDate() + interval);
       }
 
       return _.chunk(dates, groups).reverse();
-    } else {
-      while (date <= endDate) {
+    } else if (range === "weeks") {
+      while (date <= end) {
+        dates.push(new Date(date).toDateString().slice(4).replaceAll(" ", "-"));
+        date.setDate(date.getDate() + interval);
+      }
+
+      return _.chunk(dates.reverse(), groups).map((week) => week.reverse());
+    } else if (range === "months") {
+      while (date <= end) {
         dates.push(new Date(date).toDateString().slice(4).replaceAll(" ", "-"));
         date.setMonth(date.getMonth() + 1);
       }
 
       return _.chunk(dates.reverse(), groups).map((months) => months.reverse());
+    }
+  };
+
+  const scrollTimeRange = (direction) => {
+    if (direction === "older") {
+      setChartHarvestDatePage(chartHarvestDatePage + 1);
+    } else if (direction === "newer") {
+      setChartHarvestDatePage(
+        chartHarvestDatePage !== 0 ? chartHarvestDatePage - 1 : 0
+      );
     }
   };
 
@@ -126,18 +155,8 @@ export const AnalyticsHarvestByTime = () => {
         onClick={() => setChartHarvestDateRange("months")}
         name="months"
       />
-      <PrimaryButton
-        onClick={() => setChartHarvestDatePage(chartHarvestDatePage + 1)}
-        name="-"
-      />
-      <PrimaryButton
-        onClick={() =>
-          setChartHarvestDatePage(
-            chartHarvestDatePage !== 0 ? chartHarvestDatePage - 1 : 0
-          )
-        }
-        name="+"
-      />
+      <PrimaryButton onClick={() => scrollTimeRange("older")} name="-" />
+      <PrimaryButton onClick={() => scrollTimeRange("newer")} name="+" />
       <Bar
         data={chartHarvestData}
         options={{
