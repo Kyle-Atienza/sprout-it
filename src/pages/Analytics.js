@@ -84,52 +84,51 @@ export const Analytics = () => {
 
   return (
     <>
-      <div className="flex flex-row w-screen">
-        <div className="w-0 lg:w-1/6">
+      <div className='flex flex-row w-screen'>
+        <div className='w-0 lg:w-1/6'>
           <SideNavBar />
         </div>
-        <div className="flex flex-col w-full lg:w-5/6 min-h-screen">
-          <div className="w-full">
-            <TopNavBar pageName="Reports" />
+        <div className='flex flex-col w-full lg:w-5/6 min-h-screen'>
+          <div className='w-full'>
+            <TopNavBar pageName='Reports' />
           </div>
-          <div className="charts d-flex flex-wrap">
-            <div className="flex m-5 gap-5 h-[40vh]">
-              <div className="p-12 w-1/2 bg-white rounded-3xl shadow">
+          <div className='charts d-flex flex-col'>
+            <div className='flex flex-col m-5 gap-5 w-full h-[40vh] lg:flex-row'>
+              <div className='p-4 md:p-6 lg:p-12 w-full lg:w-1/2 bg-white rounded-3xl shadow'>
                 <AnalyticsSubstrateBatch compareHarvestDefects />
               </div>
-
-              <div className="p-5 w-1/2 bg-secondary-100 rounded-3xl shadow flex flex-col gap-4 overflow-y-scroll">
-                <div className="flex items-center gap-4 p-5 bg-white rounded-2xl">
-                  <CaretUpFilled className="text-2xl text-primary-400" />
-                  <p className="poppins-paragraph-sm">
+              <div className='p-4 md:p-6 lg:p-12 w-full lg:w-1/2 bg-secondary-100 rounded-3xl shadow flex flex-col gap-4 overflow-y-scroll'>
+                <div className='flex items-center gap-4 p-5 bg-white rounded-2xl'>
+                  <CaretUpFilled className='text-2xl text-primary-400' />
+                  <p className='poppins-paragraph-sm'>
                     10% more harvest from last batch
                   </p>
                 </div>
-                <div className="flex items-center gap-4 p-5 bg-white rounded-2xl">
-                  <CaretDownFilled className="text-2xl text-red-400" />
-                  <p className="poppins-paragraph-sm">
+                <div className='flex items-center gap-4 p-5 bg-white rounded-2xl'>
+                  <CaretDownFilled className='text-2xl text-red-400' />
+                  <p className='poppins-paragraph-sm'>
                     Defect rose up to 9% from last production
                   </p>
                 </div>
-                <div className="flex items-center gap-4 p-5 bg-white rounded-2xl">
-                  <CaretUpFilled className="text-2xl text-primary-400" />
-                  <p className="poppins-paragraph-sm">
+                <div className='flex items-center gap-4 p-5 bg-white rounded-2xl'>
+                  <CaretUpFilled className='text-2xl text-primary-400' />
+                  <p className='poppins-paragraph-sm'>
                     Finished 3 batches from last month
                   </p>
                 </div>
-                <div className="flex items-center gap-4 p-5 bg-white rounded-2xl">
-                  <CaretUpFilled className="text-2xl text-primary-400" />
-                  <p className="poppins-paragraph-sm">
+                <div className='flex items-center gap-4 p-5 bg-white rounded-2xl'>
+                  <CaretUpFilled className='text-2xl text-primary-400' />
+                  <p className='poppins-paragraph-sm'>
                     10% more harvest from last batch
                   </p>
                 </div>
               </div>
             </div>
-            <div className="flex m-5 gap-5 flex-col">
+            <div className='flex m-5 gap-5 flex-col'>
               <AnalyticsHarvestByTime />
             </div>
-            <div className="flex m-5 gap-5">
-              <div className="p-12 w-full bg-white rounded-3xl shadow">
+            <div className='flex m-5 gap-5'>
+              <div className='p-12 w-full bg-white rounded-3xl shadow'>
                 <Bar
                   data={chartHarvestCostData}
                   options={{
@@ -148,8 +147,8 @@ export const Analytics = () => {
                 />
               </div>
             </div>
-            <div className="flex m-5 gap-5">
-              <div className="p-12 w-3/5 bg-white rounded-3xl shadow">
+            <div className='flex m-5 gap-5'>
+              <div className='p-12 w-3/5 bg-white rounded-3xl shadow'>
                 <Line
                   data={lineData}
                   options={{
@@ -167,7 +166,7 @@ export const Analytics = () => {
                   }}
                 />
               </div>
-              <div className="p-12 w-2/5 bg-white rounded-3xl shadow">
+              <div className='p-12 w-2/5 bg-white rounded-3xl shadow'>
                 <AnalyticsSubstrateBatch harvests />
               </div>
             </div>

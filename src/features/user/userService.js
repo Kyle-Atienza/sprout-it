@@ -63,6 +63,12 @@ const resetPassword = async (payload) => {
   return response.data;
 };
 
+const getUsers = async (payload) => {
+  const response = await axios.get(`${API_URL}all`, payload);
+
+  return response.data;
+};
+
 const userService = {
   register,
   registerWithInvite,
@@ -71,6 +77,7 @@ const userService = {
   invite,
   forgotPassword,
   resetPassword,
+  getUsers,
 };
 
 export default userService;

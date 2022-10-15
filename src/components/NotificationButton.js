@@ -41,9 +41,9 @@ export const NotificationButton = ({ className }) => {
   };
 
   return (
-    <div className="relative">
+    <div className='relative'>
       <ToastContainer
-        position="top-left"
+        position='top-left'
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -52,7 +52,7 @@ export const NotificationButton = ({ className }) => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="light"
+        theme='light'
       />
       <button
         className={`w-12 h-12 rounded-full   hover:bg-light-200 shadow transition-all ${className} ${
@@ -65,17 +65,17 @@ export const NotificationButton = ({ className }) => {
         />
       </button>
       <div
-        className={`absolute z-10 top-full right-0 w-[400px] bg-light-100 rounded-md shadow flex flex-col mt-5 ${
+        className={`absolute z-10 top-full right-0 w-[240px] md:w-[360px] lg:w-[480px] bg-light-100 rounded-md shadow flex flex-col mt-5 ${
           notificationsState ? `flex` : `hidden`
         }`}
       >
-        <h3 className="p-3">Notifications</h3>
+        <h3 className='p-5 font-bold poppins-heading-6 text-secondary-500'>Notifications</h3>
         <div>
           {notifications.map((notification) => {
             return (
               <div
                 key={notification._id}
-                className="p-5 border-t-2 border-blue-900 relative flex justify-between"
+                className='p-5 border-t-2 border-light-200 relative flex justify-between'
               >
                 <div>
                   <h4>{notification.title}</h4>
@@ -83,7 +83,7 @@ export const NotificationButton = ({ className }) => {
                 </div>
                 <div>
                   <button
-                    className="p-3 bg-primary-400 rounded-full self-start h-min"
+                    className='text-xl leading-none flex justify-center items-center hover:text-red-500'
                     onClick={() => onDeleteNotification(notification._id)}
                   >
                     <CloseOutlined />

@@ -70,7 +70,7 @@ export const PhasesCarousel = () => {
           type='button'
         />
       </div>
-      <div className='carousel-inner overflow-hidden h-full w-full'>
+      <div className='carousel-inner overflow-hidden h-auto w-full pb-6'>
         <div className='bg-white carousel-item active relative float-left w-full h-full'>
           <img
             className='block h-1/2 w-full overflow-hidden object-cover'

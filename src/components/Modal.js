@@ -22,7 +22,7 @@ export const Modal = ({ children }) => {
         onClick={openModal}
       />
       <button
-        className='block md:hidden w-12 h-12 mx-4 text-xl pb-0.5 leading-none text-light-100 rounded-full bg-primary-400 hover:bg-primary-500 shadow transition-all'
+        className='block md:hidden w-12 h-12 text-xl pb-0.5 leading-none text-light-100 rounded-full bg-primary-400 hover:bg-primary-500 shadow transition-all'
         onClick={openModal}
       >
         <PlusOutlined />

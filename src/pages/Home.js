@@ -401,11 +401,11 @@ export const Home = () => {
           <div className='w-full'>
             <TopNavBar pageName='Home' />
           </div>
-          <div className='w-full flex gap-4 mt-8 px-4 md:px-6 lg:px-9'>
-            <div className='w-1/5 flex p-4 gap-2 rounded-lg bg-light-100 shadow items-center'>
+          <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mt-8 px-4 md:px-6 lg:px-9'>
+            <div className='w-full flex p-4 gap-2 rounded-lg bg-light-100 shadow items-center'>
               <img src={Images.Composting} alt='' className='w-10 h-10' />
               <div className='flex flex-col'>
-                <h4 className='poppins-paragraph font-bold text-primary-500'>
+                <h4 className='poppins-paragrap-sm lg:poppins-paragraph font-bold text-primary-500'>
                   Composting
                 </h4>
                 <p className='open-paragraph-sm'>
@@ -413,10 +413,10 @@ export const Home = () => {
                 </p>
               </div>
             </div>
-            <div className='w-1/5 flex p-4 gap-2 rounded-lg bg-light-100 shadow items-center'>
+            <div className='w-full flex p-4 gap-2 rounded-lg bg-light-100 shadow items-center'>
               <img src={Images.Bagging} alt='' className='w-10 h-10' />
               <div className='flex flex-col'>
-                <h4 className='poppins-paragraph font-bold text-primary-500'>
+                <h4 className='poppins-paragrap-sm lg:poppins-paragraph font-bold text-primary-500'>
                   Bagging
                 </h4>
                 <p className='open-paragraph-sm'>
@@ -424,10 +424,10 @@ export const Home = () => {
                 </p>
               </div>
             </div>
-            <div className='w-1/5 flex p-4 gap-2 rounded-lg bg-light-100 shadow items-center'>
+            <div className='w-full flex p-4 gap-2 rounded-lg bg-light-100 shadow items-center'>
               <img src={Images.Sterilizing} alt='' className='w-10 h-10' />
               <div className='flex flex-col'>
-                <h4 className='poppins-paragraph font-bold text-primary-500'>
+                <h4 className='poppins-paragrap-sm lg:poppins-paragraph font-bold text-primary-500'>
                   Sterilization
                 </h4>
                 <p className='open-paragraph-sm'>
@@ -436,10 +436,10 @@ export const Home = () => {
                 </p>
               </div>
             </div>
-            <div className='w-1/5 flex p-4 gap-2 rounded-lg bg-light-100 shadow items-center'>
+            <div className='w-full flex p-4 gap-2 rounded-lg bg-light-100 shadow items-center'>
               <img src={Images.Inoculation} alt='' className='w-10 h-10' />
               <div className='flex flex-col'>
-                <h4 className='poppins-paragraph font-bold text-primary-500'>
+                <h4 className='poppins-paragrap-sm lg:poppins-paragraph font-bold text-primary-500'>
                   Inoculation
                 </h4>
                 <p className='open-paragraph-sm'>
@@ -447,10 +447,10 @@ export const Home = () => {
                 </p>
               </div>
             </div>
-            <div className='w-1/5 flex p-4 gap-2 rounded-lg bg-light-100 shadow items-center'>
+            <div className='w-full flex p-4 gap-2 rounded-lg bg-light-100 shadow items-center'>
               <img src={Images.Fruiting} alt='' className='w-10 h-10' />
               <div className='flex flex-col'>
-                <h4 className='poppins-paragraph font-bold text-primary-500'>
+                <h4 className='poppins-paragrap-sm lg:poppins-paragraph font-bold text-primary-500'>
                   Fruiting
                 </h4>
                 <p className='open-paragraph-sm'>
@@ -476,7 +476,7 @@ export const Home = () => {
                   />
                 </div>
 
-                <div className='p-12 w-full bg-white rounded-3xl shadow'>
+                <div className='p-4 md:p-6 lg:p-12 w-full bg-white rounded-3xl shadow'>
                   <Bar
                     data={barData}
                     options={{

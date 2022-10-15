@@ -51,7 +51,7 @@ export const PreProductionForm = () => {
               className="w-full flex flex-col md:flex-row md:space-x-4 items-start md:items-center"
               key={material.name}
             >
-              <p className="open-paragraph font-semibold w-1/3">
+              <p className="open-paragraph font-semibold w-full md:w-1/3">
                 {material.name} ({material.unit})
               </p>
               <TextField

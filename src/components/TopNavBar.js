@@ -50,7 +50,7 @@ export const TopNavBar = ({ pageName }) => {
         className="
         z-0
             absolute
-            w-full
+            w-auto
             h-20
             lg:hidden
             flex flex-wrap

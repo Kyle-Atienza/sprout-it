@@ -125,6 +125,22 @@ export const resetPassword = createAsyncThunk(
   }
 );
 
+export const getUsers = createAsyncThunk(
+  "users",
+  async (payload, thunkAPI) => {
+    try {
+      return await userService.getUsers(payload);
+    } catch (error) {
+      const message = {
+        status: error.message,
+        response: error.response.data.message,
+      };
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const logout = createAsyncThunk("user/logout", async () => {
   localStorage.removeItem("sproutItUser");
 });
