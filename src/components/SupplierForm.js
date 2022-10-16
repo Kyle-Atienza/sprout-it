@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { PrimaryButton } from "../components";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { createSupplier } from "../features/supplier/supplierSlice";
+import {
+  createSupplier,
+  updateSupplier,
+} from "../features/supplier/supplierSlice";
 
-export const SupplierForm = ({ closeForm }) => {
+export const SupplierForm = ({ closeForm, supplier }) => {
   const dispatch = useDispatch();
 
   const [supplierData, setSupplierData] = useState({
@@ -26,12 +29,36 @@ export const SupplierForm = ({ closeForm }) => {
     closeForm();
   };
 
+  const onUpdateSupplier = () => {
+    dispatch(
+      updateSupplier({
+        id: supplier._id,
+        payload: {
+          name: name,
+          address: address,
+          contact: contact,
+        },
+      })
+    );
+    closeForm();
+  };
+
   const onChange = (e) => {
     setSupplierData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
   };
+
+  useEffect(() => {
+    if (supplier) {
+      setSupplierData({
+        name: supplier.name,
+        address: supplier.address,
+        contact: supplier.contact,
+      });
+    }
+  }, []);
 
   return (
     <>
@@ -41,6 +68,7 @@ export const SupplierForm = ({ closeForm }) => {
         </label>
         <div className="flex justify-center items-center">
           <input
+            defaultValue={name}
             className="w-full p-3 mr-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400"
             name="name"
             type="text"
@@ -55,6 +83,7 @@ export const SupplierForm = ({ closeForm }) => {
         </label>
         <div className="flex justify-center items-center">
           <input
+            defaultValue={address}
             className="w-full p-3 mr-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400"
             name="address"
             type="text"
@@ -69,6 +98,7 @@ export const SupplierForm = ({ closeForm }) => {
         </label>
         <div className="flex justify-center items-center">
           <input
+            defaultValue={contact}
             className="w-full p-3 mr-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400"
             name="contact"
             type="text"
@@ -77,7 +107,10 @@ export const SupplierForm = ({ closeForm }) => {
           />
         </div>
       </div>
-      <PrimaryButton onClick={onCreateSupplier} name="Create Supplier" />
+      <PrimaryButton
+        onClick={supplier ? onUpdateSupplier : onCreateSupplier}
+        name="Create Supplier"
+      />
     </>
   );
 };

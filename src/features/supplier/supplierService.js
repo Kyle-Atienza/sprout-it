@@ -22,9 +22,17 @@ const createSupplier = async (supplierData, token) => {
   return response.data;
 };
 
-const updateSupplier = async ({ id, payload }, token) => {};
+const updateSupplier = async ({ id, payload }, token) => {
+  const response = await axios.put(`${API_URL}${id}`, payload, config(token));
 
-const deleteSupplier = async ({ id, payload }, token) => {};
+  return response.data;
+};
+
+const deleteSupplier = async (id, token) => {
+  const response = await axios.delete(`${API_URL}${id}`, config(token));
+
+  return response.data;
+};
 
 const supplierService = {
   getSuppliers,
