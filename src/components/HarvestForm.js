@@ -15,8 +15,8 @@ export const HarvestForm = ({ selectedBatch, setIsBatchHarvestModalOpen }) => {
 
   const { batchHarvests } = useSelector((state) => state.harvest);
 
-  const [todaysHarvest, setTodaysHarvest] = useState(0);
-  const [updatedHarvest, setUpdatedHarvest] = useState(0);
+  const [todaysHarvest, setTodaysHarvest] = useState("");
+  const [updatedHarvest, setUpdatedHarvest] = useState("");
   const [inputHarvest, setInputHarvest] = useState(false);
 
   const onSubmitHarvest = () => {

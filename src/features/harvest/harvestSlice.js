@@ -7,6 +7,7 @@ const initialState = {
     weeks: [],
     months: [],
   },
+  harvests: [],
   batchHarvests: [],
   dailyHarvests: [],
   isSuccess: false,
