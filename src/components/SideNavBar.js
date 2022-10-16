@@ -19,6 +19,7 @@ export const SideNavBar = (className) => {
 
   const onLogout = () => {
     dispatch(logout());
+    window.location.reload();
   };
 
   return (
@@ -94,13 +95,13 @@ export const SideNavBar = (className) => {
             </a>
           </li>
           <li className="rounded-full px-4 py-2 hover:bg-primary-100 text-dark-400 hover:text-primary-700 transition-all">
-            <a
+            <div
               onClick={onLogout}
-              className="flex items-center p-2 space-x-3 rounded-md"
+              className="flex items-center p-2 space-x-3 rounded-md cursor-pointer"
             >
               <LogoutOutlined className="text-xl leading-none -mt-1" />
               <h4 className="poppins-paragraph font-semibold">Log out</h4>
-            </a>
+            </div>
           </li>
         </ul>
       </div>
