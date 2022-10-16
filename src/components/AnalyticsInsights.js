@@ -1,4 +1,5 @@
 import { CaretDownFilled, CaretUpFilled } from "@ant-design/icons";
+import _, { isUndefined } from "lodash";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { batch, useDispatch, useSelector } from "react-redux";
@@ -7,32 +8,172 @@ export const AnalyticsInsights = () => {
   // const dispatch = useDispatch();
 
   const { batches } = useSelector((state) => state.batch);
+  const { harvestsByTimeRange } = useSelector((state) => state.harvest);
+
+  const { days, weeks, months } = harvestsByTimeRange;
 
   const [insights, setInsights] = useState([]);
 
   useEffect(() => {
-    if (batches.fruiting) {
-      setInsights([
+    const initialInsights = [];
+
+    if (!!batches.fruiting) {
+      initialInsights.push(
         ...batchesPastDaysHarvests().map((batch) => {
           let data = {
             show: "",
-            message: "",
+            isGood: null,
+            message: null,
           };
           if (batch.daysWithHarvests > 5 || batch.totalHarvests < 25) {
             data.message = `Batch ${batch.batch} doesn't produce much harvest, check on its current condition`;
+            data.isGood = false;
             data.show = true;
           } else {
             data.message = "";
+            data.isGood = false;
             data.show = false;
           }
           return data;
-        }),
-      ]);
+        })
+      );
     }
-  }, [batches]);
+
+    if (days.length && weeks.length && months.length) {
+      if (
+        !!getHarvestGrowthPercentage(days) &&
+        !!getHarvestGrowthPercentage(weeks) &&
+        !!getHarvestGrowthPercentage(months)
+      ) {
+        // wip
+        const getHarvestGrowthInsight = (range) => {
+          let rangeName;
+          if (range === "days") {
+            rangeName = "daily";
+          } else if (range === "weeks") {
+            rangeName = "weekly";
+          } else if (range === "months") {
+            rangeName = "monthly";
+          }
+
+          const harvestGrowthPercentage = getHarvestGrowthPercentage(range);
+
+          if (harvestGrowthPercentage === -100) {
+            return {
+              show: true,
+              isGood: false,
+              message: "You still haven't harvested anything today",
+            };
+          } else {
+            return {
+              show: true,
+              isGood: harvestGrowthPercentage > 0,
+              message: `Your ${rangeName} harvest ${
+                harvestGrowthPercentage > 0 ? "increased" : "decreased"
+              } by ${harvestGrowthPercentage}%`,
+            };
+          }
+        };
+
+        initialInsights.push(
+          {
+            show: true,
+            isGood: getHarvestGrowthPercentage(days) > 0,
+            message: `Your daily harvest ${
+              getHarvestGrowthPercentage(days) > 0 ? "increased" : "decreased"
+            } by ${getHarvestGrowthPercentage(days)}%`,
+          },
+          {
+            show: true,
+            isGood: getHarvestGrowthPercentage(weeks) > 0,
+            message: `Your weekly harvest ${
+              getHarvestGrowthPercentage(weeks) > 0 ? "increased" : "decreased"
+            } by ${getHarvestGrowthPercentage(weeks)}%`,
+          },
+          {
+            show: true,
+            isGood: getHarvestGrowthPercentage(months) > 0,
+            message: `Your monthly harvest ${
+              getHarvestGrowthPercentage(months) > 0 ? "increased" : "decreased"
+            } by ${getHarvestGrowthPercentage(months)}%`,
+          }
+        );
+      }
+    }
+
+    setInsights(initialInsights);
+  }, [batches, harvestsByTimeRange]);
+
+  /*  useEffect(() => {
+    if (days.length && weeks.length && months.length) {
+      if (
+        !!getHarvestGrowthPercentage(days) &&
+        !!getHarvestGrowthPercentage(weeks) &&
+        !!getHarvestGrowthPercentage(months)
+      ) {
+        setInsights(
+          _.uniqBy(
+            [
+              ...insights,
+              {
+                show: "true",
+                message: `Your daily harvest ${
+                  getHarvestGrowthPercentage(days) > 0
+                    ? "increased"
+                    : "decreased"
+                } by ${getHarvestGrowthPercentage(days)}%`,
+              },
+              {
+                show: "true",
+                message: `Your weekly harvest ${
+                  getHarvestGrowthPercentage(weeks) > 0
+                    ? "increased"
+                    : "decreased"
+                } by ${getHarvestGrowthPercentage(weeks)}%`,
+              },
+              {
+                show: "true",
+                message: `Your monthly harvest ${
+                  getHarvestGrowthPercentage(months) > 0
+                    ? "increased"
+                    : "decreased"
+                } by ${getHarvestGrowthPercentage(months)}%`,
+              },
+            ],
+            "message"
+          )
+        );
+      }
+    }
+  }, [harvestsByTimeRange]); */
+
+  useEffect(() => {
+    console.log(insights);
+  }, [insights]);
 
   const pastDays = (current, daysPast) => {
     return new Date(current.setDate(current.getDate() - daysPast));
+  };
+
+  const getHarvestGrowthPercentage = (harvests) => {
+    const currentHarvest = [...harvests].reverse()[1];
+    const pastHarvest = [...harvests].reverse()[2];
+
+    const totalHarvests = (harvest) => {
+      return harvest.data.reduce((prev, curr) => {
+        return prev + curr.weight;
+      }, 0);
+    };
+
+    const currentValue = totalHarvests(currentHarvest);
+    const pastValue = totalHarvests(pastHarvest);
+    const percentage = Math.floor(
+      ((currentValue - pastValue) / pastValue) * 100
+    );
+
+    if (!isNaN(percentage)) {
+      return percentage;
+    }
   };
 
   const batchesPastDaysHarvests = () => {
@@ -60,55 +201,6 @@ export const AnalyticsInsights = () => {
       });
   };
 
-  const getDatesInRange = (startDate, endDate, range) => {
-    let date;
-    let interval;
-    let end;
-
-    // console.log(startDate, endDate, range);
-
-    if (range === "days") {
-      date = new Date(startDate.getTime());
-      interval = 1;
-      end = new Date(endDate.setDate(endDate.getDate() + 1));
-    } else if (range === "weeks") {
-      const day = new Date(startDate).getDay();
-      const diff = new Date(startDate).getDate() - day + (day === 0 ? -6 : 1);
-
-      date = new Date(new Date(startDate).setDate(diff));
-      interval = 7;
-      end = new Date(endDate.setDate(endDate.getDate() + 7));
-    } else if (range === "months") {
-      date = new Date(
-        new Date(startDate).getFullYear(),
-        new Date(startDate).getMonth(),
-        1
-      );
-      end = new Date(endDate.setMonth(endDate.getMonth() + 1));
-    }
-
-    const dates = [];
-
-    if (range === "days") {
-      while (date <= end) {
-        dates.push(new Date(date).toDateString().slice(4).replaceAll(" ", "-"));
-        date.setDate(date.getDate() + interval);
-      }
-    } else if (range === "weeks") {
-      while (date <= end) {
-        dates.push(new Date(date).toDateString().slice(4).replaceAll(" ", "-"));
-        date.setDate(date.getDate() + interval);
-      }
-    } else if (range === "months") {
-      while (date <= end) {
-        dates.push(new Date(date).toDateString().slice(4).replaceAll(" ", "-"));
-        date.setMonth(date.getMonth() + 1);
-      }
-    }
-
-    return dates;
-  };
-
   return (
     <>
       {insights
@@ -121,7 +213,12 @@ export const AnalyticsInsights = () => {
               key={index}
               className="flex items-center gap-4 p-5 bg-white rounded-2xl"
             >
-              <CaretUpFilled className="text-2xl text-primary-400" />
+              {insight.isGood ? (
+                <CaretUpFilled className="text-2xl text-primary-400" />
+              ) : (
+                <CaretDownFilled className="text-2xl text-red-400" />
+              )}
+
               <p className="poppins-paragraph-sm">{insight.message}</p>
             </div>
           );
