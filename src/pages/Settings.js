@@ -1,16 +1,21 @@
 import React, { useState } from "react";
 import { InviteForm } from "../components";
-import { SideNavBar, TopNavBar, TextField } from "../components";
+import { SideNavBar, TopNavBar, TextField, PrimaryButton } from "../components";
 import { useEffect } from "react";
 import { getMaterials } from "../features/inventory/inventorySlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsers, deleteUser } from "../features/user/userSlice";
 import { DeleteFilled } from "@ant-design/icons";
+import { updateUser } from "../features/user/userSlice";
 
 export function Settings() {
   const dispatch = useDispatch();
+  const [password, setPassword] = useState({
+    newPass: "",
+    confirmPass: "",
+  });
 
-  const { users } = useSelector((state) => state.user);
+  const { users, user } = useSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(getMaterials());
@@ -24,6 +29,33 @@ export function Settings() {
   const onDeleteUser = (id) => {
     dispatch(deleteUser(id));
     window.location.reload();
+  };
+
+  const onChangeUpdatePassword = (e) => {
+    setPassword((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const updatePassword = () => {
+    if (password.newPass === password.confirmPass) {
+      dispatch(
+        updateUser({
+          id: user._id,
+          data: {
+            password: password.newPass,
+          },
+        })
+      );
+      setPassword({
+        newPass: "",
+        confirmPass: "",
+      });
+      alert("Password Updated Successfully");
+    } else {
+      alert("Your password didn't match");
+    }
   };
 
   return (
@@ -40,6 +72,24 @@ export function Settings() {
           <div className="w-full flex gap-10 my-4 py-4 px-4 md:px-6 lg:px-9">
             <section className="w-full lg:w-1/2 ">
               <InviteForm />
+              <h3>Change Password</h3>
+              <TextField
+                value={password.newPass}
+                type="password"
+                name="newPass"
+                id="password"
+                placeholder="Create new password"
+                onChange={onChangeUpdatePassword}
+              />
+              <TextField
+                value={password.confirmPass}
+                type="password"
+                name="confirmPass"
+                id="password"
+                placeholder="Confirm new password"
+                onChange={onChangeUpdatePassword}
+              />
+              <PrimaryButton name="Update Password" onClick={updatePassword} />
             </section>
             <section className="w-full lg:w-1/2 mx-10 my-6 shadow-md bg-light-100 rounded-xl">
               <table className="w-full text-sm text-left">
