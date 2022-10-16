@@ -23,7 +23,7 @@ export const TextField = ({
   };
 
   return (
-    <div className="relative">
+    <div className="flex w-full">
       <input
         ref={inputRef}
         type={type}

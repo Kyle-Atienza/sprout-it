@@ -90,7 +90,7 @@ export const TopNavBar = ({ pageName }) => {
             id="navbarSupportedContent"
           >
             {/* <!-- Left links --> */}
-            <ul className="navbar-nav flex flex-col list-style-none mr-auto bg-light-100 rounded-lg lg:hidd shadow p-4">
+            <ul className="navbar-nav flex flex-col list-style-none mr-auto bg-light-100 rounded-lg lg:hidd shadow p-4 z-50">
               <li className="rounded-full px-4 py-2 hover:bg-primary-100 active:bg-primary-100 text-dark-400 hover:text-primary-700 transition-all">
                 <a
                   href="/home"

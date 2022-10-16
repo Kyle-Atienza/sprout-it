@@ -102,29 +102,29 @@ export const Analytics = () => {
 
   return (
     <>
-      <div className="flex flex-row w-screen">
-        <div className="w-0 lg:w-1/6">
+      <div className='flex flex-row w-screen'>
+        <div className='w-0 lg:w-1/6'>
           <SideNavBar />
         </div>
-        <div className="flex flex-col w-full lg:w-5/6 min-h-screen">
-          <div className="w-full">
-            <TopNavBar pageName="Reports" />
+        <div className='flex flex-col w-full lg:w-5/6 min-h-screen'>
+          <div className='w-full'>
+            <TopNavBar pageName='Analytics' />
           </div>
-          <div className="charts d-flex flex-col">
-            <div className="flex flex-col m-5 gap-5 w-full h-[40vh] lg:flex-row">
-              <div className="p-4 md:p-6 lg:p-12 w-full lg:w-1/2 bg-white rounded-3xl shadow">
+          <div className='charts d-flex flex-col mx-10 mt-16'>
+            <div className='flex flex-col gap-0 lg:gap-5 lg:flex-row'>
+              <div className='p-4 md:p-6 lg:p-12 w-full lg:w-1/2 bg-white rounded-3xl shadow'>
                 <AnalyticsSubstrateBatch compareHarvestDefects />
               </div>
 
-              <div className="p-5 w-1/2 bg-secondary-100 rounded-3xl shadow flex flex-col gap-4 overflow-y-scroll">
+              <div className='p-4 md:p-6 mt-6 lg:mt-0 lg:p-12 w-full lg:w-1/2 bg-secondary-100 rounded-3xl shadow flex flex-col gap-4 overflow-y-scroll'>
                 <AnalyticsInsights />
               </div>
             </div>
-            <div className="flex m-5 gap-5 flex-col">
+            <div className='flex gap-5 flex-col mt-6'>
               <AnalyticsHarvestByTime />
             </div>
-            <div className="flex m-5 gap-5">
-              <div className="p-12 w-full bg-white rounded-3xl shadow">
+            <div className='flex gap-5 my-6'>
+              <div className='p-4 md:p-6 lg:p-12 w-full bg-white rounded-3xl shadow'>
                 <Bar
                   data={chartHarvestCostData}
                   options={{
@@ -141,29 +141,6 @@ export const Analytics = () => {
                     },
                   }}
                 />
-              </div>
-            </div>
-            <div className="flex m-5 gap-5">
-              <div className="p-12 w-3/5 bg-white rounded-3xl shadow">
-                <Line
-                  data={lineData}
-                  options={{
-                    responsive: true,
-                    plugins: {
-                      legend: {
-                        position: "top",
-                      },
-                      title: {
-                        display: true,
-                        text: "Fruiting Bags to Defects Ratio",
-                        fontSize: 20,
-                      },
-                    },
-                  }}
-                />
-              </div>
-              <div className="p-12 w-2/5 bg-white rounded-3xl shadow">
-                <AnalyticsSubstrateBatch harvests />
               </div>
             </div>
           </div>

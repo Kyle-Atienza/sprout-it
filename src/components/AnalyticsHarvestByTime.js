@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { PrimaryButton } from "../components";
+import { PrimaryButton, SecondaryButton } from "../components";
 import {
   getDailyHarvests,
   mapHarvestsByTimeFrame,
@@ -164,21 +164,24 @@ export const AnalyticsHarvestByTime = () => {
   };
 
   return (
-    <div className="p-12 w-full bg-white rounded-3xl shadow">
-      <PrimaryButton
-        onClick={() => setChartHarvestDateRange("days")}
-        name="days"
-      />
-      <PrimaryButton
-        onClick={() => setChartHarvestDateRange("weeks")}
-        name="weeks"
-      />
-      <PrimaryButton
-        onClick={() => setChartHarvestDateRange("months")}
-        name="months"
-      />
-      <PrimaryButton onClick={() => scrollTimeRange("older")} name="-" />
-      <PrimaryButton onClick={() => scrollTimeRange("newer")} name="+" />
+    <div className="p-4 md:p-6 lg:p-12 w-full bg-white rounded-3xl shadow">
+      <div className="flex flex-wrap gap-2">
+        <SecondaryButton
+          onClick={() => setChartHarvestDateRange("days")}
+          name="days"
+        />
+        <SecondaryButton
+          onClick={() => setChartHarvestDateRange("weeks")}
+          name="weeks"
+        />
+        <SecondaryButton
+          onClick={() => setChartHarvestDateRange("months")}
+          name="months"
+        />
+        <SecondaryButton onClick={() => scrollTimeRange("older")} name="<" />
+        <SecondaryButton onClick={() => scrollTimeRange("newer")} name=">" />
+      </div>
+
       <Bar
         data={chartHarvestData}
         options={{
