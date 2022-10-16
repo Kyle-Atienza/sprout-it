@@ -10,7 +10,7 @@ Chart.register(...registerables);
 export const AnalyticsHarvestByTime = () => {
   const dispatch = useDispatch();
 
-  const { finished } = useSelector((state) => state.batch);
+  const { finished, initialBatches } = useSelector((state) => state.batch);
   const { daily: dailyHarvest } = useSelector((state) => state.harvest);
 
   // const [dates, setDates] = useState([]);
@@ -36,7 +36,7 @@ export const AnalyticsHarvestByTime = () => {
 
   useEffect(() => {
     if (finished) {
-      dispatch(getDailyHarvests(finished));
+      dispatch(getDailyHarvests(initialBatches));
     }
   }, [finished]);
 
@@ -45,7 +45,7 @@ export const AnalyticsHarvestByTime = () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
       dates = getDatesInRange(
         new Date(dailyHarvest[0].date),
-        new Date(dailyHarvest[dailyHarvest.length - 1].date),
+        new Date(Date.now()),
         chartHarvestDateRange
       )[chartHarvestDatePage];
 

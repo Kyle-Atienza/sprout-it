@@ -24,4 +24,5 @@ export * from "./AnalyticsHarvestByTime";
 export * from "./AnalyticsSubstrateBatch";
 export * from "./MaterialCard";
 export * from "./AnalyticsHarvestByTime";
+export * from "./AnalyticsInsights";
 export * from "./SupplierForm";

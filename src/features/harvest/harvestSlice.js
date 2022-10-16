@@ -2,12 +2,13 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import harvestService from "./harvestService";
 
 const initialState = {
-  harvests: {}, // group harvests by batch
+  harvestsByTimeRange: {
+    days: [],
+    weeks: [],
+    months: [],
+  },
   batchHarvests: [],
   daily: [],
-  weekly: [],
-  monthly: [],
-  yearly: [],
   isSuccess: false,
   isError: false,
   isLoading: false,
@@ -82,6 +83,11 @@ export const deleteHarvest = createAsyncThunk(
   }
 );
 
+/* export const mapHarvestsByTimeFrame = createAsyncThunk(
+  "harvest/mapByTimeFrame",
+  async (payload, thunkAPI) => {}
+); */
+
 export const harvestSlice = createSlice({
   name: "harvest",
   initialState,
@@ -94,7 +100,7 @@ export const harvestSlice = createSlice({
       state.message = "";
     },
     getDailyHarvests: (state, action) => {
-      state.daily = action.payload
+      const harvestsByTimeRange = action.payload
         .filter((batch) => {
           // get batch with harvests
           return batch.harvests.length;
@@ -111,18 +117,114 @@ export const harvestSlice = createSlice({
             .toDateString()
             .slice(4)
             .replaceAll(" ", "-");
-          date[index] = date[index] ?? {
+          date[key] = date[key] ?? {
             date: key,
             harvests: [],
           };
-          date[index].harvests.push(currentBatch);
+          date[key].harvests.push(currentBatch);
           return date;
-        }, [])
+        }, {});
+
+      state.daily = Object.keys(harvestsByTimeRange)
+        .map((harvest) => {
+          return {
+            date: harvestsByTimeRange[harvest].date,
+            harvests: harvestsByTimeRange[harvest].harvests,
+          };
+        })
         .slice() // gamitin daw pag nag ssort kase d nagana
         .sort((a, b) => {
           // sort date from earliest to latest
           return Date.parse(a.date) - Date.parse(b.date);
         });
+    },
+    mapHarvestsByTimeFrame: (state, action) => {
+      const getDatesInRange = (startDate, endDate, range) => {
+        let date;
+        let interval;
+        let end;
+
+        // console.log(startDate, endDate, range);
+
+        if (range === "days") {
+          date = new Date(startDate.getTime());
+          interval = 1;
+          end = new Date(endDate.setDate(endDate.getDate() + 1));
+        } else if (range === "weeks") {
+          const day = new Date(startDate).getDay();
+          const diff =
+            new Date(startDate).getDate() - day + (day === 0 ? -6 : 1);
+
+          date = new Date(new Date(startDate).setDate(diff));
+          interval = 7;
+          end = new Date(endDate.setDate(endDate.getDate() + 7));
+        } else if (range === "months") {
+          date = new Date(
+            new Date(startDate).getFullYear(),
+            new Date(startDate).getMonth(),
+            1
+          );
+          end = new Date(endDate.setMonth(endDate.getMonth() + 1));
+        }
+
+        const dates = [];
+
+        if (range === "days") {
+          while (date <= end) {
+            dates.push(
+              new Date(date).toDateString().slice(4).replaceAll(" ", "-")
+            );
+            date.setDate(date.getDate() + interval);
+          }
+        } else if (range === "weeks") {
+          while (date <= end) {
+            dates.push(
+              new Date(date).toDateString().slice(4).replaceAll(" ", "-")
+            );
+            date.setDate(date.getDate() + interval);
+          }
+        } else if (range === "months") {
+          while (date <= end) {
+            dates.push(
+              new Date(date).toDateString().slice(4).replaceAll(" ", "-")
+            );
+            date.setMonth(date.getMonth() + 1);
+          }
+        }
+
+        return dates;
+      };
+
+      Object.keys(state.harvestsByTimeRange).forEach((time) => {
+        const dates = getDatesInRange(
+          new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
+          new Date(Date.now()),
+          time
+        );
+
+        state.harvestsByTimeRange[time] = dates.map((date, index) => {
+          return {
+            date: date,
+            label:
+              time === "months"
+                ? date.split("-").splice(0, 1).join(" ")
+                : date.split("-").splice(0, 2).join(" "),
+            data: action.payload
+              .filter((harvest) => {
+                return (
+                  new Date(harvest.date).getTime() >=
+                    new Date(dates[index]).getTime() &&
+                  new Date(harvest.date).getTime() <
+                    new Date(
+                      dates[index + 1] ? dates[index + 1] : date
+                    ).getTime()
+                );
+              })
+              .map((harvest) => harvest.harvests)
+              .flat(),
+          };
+        });
+      });
     },
   },
   extraReducers: (builder) => {
@@ -214,5 +316,6 @@ export const harvestSlice = createSlice({
   },
 });
 
-export const { resetHarvests, getDailyHarvests } = harvestSlice.actions;
+export const { resetHarvests, getDailyHarvests, mapHarvestsByTimeFrame } =
+  harvestSlice.actions;
 export default harvestSlice.reducer;

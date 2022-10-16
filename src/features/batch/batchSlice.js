@@ -4,6 +4,7 @@ import batchService from "./batchService";
 const initialState = {
   initialBatches: [],
   batches: [],
+  active: [],
   finished: [],
   substrate: {
     kusot: [],
@@ -160,6 +161,9 @@ export const batchSlice = createSlice({
         // finished tasks
         state.finished = action.payload.filter((batch) => {
           return batch.activePhase === "";
+        });
+        state.active = action.payload.filter((batch) => {
+          return batch.active;
         });
 
         state.substrate.mixed = action.payload.filter((batch) => {
