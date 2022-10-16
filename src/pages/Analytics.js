@@ -11,20 +11,37 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getBatches } from "../features/batch/batchSlice";
 import { Bar, Line } from "react-chartjs-2";
-import { CaretUpFilled, CaretDownFilled } from "@ant-design/icons";
 import { Chart, registerables } from "chart.js";
 import { getMaterials } from "../features/inventory/inventorySlice";
+import {
+  getDailyHarvests,
+  mapHarvestsByTimeFrame,
+} from "../features/harvest/harvestSlice";
 Chart.register(...registerables);
 
 export const Analytics = () => {
   const dispatch = useDispatch();
 
-  const { finished } = useSelector((state) => state.batch);
+  const { finished, initialBatches } = useSelector((state) => state.batch);
+  const { dailyHarvests } = useSelector((state) => state.harvest);
 
   useEffect(() => {
     dispatch(getBatches());
     dispatch(getMaterials());
   }, []);
+
+  useEffect(() => {
+    if (finished) {
+      dispatch(getDailyHarvests(initialBatches));
+    }
+  }, [finished]);
+
+  useEffect(() => {
+    // console.log("mapHarvestsByTimeFrame");
+    if (dailyHarvests.length) {
+      dispatch(mapHarvestsByTimeFrame(dailyHarvests));
+    }
+  }, [dailyHarvests]);
 
   const getBatchHarvestSum = (batch) => {
     return batch.harvests.reduce((prev, current) => {

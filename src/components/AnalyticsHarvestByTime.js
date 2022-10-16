@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { PrimaryButton } from "../components";
-import { getDailyHarvests } from "../features/harvest/harvestSlice";
+import {
+  getDailyHarvests,
+  mapHarvestsByTimeFrame,
+} from "../features/harvest/harvestSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { Bar } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
@@ -11,7 +14,9 @@ export const AnalyticsHarvestByTime = () => {
   const dispatch = useDispatch();
 
   const { finished, initialBatches } = useSelector((state) => state.batch);
-  const { daily: dailyHarvest } = useSelector((state) => state.harvest);
+  const { dailyHarvests, harvestsByTimeRange } = useSelector(
+    (state) => state.harvest
+  );
 
   // const [dates, setDates] = useState([]);
   let dates = [];
@@ -41,10 +46,15 @@ export const AnalyticsHarvestByTime = () => {
   }, [finished]);
 
   useEffect(() => {
-    if (dailyHarvest.length) {
+    if (dailyHarvests.length) {
+      dispatch(mapHarvestsByTimeFrame(dailyHarvests));
+
+      console.log(
+        chunkHarvestsByTimeRange(harvestsByTimeRange, chartHarvestDateRange)
+      );
       // eslint-disable-next-line react-hooks/exhaustive-deps
       dates = getDatesInRange(
-        new Date(dailyHarvest[0].date),
+        new Date(dailyHarvests[0].date),
         new Date(Date.now()),
         chartHarvestDateRange
       )[chartHarvestDatePage];
@@ -57,7 +67,7 @@ export const AnalyticsHarvestByTime = () => {
               chartHarvestDateRange === "months"
                 ? date.split("-").splice(0, 1).join(" ")
                 : date.split("-").splice(0, 2).join(" "),
-            data: dailyHarvest
+            data: dailyHarvests
               .filter((harvest) => {
                 return (
                   new Date(harvest.date).getTime() >=
@@ -74,7 +84,7 @@ export const AnalyticsHarvestByTime = () => {
         })
       );
     }
-  }, [dailyHarvest, chartHarvestDateRange, chartHarvestDatePage]);
+  }, [dailyHarvests, chartHarvestDateRange, chartHarvestDatePage]);
 
   const getDatesInRange = (startDate, endDate, range) => {
     let date;
@@ -139,6 +149,18 @@ export const AnalyticsHarvestByTime = () => {
         chartHarvestDatePage !== 0 ? chartHarvestDatePage - 1 : 0
       );
     }
+  };
+
+  const chunkHarvestsByTimeRange = (harvests, range) => {
+    let group;
+    if (range === "days") {
+      group = 15;
+    } else if (range === "weeks") {
+      group = 8;
+    } else if (range === "months") {
+      group = 12;
+    }
+    _.chunk(harvests, group);
   };
 
   return (

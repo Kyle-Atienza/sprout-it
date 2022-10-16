@@ -2,87 +2,13 @@ import { CaretDownFilled, CaretUpFilled } from "@ant-design/icons";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { batch, useDispatch, useSelector } from "react-redux";
-import { getBatches } from "../features/batch/batchSlice";
-import {
-  getDailyHarvests,
-  mapHarvestsByTimeFrame,
-} from "../features/harvest/harvestSlice";
 
 export const AnalyticsInsights = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const { initialBatches, active, batches, finished } = useSelector(
-    (state) => state.batch
-  );
-  const { daily: dailyHarvest } = useSelector((state) => state.harvest);
-
-  const [harvestsByTimeRange, setHarvestsByTimeRange] = useState({
-    days: [],
-    weeks: [],
-    months: [],
-  });
+  const { batches } = useSelector((state) => state.batch);
 
   const [insights, setInsights] = useState([]);
-
-  useEffect(() => {
-    dispatch(getBatches());
-  }, []);
-
-  useEffect(() => {
-    // console.log("getDailyHarvests");
-    if (finished) {
-      dispatch(getDailyHarvests(initialBatches));
-    }
-  }, [finished]);
-
-  useEffect(() => {
-    // console.log("mapHarvestsByTimeFrame");
-    if (dailyHarvest.length) {
-      Object.keys(harvestsByTimeRange).forEach((time) => {
-        const dates = getDatesInRange(
-          new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
-          new Date(Date.now()),
-          time
-        );
-
-        setHarvestsByTimeRange((prevState) => ({
-          ...prevState,
-          [time]: dates.map((date, index) => {
-            return {
-              date: date,
-              label:
-                time === "months"
-                  ? date.split("-").splice(0, 1).join(" ")
-                  : date.split("-").splice(0, 2).join(" "),
-              data: dailyHarvest
-                .map((harvest) => {
-                  console.log(
-                    new Date(harvest.date).getTime() >=
-                      new Date(dates[index]).getTime() &&
-                      new Date(harvest.date).getTime() <
-                        new Date(
-                          dates[index + 1] ? dates[index + 1] : date
-                        ).getTime()
-                  );
-                  if (
-                    new Date(harvest.date).getTime() >=
-                      new Date(dates[index]).getTime() &&
-                    new Date(harvest.date).getTime() <
-                      new Date(
-                        dates[index + 1] ? dates[index + 1] : date
-                      ).getTime()
-                  ) {
-                    return harvest.harvests;
-                  }
-                  return [];
-                })
-                .flat(),
-            };
-          }),
-        }));
-      });
-    }
-  }, [dailyHarvest]);
 
   useEffect(() => {
     if (batches.fruiting) {
@@ -104,8 +30,6 @@ export const AnalyticsInsights = () => {
       ]);
     }
   }, [batches]);
-
-  // batch _ doesn't produce much harvest, check on its current condition
 
   const pastDays = (current, daysPast) => {
     return new Date(current.setDate(current.getDate() - daysPast));

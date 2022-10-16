@@ -8,7 +8,7 @@ const initialState = {
     months: [],
   },
   batchHarvests: [],
-  daily: [],
+  dailyHarvests: [],
   isSuccess: false,
   isError: false,
   isLoading: false,
@@ -125,7 +125,7 @@ export const harvestSlice = createSlice({
           return date;
         }, {});
 
-      state.daily = Object.keys(harvestsByTimeRange)
+      state.dailyHarvests = Object.keys(harvestsByTimeRange)
         .map((harvest) => {
           return {
             date: harvestsByTimeRange[harvest].date,
@@ -209,8 +209,8 @@ export const harvestSlice = createSlice({
               time === "months"
                 ? date.split("-").splice(0, 1).join(" ")
                 : date.split("-").splice(0, 2).join(" "),
-            data: action.payload
-              .filter((harvest) => {
+            data: [
+              ...action.payload.filter((harvest) => {
                 return (
                   new Date(harvest.date).getTime() >=
                     new Date(dates[index]).getTime() &&
@@ -219,7 +219,8 @@ export const harvestSlice = createSlice({
                       dates[index + 1] ? dates[index + 1] : date
                     ).getTime()
                 );
-              })
+              }),
+            ]
               .map((harvest) => harvest.harvests)
               .flat(),
           };
