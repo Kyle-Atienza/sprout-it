@@ -46,13 +46,13 @@ export function InviteForm() {
             name={"firstName"}
             placeholder={"First Name"}
             onChange={onChange}
-            className='w-1/2'
+            className='w-full'
           />
           <TextField
             name={"lastName"}
             placeholder={"Last Name"}
             onChange={onChange}
-            className='w-1/2'
+            className='w-full'
           />
         </div>
         <TextField

@@ -17,7 +17,7 @@ export function BatchDetails({ batch }) {
       case "sterilization":
         return "Sterilization";
       case "inoculation":
-        return "Inculation";
+        return "Inoculation";
       case "fruiting":
         return "Fruiting";
       case "post":

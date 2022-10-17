@@ -104,7 +104,7 @@ export const PhasesCarousel = () => {
               Oyster mushrooms, the common name for the species Pleurotus
               ostreatus, are one of the most common types of cultivated
               mushrooms in the world. They're also known as pearl oyster
-              mushrooms or tree oyster mushrooms. The funghi grow naturally on
+              mushrooms or tree oyster mushrooms. The fungi grow naturally on
               and near trees in temperate and subtropic forests around the
               world, and they're grown commercially in many countries. Oyster
               mushrooms are eaten in a variety of cuisines and are especially
@@ -131,7 +131,7 @@ export const PhasesCarousel = () => {
               the materials together to create the mushroom compost which will
               contain the mushrooms that will grow in the fruiting phase. Proper
               moisture content is needed to ensure the best quality of mushroom
-              growth
+              growth.
             </p>
           </div>
         </div>
@@ -151,7 +151,7 @@ export const PhasesCarousel = () => {
               compost. This phase may take up from several days up to a few
               weeks. Within this process the materials turns to transform into a
               single substrate which contains the necessary nutrients of the
-              mushroom
+              mushroom.
             </p>
           </div>
         </div>
@@ -170,7 +170,7 @@ export const PhasesCarousel = () => {
               plastic size and the compost itself. This way the mushroom compost
               can be put inside the sterilizer and easily transferred and placed
               in the fruiting area. At this point each bags is called fruiting
-              bags
+              bags.
             </p>
           </div>
         </div>
@@ -214,7 +214,7 @@ export const PhasesCarousel = () => {
               the mushroom. After individually placing spawn to each fruiting
               bags, it will start to spread all over the fruiting bags and this
               usually takes up few weeks of waiting before it is viable to be
-              transferred to fruiting house
+              transferred to fruiting house.
             </p>
           </div>
         </div>
@@ -233,7 +233,7 @@ export const PhasesCarousel = () => {
               and disinfectant to the bags itself. The actual growing process
               will start after a few weeks of waiting, until it starts to grown
               pins of mushrooms and later grow to fully harvestable mushrooms.
-              Harvested mushrooms are weighed for record keeping
+              Harvested mushrooms are weighed for record keeping.
             </p>
           </div>
         </div>

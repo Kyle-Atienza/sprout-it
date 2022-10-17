@@ -123,14 +123,6 @@ export const Records = () => {
             <TopNavBar pageName='Records' />
           </div>
 
-          <div className='search mx-10 mt-16'>
-            <input
-              type='text'
-              className='rounded-full border-0 shadow-md bg-light-100 poppins-paragraph-sm px-5 py-3 placeholder:opacity-50 w-80'
-              placeholder='Search Batches'
-            />
-          </div>
-
           <div className='overflow-x-auto relative harvests-table mx-10 my-6 shadow-md bg-light-100 rounded-xl'>
             <table className='w-full text-sm text-left'>
               <thead className=' poppins-paragraph text-secondary-300'>
