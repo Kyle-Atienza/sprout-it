@@ -1,5 +1,4 @@
-import { Routes, Route, useNavigate } from "react-router";
-import { useSelector } from "react-redux";
+import { Routes, Route } from "react-router";
 import {
   LoginUser,
   RegisterUser,
@@ -14,19 +13,8 @@ import {
   Financials,
   Home,
 } from "./pages";
-import { useEffect } from "react";
 
 export const App = () => {
-  const navigate = useNavigate();
-
-  const { user } = useSelector((state) => state.user);
-
-  useEffect(() => {
-    if (!user) {
-      navigate("/");
-    }
-  }, [user]);
-
   return (
     <div className="bg-accent-100">
       <Routes>

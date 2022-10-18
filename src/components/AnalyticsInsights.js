@@ -1,5 +1,5 @@
 import { CaretDownFilled, CaretUpFilled } from "@ant-design/icons";
-import _, { isUndefined } from "lodash";
+import _ from "lodash";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { batch, useDispatch, useSelector } from "react-redux";
@@ -17,7 +17,7 @@ export const AnalyticsInsights = () => {
   useEffect(() => {
     const initialInsights = [];
 
-    if (!!batches.fruiting) {
+    if (batches.fruiting) {
       initialInsights.push(
         ...batchesPastDaysHarvests().map((batch) => {
           let data = {
