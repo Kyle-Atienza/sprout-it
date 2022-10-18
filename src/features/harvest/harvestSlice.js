@@ -250,7 +250,8 @@ export const harvestSlice = createSlice({
       .addCase(createHarvest.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.harvests = [...state.harvests, action.payload];
+        // state.harvests = [...state.harvests, action.payload];
+        state.batchHarvests = [...state.batchHarvests, action.payload];
       })
       .addCase(createHarvest.rejected, (state, action) => {
         state.isLoading = false;

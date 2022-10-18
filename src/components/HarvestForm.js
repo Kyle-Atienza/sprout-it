@@ -15,17 +15,18 @@ export const HarvestForm = ({ selectedBatch, setIsBatchHarvestModalOpen }) => {
 
   const { batchHarvests } = useSelector((state) => state.harvest);
 
-  const [todaysHarvest, setTodaysHarvest] = useState("");
+  const [todaysHarvest, setTodaysHarvest] = useState({});
   const [updatedHarvest, setUpdatedHarvest] = useState("");
   const [inputHarvest, setInputHarvest] = useState(false);
 
   const onSubmitHarvest = () => {
-    if (!todaysHarvest) {
+    if (Object.keys(todaysHarvest).length === 0) {
+      console.log(selectedBatch._id);
       dispatch(
         createHarvest({
           id: selectedBatch._id,
           payload: {
-            weight: todaysHarvest,
+            weight: updatedHarvest,
           },
         })
       );
@@ -56,15 +57,17 @@ export const HarvestForm = ({ selectedBatch, setIsBatchHarvestModalOpen }) => {
       );
     });
 
-    setTodaysHarvest(!!todaysHarvest ? todaysHarvest : 0);
+    console.log(todaysHarvest);
+
+    setTodaysHarvest(!!todaysHarvest ? todaysHarvest : {});
     setUpdatedHarvest(!!todaysHarvest ? todaysHarvest.weight : 0);
   }, [batchHarvests]);
 
   return (
-    <div className='flex flex-col'>
-      <div className='flex gap-2 items-center mb-4'>
-        <p className='poppins-paragraph-sm'>
-          Today's Harvests: {todaysHarvest.weight} kg
+    <div className="flex flex-col">
+      <div className="flex gap-2 items-center mb-4">
+        <p className="poppins-paragraph-sm">
+          Today's Harvests: {todaysHarvest.weight ? todaysHarvest.weight : 0} kg
         </p>
         <button onClick={() => setInputHarvest(!inputHarvest)}>
           {inputHarvest ? <CheckCircleOutlined /> : <EditOutlined />}
@@ -74,21 +77,21 @@ export const HarvestForm = ({ selectedBatch, setIsBatchHarvestModalOpen }) => {
       {inputHarvest ? (
         <>
           <input
-            className='w-full p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm my-2 focus:ring-primary-500 focus:border-primary-400'
-            id='todaysHarvest'
-            name='todaysHarvest'
-            type='number'
+            className="w-full p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm my-2 focus:ring-primary-500 focus:border-primary-400"
+            id="todaysHarvest"
+            name="todaysHarvest"
+            type="number"
             required
             value={updatedHarvest}
             onChange={(e) => setUpdatedHarvest(e.target.value)}
             placeholder={!todaysHarvest ? 0 : null}
           />
-          <div className='flex justify-between mb-4'>
+          <div className="flex justify-between mb-4">
             <SecondaryButton
               onClick={() => setIsBatchHarvestModalOpen(true)}
-              name='View All Harvest'
+              name="View All Harvest"
             />
-            <PrimaryButton onClick={onSubmitHarvest} name='Submit Harvest' />
+            <PrimaryButton onClick={onSubmitHarvest} name="Submit Harvest" />
           </div>
         </>
       ) : null}
