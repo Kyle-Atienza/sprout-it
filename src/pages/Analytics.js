@@ -54,48 +54,17 @@ export const Analytics = () => {
     datasets: [
       {
         label: "Batch Cost (₱)",
-        backgroundColor: "#7C6A50",
-        type: "line",
+        backgroundColor: "#BCDEA2",
         data: finished.map((batch) => {
           return batch.value;
         }),
       },
       {
         label: "Batch Harvests (₱)",
-        backgroundColor: "#8ABD70",
+        backgroundColor: "#A29072",
         data: finished.map((batch) => {
           return getBatchHarvestSum(batch) * 30;
         }),
-      },
-    ],
-  };
-
-  const lineData = {
-    labels: [
-      "Batch 1",
-      "Batch 2",
-      "Batch 3",
-      "Batch 4",
-      "Batch 5",
-      "Batch 6",
-      "Batch 7",
-      "Batch 8",
-      "Batch 9",
-    ],
-    datasets: [
-      {
-        label: "Defective Fruiting Bags",
-        fill: true,
-        data: [22, 9, 19, 21, 20, 15, 9, 7, 13],
-        borderColor: "#DA5F5F",
-        backgroundColor: "#DA5F5F",
-      },
-      {
-        label: "Fruiting Bags Produces",
-        fill: true,
-        data: [125, 110, 120, 131, 116, 189, 210, 153, 158],
-        borderColor: "#8ABD70",
-        backgroundColor: "#8ABD70",
       },
     ],
   };
@@ -116,7 +85,10 @@ export const Analytics = () => {
                 <AnalyticsSubstrateBatch compareHarvestDefects />
               </div>
 
-              <div className='p-4 md:p-6 mt-6 lg:mt-0 lg:p-12 w-full lg:w-1/2 bg-secondary-100 rounded-3xl shadow flex flex-col gap-4 overflow-y-scroll'>
+              <div className=' w-full lg:w-1/2 flex flex-col gap-4 overflow-y-scroll scrollbar-hidden'>
+                <h2 className='poppins-heading-6 text-dark-500'>
+                  Insights
+                </h2>
                 <AnalyticsInsights />
               </div>
             </div>
@@ -129,13 +101,21 @@ export const Analytics = () => {
                   data={chartHarvestCostData}
                   options={{
                     responsive: true,
+                    scales: {
+                      x: {
+                        stacked: true,
+                      },
+                      y: {
+                        stacked: true,
+                      },
+                    },
                     plugins: {
                       legend: {
                         position: "top",
                       },
                       title: {
                         display: true,
-                        text: "Batch Cost",
+                        text: "Costs & Harvests per Batch",
                         fontSize: 20,
                       },
                     },

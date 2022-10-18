@@ -118,7 +118,7 @@ export const TopNavBar = ({ pageName }) => {
               </li>
               <li className='rounded-full px-4 py-2 hover:bg-primary-100 active:bg-primary-100 text-dark-400 hover:text-primary-700 transition-all'>
                 <a
-                  href='/records'
+                  href='/inventory'
                   className='flex items-center p-2 space-x-3 rounded-md'
                 >
                   <InboxOutlined className='text-xl leading-none -mt-1' />
@@ -127,7 +127,7 @@ export const TopNavBar = ({ pageName }) => {
               </li>
               <li className='rounded-full px-4 py-2 hover:bg-primary-100 active:bg-primary-100 text-dark-400 hover:text-primary-700 transition-all'>
                 <a
-                  href='/records'
+                  href='/financials'
                   className='flex items-center p-2 space-x-3 rounded-md'
                 >
                   <StockOutlined className='text-xl leading-none -mt-1' />

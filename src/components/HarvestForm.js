@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { EditFilled, CheckCircleFilled } from "@ant-design/icons";
+import { CheckCircleOutlined, EditOutlined } from "@ant-design/icons";
 import {
   createHarvest,
   getHarvests,
@@ -8,7 +8,7 @@ import {
   resetHarvests,
 } from "../features/harvest/harvestSlice";
 
-import { PrimaryButton } from "../components";
+import { PrimaryButton, SecondaryButton } from "../components";
 
 export const HarvestForm = ({ selectedBatch, setIsBatchHarvestModalOpen }) => {
   const dispatch = useDispatch();
@@ -61,28 +61,35 @@ export const HarvestForm = ({ selectedBatch, setIsBatchHarvestModalOpen }) => {
   }, [batchHarvests]);
 
   return (
-    <div>
-      <p>Todays Harvests {todaysHarvest.weight} kg</p>
-      <button onClick={() => setInputHarvest(!inputHarvest)}>
-        {inputHarvest ? <CheckCircleFilled /> : <EditFilled />}
-      </button>
+    <div className='flex flex-col'>
+      <div className='flex gap-2 items-center mb-4'>
+        <p className='poppins-paragraph-sm'>
+          Today's Harvests: {todaysHarvest.weight} kg
+        </p>
+        <button onClick={() => setInputHarvest(!inputHarvest)}>
+          {inputHarvest ? <CheckCircleOutlined /> : <EditOutlined />}
+        </button>
+      </div>
+
       {inputHarvest ? (
         <>
           <input
-            className="w-full p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm my-2 focus:ring-primary-500 focus:border-primary-400"
-            id="todaysHarvest"
-            name="todaysHarvest"
-            type="number"
+            className='w-full p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm my-2 focus:ring-primary-500 focus:border-primary-400'
+            id='todaysHarvest'
+            name='todaysHarvest'
+            type='number'
             required
             value={updatedHarvest}
             onChange={(e) => setUpdatedHarvest(e.target.value)}
             placeholder={!todaysHarvest ? 0 : null}
           />
-          <PrimaryButton onClick={onSubmitHarvest} name="Submit Harvest" />
-          <PrimaryButton
-            onClick={() => setIsBatchHarvestModalOpen(true)}
-            name="View All Harvest"
-          />
+          <div className='flex justify-between mb-4'>
+            <SecondaryButton
+              onClick={() => setIsBatchHarvestModalOpen(true)}
+              name='View All Harvest'
+            />
+            <PrimaryButton onClick={onSubmitHarvest} name='Submit Harvest' />
+          </div>
         </>
       ) : null}
     </div>

@@ -29,7 +29,7 @@ export const AnalyticsHarvestByTime = () => {
     datasets: [
       {
         label: "Batch Harvests",
-        backgroundColor: "#8ABD70",
+        backgroundColor: "#BCDEA2",
         data: chartHarvestDates.map((date) =>
           date.data.reduce((prev, curr) => {
             return prev + curr.weight;
@@ -117,7 +117,7 @@ export const AnalyticsHarvestByTime = () => {
             },
             title: {
               display: true,
-              text: "Batch Cost",
+              text: "Harvests by Time",
               fontSize: 20,
             },
           },

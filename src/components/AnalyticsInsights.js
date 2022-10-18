@@ -211,7 +211,7 @@ export const AnalyticsInsights = () => {
           return (
             <div
               key={index}
-              className="flex items-center gap-4 p-5 bg-white rounded-2xl"
+              className="flex items-center gap-4 p-5 bg-white shadow rounded-2xl"
             >
               {insight.isGood ? (
                 <CaretUpFilled className="text-2xl text-primary-400" />

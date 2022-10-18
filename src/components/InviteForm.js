@@ -35,7 +35,7 @@ export function InviteForm() {
     };
   }, []);
 
-  const link = "http://localhost:3000/register/";
+  const link = "https://sprout-it.vercel.app/register/";
 
   return (
     <>

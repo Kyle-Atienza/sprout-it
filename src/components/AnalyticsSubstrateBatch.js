@@ -70,7 +70,7 @@ export const AnalyticsSubstrateBatch = ({
     datasets: [
       {
         label: "Total Harvests",
-        backgroundColor: "#8ABD70",
+        backgroundColor: "#BCDEA2",
         data: [
           getBatchesHarvestSum(kusotBatch),
           getBatchesHarvestSum(dayamiBatch),
@@ -79,7 +79,7 @@ export const AnalyticsSubstrateBatch = ({
       },
       {
         label: "Total Defects",
-        backgroundColor: "#7C6A50",
+        backgroundColor: "#A29072",
         data: [
           getBatchesDefectsSum(kusotBatch),
           getBatchesDefectsSum(dayamiBatch),
@@ -117,7 +117,7 @@ export const AnalyticsSubstrateBatch = ({
             },
             title: {
               display: true,
-              text: "Monthly Harvest",
+              text: "Monthly Harvest per Substrate",
               fontSize: 20,
             },
           },
