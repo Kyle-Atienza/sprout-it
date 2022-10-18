@@ -1,4 +1,4 @@
-import { EyeInvisibleFilled } from "@ant-design/icons";
+import { EyeOutlined } from "@ant-design/icons";
 import { useRef } from "react";
 
 export const TextField = ({
@@ -23,7 +23,7 @@ export const TextField = ({
   };
 
   return (
-    <div className="relative">
+    <div className='inline'>
       <input
         ref={inputRef}
         type={type}
@@ -36,8 +36,8 @@ export const TextField = ({
         className={`w-full p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm my-2 focus:ring-primary-500 focus:border-primary-400 ${className}`}
       />
       {password ? (
-        <EyeInvisibleFilled
-          className="absolute top-1/2 -translate-y-1/2 -ml-10"
+        <EyeOutlined
+          className='absolute mt-6 -ml-10'
           onClick={togglePasswordVisibility}
         />
       ) : null}

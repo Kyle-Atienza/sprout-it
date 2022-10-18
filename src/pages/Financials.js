@@ -190,7 +190,7 @@ export const Financials = () => {
                   />
                 </div>
 
-                <div className="overflow-x-auto relative harvests-table mx-10 my-6 shadow-md bg-light-100 rounded-xl">
+                <div className="overflow-x-auto harvests-table mx-10 my-6 shadow-md bg-light-100 rounded-xl">
                   <table className="w-full text-sm text-left">
                     <thead className=" poppins-paragraph text-secondary-300">
                       <tr>
@@ -267,7 +267,7 @@ export const Financials = () => {
                   />
                 </div>
 
-                <div className="overflow-x-auto relative harvests-table mx-10 my-6 shadow-md bg-light-100 rounded-xl">
+                <div className="overflow-x-auto harvests-table mx-10 my-6 shadow-md bg-light-100 rounded-xl">
                   <table className="w-full text-sm text-left">
                     <thead className=" poppins-paragraph text-secondary-300">
                       <tr>

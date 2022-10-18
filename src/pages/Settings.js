@@ -92,7 +92,7 @@ export function Settings() {
               <PrimaryButton className="mt-4" name='Update Password' onClick={updatePassword} />
             </section>
 
-            <div className='w-full lg:w-2/3 overflow-x-auto relative harvests-table mx-0 md:mx-6 lg:mx-10 my-6 shadow-md bg-light-100 rounded-xl'>
+            <div className='w-full lg:w-2/3 overflow-x-auto harvests-table mx-0 md:mx-6 lg:mx-10 my-6 shadow-md bg-light-100 rounded-xl'>
               <table className='w-full text-sm text-left'>
                 <thead className=' poppins-paragraph text-secondary-300'>
                   <tr>
