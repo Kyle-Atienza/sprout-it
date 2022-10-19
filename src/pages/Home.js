@@ -404,7 +404,7 @@ export const Home = () => {
             </div>
           </div>
 
-          <div className='w-full mt-8 py-4 px-4 md:px-6 lg:px-9 flex flex-col lg:flex-row gap-16'>
+          <div className='w-full mt-8 py-4 px-4 md:px-6 lg:px-9 flex flex-col lg:flex-row gap-8'>
             <section className='w-full lg:w-1/2 flex flex-col lg:flex-row'>
               <div className='flex flex-col w-full'>
                 <div className='flex gap-4 mb-6 w-full'>

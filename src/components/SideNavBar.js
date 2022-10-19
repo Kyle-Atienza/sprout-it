@@ -77,13 +77,13 @@ export const SideNavBar = (className) => {
             </a>
           </li>
           <li className='rounded-full px-4 py-2 hover:bg-primary-100 active:bg-primary-100 text-dark-400 hover:text-primary-700 transition-all'>
-            <div
-              onClick={onLogout}
+            <a
+              href='/records'
               className='flex items-center p-2 space-x-3 rounded-md'
             >
               <FolderOutlined className='text-xl leading-none -mt-1' />
               <h4 className='poppins-paragraph font-semibold'>Records</h4>
-            </div>
+            </a>
           </li>
           <li className='rounded-full px-4 py-2 hover:bg-primary-100 active:bg-primary-100 text-dark-400 hover:text-primary-700 transition-all'>
             <a
