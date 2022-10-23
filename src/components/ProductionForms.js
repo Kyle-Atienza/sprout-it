@@ -40,7 +40,7 @@ export const PreProductionForm = () => {
       })
     );
 
-    window.location.reload();
+    // window.location.reload();
   };
 
   return (
