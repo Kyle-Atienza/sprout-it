@@ -139,7 +139,6 @@ export const Financials = () => {
                     supplier={selectedSupplier}
                     closeForm={() => {
                       setIsSupplierModalOpen(false);
-                      setIsPurchaseModalOpen(false);
                     }}
                   />
                 </Dialog.Panel>

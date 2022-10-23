@@ -27,6 +27,11 @@ export const SupplierForm = ({ closeForm, supplier }) => {
       })
     );
     closeForm();
+    setSupplierData({
+      name: "",
+      address: "",
+      contact: "",
+    });
   };
 
   const onUpdateSupplier = () => {
@@ -108,7 +113,9 @@ export const SupplierForm = ({ closeForm, supplier }) => {
         </div>
       </div>
       <PrimaryButton
-        onClick={supplier ? onUpdateSupplier : onCreateSupplier}
+        onClick={
+          Object.keys(supplier).length ? onUpdateSupplier : onCreateSupplier
+        }
         name="Create Supplier"
       />
     </>

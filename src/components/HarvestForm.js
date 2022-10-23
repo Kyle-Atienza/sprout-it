@@ -51,16 +51,17 @@ export const HarvestForm = ({ selectedBatch, setIsBatchHarvestModalOpen }) => {
   }, []);
 
   useEffect(() => {
-    const todaysHarvest = batchHarvests.find((harvest) => {
-      return (
-        new Date(harvest.createdAt).toDateString() === new Date().toDateString()
-      );
-    });
+    if (batchHarvests.length) {
+      const todaysHarvest = batchHarvests.find((harvest) => {
+        return (
+          new Date(harvest.createdAt).toDateString() ===
+          new Date().toDateString()
+        );
+      });
 
-    console.log(todaysHarvest);
-
-    setTodaysHarvest(!!todaysHarvest ? todaysHarvest : {});
-    setUpdatedHarvest(!!todaysHarvest ? todaysHarvest.weight : 0);
+      setTodaysHarvest(!!todaysHarvest ? todaysHarvest : {});
+      setUpdatedHarvest(!!todaysHarvest ? todaysHarvest.weight : 0);
+    }
   }, [batchHarvests]);
 
   return (

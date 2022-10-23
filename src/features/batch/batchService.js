@@ -33,6 +33,7 @@ const createBatch = async (batchData, token) => {
 };
 
 const updateBatch = async ({ id, payload }, token) => {
+  console.log(id);
   const response = await axios.put(
     `${`${API_URL}batch/`}/${id}`,
     payload,

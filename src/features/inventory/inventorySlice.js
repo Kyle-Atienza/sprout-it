@@ -112,7 +112,7 @@ export const inventorySlice = createSlice({
       .addCase(postMaterial.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.inventory = action.payload;
+        state.materials = [...state.materials, action.payload];
       })
       .addCase(postMaterial.rejected, (state, action) => {
         state.isLoading = false;
