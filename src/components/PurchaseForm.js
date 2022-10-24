@@ -42,6 +42,8 @@ export const PurchaseForm = ({ openSupplierModal }) => {
         price: purchaseData.price,
       })
     );
+
+    window.location.reload();
   };
 
   return (
