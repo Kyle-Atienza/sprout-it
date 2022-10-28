@@ -27,17 +27,6 @@ export const PreProductionForm = () => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    /* console.log({
-      materials: Object.keys(formData).map((materialInput) => {
-        return {
-          id: materials.find((materialItem) => {
-            return materialItem.name === materialInput;
-          })._id,
-          weight: formData[materialInput],
-        };
-      }),
-    }); */
-
     dispatch(
       createBatch({
         materials: Object.keys(formData).map((materialInput) => {
@@ -51,7 +40,7 @@ export const PreProductionForm = () => {
       })
     );
 
-    // window.location.reload();
+    window.location.reload();
   };
 
   return (
