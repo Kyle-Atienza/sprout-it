@@ -147,10 +147,6 @@ export const AnalyticsInsights = () => {
     }
   }, [harvestsByTimeRange]); */
 
-  useEffect(() => {
-    console.log(insights);
-  }, [insights]);
-
   const pastDays = (current, daysPast) => {
     return new Date(current.setDate(current.getDate() - daysPast));
   };

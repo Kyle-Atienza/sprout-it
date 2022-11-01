@@ -143,7 +143,6 @@ export const batchSlice = createSlice({
       .addCase(getBatches.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        console.log(action.payload);
 
         // all batches not filtered
         state.initialBatches = action.payload;
