@@ -21,6 +21,7 @@ import {
   getBatches,
   updateBatch,
   deleteBatch,
+  reloadBatches,
 } from "../features/batch/batchSlice";
 import { getTasks, updateTask } from "../features/task/taskSlice";
 import { getMaterials } from "../features/inventory/inventorySlice";
@@ -460,7 +461,7 @@ export const Production = () => {
   const onDeleteBatch = (id) => {
     dispatch(deleteBatch(id));
     setIsBatchModalOpen(false);
-    window.location.reload();
+    // window.location.reload();
   };
 
   return (

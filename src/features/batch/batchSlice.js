@@ -134,6 +134,47 @@ export const batchSlice = createSlice({
         });
       });
     },
+    reloadBatches: (state, action) => {
+      // all active batches separated in their own phases
+      state.batches = action.payload
+        .filter((batch) => {
+          return batch.activePhase !== "";
+        })
+        .reduce((phases, batch) => {
+          const { activePhase } = batch;
+          phases[activePhase] = phases[activePhase] ?? [];
+          phases[activePhase].push(batch);
+          return phases;
+        }, {});
+      // finished tasks
+      state.finished = action.payload.filter((batch) => {
+        return batch.activePhase === "";
+      });
+      state.active = action.payload.filter((batch) => {
+        return batch.active;
+      });
+
+      state.substrate.mixed = action.payload.filter((batch) => {
+        return !(
+          batch.materials.every((material) => {
+            return material.material.name === "Dayami";
+          }) ||
+          batch.materials.every((material) => {
+            return material.material.name === "Kusot";
+          })
+        );
+      });
+      state.substrate.dayami = action.payload.filter((batch) => {
+        return batch.materials.some((material) => {
+          return material.material.name === "Dayami";
+        });
+      });
+      state.substrate.kusot = action.payload.filter((batch) => {
+        return batch.materials.some((material) => {
+          return material.material.name === "Kusot";
+        });
+      });
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -216,6 +257,8 @@ export const batchSlice = createSlice({
           ? [...state.batches.pre, action.payload]
           : [action.payload];
 
+        window.location.reload();
+
         // console.log(action.payload);
       })
       .addCase(createBatch.rejected, (state, action) => {
@@ -263,6 +306,12 @@ export const batchSlice = createSlice({
       .addCase(deleteBatch.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
+        state.initialBatches = state.initialBatches.filter((batch) => {
+          return batch._id !== action.payload._id;
+        });
+
+        // reloadBatches(state.initialBatches);
+        window.location.reload();
       })
       .addCase(deleteBatch.rejected, (state, action) => {
         state.isLoading = false;
@@ -272,5 +321,6 @@ export const batchSlice = createSlice({
   },
 });
 
-export const { reset, loadBatchesBySubstrate } = batchSlice.actions;
+export const { reset, loadBatchesBySubstrate, reloadBatches } =
+  batchSlice.actions;
 export default batchSlice.reducer;
