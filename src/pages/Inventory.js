@@ -102,7 +102,7 @@ export const Inventory = () => {
             </Transition>
           </div>
 
-          <div className="w-full px-10 my-6 grid gap-4 grid-flow-col md:grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="w-full px-10 my-6 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {materials.map((material, index) => {
               return (
                 <MaterialCard
