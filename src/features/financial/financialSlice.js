@@ -110,6 +110,8 @@ export const financialSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.purchases = [...state.purchases, action.payload];
+
+        window.location.reload();
       })
       .addCase(createPurchase.rejected, (state, action) => {
         state.isLoading = false;

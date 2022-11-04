@@ -258,8 +258,6 @@ export const batchSlice = createSlice({
           : [action.payload];
 
         window.location.reload();
-
-        // console.log(action.payload);
       })
       .addCase(createBatch.rejected, (state, action) => {
         state.isLoading = false;
