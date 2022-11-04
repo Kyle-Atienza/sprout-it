@@ -86,7 +86,7 @@ export const Analytics = () => {
               </div>
 
               <div className=" w-full lg:w-1/2 flex flex-col gap-4 overflow-y-scroll scrollbar-hidden">
-                <h2 className="poppins-heading-6 text-dark-500">Insights</h2>
+                <h2 className="poppins-heading-6 text-dark-500 mt-6 lg:mt-0">Insights</h2>
                 <AnalyticsInsights />
               </div>
             </div>
