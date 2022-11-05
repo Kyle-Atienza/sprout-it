@@ -13,7 +13,7 @@ export const MaterialCard = ({ editMaterial, material, index }) => {
 
   const onDeleteMaterial = () => {
     dispatch(deleteMaterial(material._id));
-    window.location.reload();
+    // window.location.reload();
   };
 
   const closeModal = () => {
