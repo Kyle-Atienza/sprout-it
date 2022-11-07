@@ -7,6 +7,7 @@ import {
   PurchaseForm,
   MaterialForm,
   BatchDetails,
+  AnalyticsHarvestByTime,
 } from "../components";
 import { useState, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -421,7 +422,7 @@ export const Home = () => {
                 </div>
 
                 <div className="p-4 md:p-6 lg:p-12 w-full bg-white rounded-3xl shadow">
-                  <Bar
+                  {/* <Bar
                     data={barData}
                     options={{
                       responsive: true,
@@ -436,7 +437,8 @@ export const Home = () => {
                         },
                       },
                     }}
-                  />
+                  /> */}
+                  <AnalyticsHarvestByTime />
                 </div>
               </div>
             </section>
