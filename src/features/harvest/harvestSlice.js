@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { act } from "react-dom/test-utils";
 import harvestService from "./harvestService";
 
 const initialState = {
@@ -114,8 +113,8 @@ export const harvestSlice = createSlice({
         .flat() // flatten nested arrays
         .reduce((date, currentBatch, index) => {
           // group arrays by date
-          const { createdAt } = currentBatch;
-          const key = new Date(createdAt)
+          const { harvestedAt } = currentBatch;
+          const key = new Date(harvestedAt)
             .toDateString()
             .slice(4)
             .replaceAll(" ", "-");

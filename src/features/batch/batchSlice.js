@@ -113,25 +113,35 @@ export const batchSlice = createSlice({
       state.message = "";
     },
     loadBatchesBySubstrate: (state) => {
-      state.substrate.mixed = state.finished.filter((batch) => {
-        return !(
-          batch.materials.every((material) => {
-            return material.material.name === "Dayami";
-          }) ||
-          batch.materials.every((material) => {
-            return material.material.name === "Kusot";
-          })
+      state.substrate.mixed = state.active.filter((batch) => {
+        return (
+          batch.materials.filter(({ material }) => {
+            return material.name === "Kusot";
+          }).length &&
+          batch.materials.filter(({ material }) => {
+            return material.name === "Dayami";
+          }).length
         );
       });
-      state.substrate.dayami = state.finished.filter((batch) => {
-        return batch.materials.some((material) => {
-          return material.material.name === "Dayami";
-        });
+      state.substrate.dayami = state.active.filter((batch) => {
+        return (
+          batch.materials.filter(({ material }) => {
+            return material.name === "Dayami";
+          }).length &&
+          !batch.materials.filter(({ material }) => {
+            return material.name === "Kusot";
+          }).length
+        );
       });
-      state.substrate.kusot = state.finished.filter((batch) => {
-        return batch.materials.some((material) => {
-          return material.material.name === "Kusot";
-        });
+      state.substrate.kusot = state.active.filter((batch) => {
+        return (
+          batch.materials.filter(({ material }) => {
+            return material.name === "Kusot";
+          }).length &&
+          !batch.materials.filter(({ material }) => {
+            return material.name === "Dayami";
+          }).length
+        );
       });
     },
     reloadBatches: (state, action) => {

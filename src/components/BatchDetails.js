@@ -99,7 +99,7 @@ export function BatchDetails({ batch }) {
             <p className="open-paragraph my-1">
               <span className="font-semibold">Date Started: </span>
               {batch.hasOwnProperty("composting")
-                ? batch.composting.startedAt
+                ? new Date(batch.composting.startedAt).toDateString()
                 : null}
             </p>
             <p className="open-paragraph my-1">
@@ -135,7 +135,7 @@ export function BatchDetails({ batch }) {
             <p className="open-paragraph my-1">
               <span className="font-semibold">Date Started: </span>
               {batch.hasOwnProperty("bagging")
-                ? batch.bagging.startedAt
+                ? new Date(batch.bagging.startedAt).toDateString()
                 : null}{" "}
               kg
             </p>
@@ -163,7 +163,7 @@ export function BatchDetails({ batch }) {
           <p className="open-paragraph my-1">
             <span className="font-semibold">Date Started: </span>
             {batch.hasOwnProperty("sterilization")
-              ? batch.sterilization.startedAt
+              ? new Date(batch.sterilization.startedAt).toDateString()
               : null}
           </p>
           <p className="open-paragraph my-1">
@@ -185,7 +185,7 @@ export function BatchDetails({ batch }) {
           <p className="open-paragraph my-1">
             <span className="font-semibold">Date Started: </span>
             {batch.hasOwnProperty("inoculation")
-              ? batch.inoculation.startedAt
+              ? new Date(batch.inoculation.startedAt).toDateString()
               : null}
           </p>
           <p className="open-paragraph my-1">
@@ -213,7 +213,7 @@ export function BatchDetails({ batch }) {
             <p className="open-paragraph my-1">
               <span className="font-semibold">Date Started: </span>
               {batch.hasOwnProperty("fruiting")
-                ? batch.fruiting.startedAt
+                ? new Date(batch.fruiting.startedAt).toDateString()
                 : null}
             </p>
             <p className="open-paragraph my-1">

@@ -9,6 +9,26 @@ export const HarvestTable = () => {
 
   const [editRow, setEditRow] = useState(null); //index of currently edited row
 
+  useEffect(() => {
+    /* if (batchHarvests) {
+      console.log(
+        batchHarvests.sort((a, b) => {
+          if (
+            new Date(a.harvestedAt).getTime() <
+            new Date(b.harvestedAt).getTime()
+          )
+            return -1;
+          if (
+            new Date(a.harvestedAt).getTime() >
+            new Date(b.harvestedAt).getTime()
+          )
+            return 1;
+          return 0;
+        })
+      );
+    } */
+  }, []);
+
   return (
     <div>
       <table className="w-full text-sm text-left">
@@ -30,17 +50,23 @@ export const HarvestTable = () => {
         </thead>
         <tbody>
           {/* sort rows by date */}
-          {batchHarvests.map((dailyHarvest, index) => {
-            return (
-              <HarvestTableRow
-                setEditRow={(rowIndex) => setEditRow(rowIndex)}
-                editRow={editRow}
-                row={index}
-                harvest={dailyHarvest}
-                key={index}
-              />
-            );
-          })}
+          {batchHarvests
+            /* .sort((a, b) => {
+              console.log(!!new Date(b.harvestedAt), !!new Date(a.harvestedAt));
+              return new Date(b.harvestedAt) - new Date(a.harvestedAt);
+            }) */
+            .map((dailyHarvest, index) => {
+              // console.log(new Date(dailyHarvest.harvestedAt).getTime());
+              return (
+                <HarvestTableRow
+                  setEditRow={(rowIndex) => setEditRow(rowIndex)}
+                  editRow={editRow}
+                  row={index}
+                  harvest={dailyHarvest}
+                  key={index}
+                />
+              );
+            })}
         </tbody>
       </table>
     </div>

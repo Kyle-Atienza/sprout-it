@@ -7,25 +7,12 @@ import { forgetPassword } from "../features/user/userSlice";
 
 export const ForgotPassword = () => {
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
-
-  /* const { user, isSuccess, isError, message } = useSelector(
-    (state) => state.user
-  ); */
 
   const [formData, setFormData] = useState({
     email: "",
   });
 
   const { email } = formData;
-
-  /* useEffect(() => {
-    if (isError) {
-      alert(message.response);
-    }
-
-    dispatch(reset());
-  }, [user, isSuccess, isError, message, navigate, dispatch]); */
 
   const onChange = (e) => {
     setFormData((prevState) => ({

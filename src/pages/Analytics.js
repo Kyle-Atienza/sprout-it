@@ -22,7 +22,9 @@ Chart.register(...registerables);
 export const Analytics = () => {
   const dispatch = useDispatch();
 
-  const { finished, initialBatches } = useSelector((state) => state.batch);
+  const { finished, active, initialBatches } = useSelector(
+    (state) => state.batch
+  );
   const { dailyHarvests } = useSelector((state) => state.harvest);
 
   useEffect(() => {
@@ -31,10 +33,10 @@ export const Analytics = () => {
   }, []);
 
   useEffect(() => {
-    if (finished) {
+    if (finished && active) {
       dispatch(getDailyHarvests(initialBatches));
     }
-  }, [finished]);
+  }, [active, finished]);
 
   useEffect(() => {
     // console.log("mapHarvestsByTimeFrame");
@@ -50,19 +52,19 @@ export const Analytics = () => {
   };
 
   const chartHarvestCostData = {
-    labels: finished.map((batch) => "Batch" + batch.name),
+    labels: [...finished, ...active].map((batch) => "Batch" + batch.name),
     datasets: [
       {
         label: "Batch Cost",
         backgroundColor: "#BCDEA2",
-        data: finished.map((batch) => {
+        data: [...finished, ...active].map((batch) => {
           return batch.value;
         }),
       },
       {
         label: "Batch Harvests",
         backgroundColor: "#A29072",
-        data: finished.map((batch) => {
+        data: [...finished, ...active].map((batch) => {
           return getBatchHarvestSum(batch) * 30;
         }),
       },
@@ -86,7 +88,9 @@ export const Analytics = () => {
               </div>
 
               <div className=" w-full lg:w-1/2 flex flex-col gap-4 overflow-y-scroll scrollbar-hidden">
-                <h2 className="poppins-heading-6 text-dark-500 mt-6 lg:mt-0">Insights</h2>
+                <h2 className="poppins-heading-6 text-dark-500 mt-6 lg:mt-0">
+                  Insights
+                </h2>
                 <AnalyticsInsights />
               </div>
             </div>

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getBatches } from "../features/batch/batchSlice";
+import {
+  getBatches,
+  loadBatchesBySubstrate,
+} from "../features/batch/batchSlice";
 import { getMaterials } from "../features/inventory/inventorySlice";
 
 import { Bar, Doughnut } from "react-chartjs-2";
@@ -13,9 +16,8 @@ export const AnalyticsSubstrateBatch = ({
 }) => {
   const dispatch = useDispatch();
 
-  const { finished, substrate } = useSelector((state) => state.batch);
+  const { finished, substrate, active } = useSelector((state) => state.batch);
 
-  const { kusot, dayami, mixed } = substrate;
   const [kusotBatch, setKusotBatch] = useState([]);
   const [dayamiBatch, setDayamiBatch] = useState([]);
   const [mixedBatch, setMixedBatch] = useState([]);
@@ -23,19 +25,49 @@ export const AnalyticsSubstrateBatch = ({
   useEffect(() => {
     dispatch(getBatches());
     dispatch(getMaterials());
+    // dispatch(loadBatchesBySubstrate());
   }, []);
 
   useEffect(() => {
-    if (kusot) {
-      setKusotBatch(kusot.filter((batch) => !batch.active));
-    }
-    if (dayami) {
-      setDayamiBatch(dayami.filter((batch) => !batch.active));
-    }
-    if (mixed) {
-      setMixedBatch(mixed.filter((batch) => !batch.active));
-    }
-  }, [kusot, dayami, mixed]);
+    setMixedBatch(
+      [...active, ...finished].filter((batch) => {
+        return (
+          batch.materials.filter(({ material }) => {
+            return material.name === "Kusot";
+          }).length &&
+          batch.materials.filter(({ material }) => {
+            return material.name === "Dayami";
+          }).length
+        );
+      })
+    );
+
+    setKusotBatch(
+      [...active, ...finished].filter((batch) => {
+        return (
+          batch.materials.filter(({ material }) => {
+            return material.name === "Kusot";
+          }).length &&
+          !batch.materials.filter(({ material }) => {
+            return material.name === "Dayami";
+          }).length
+        );
+      })
+    );
+
+    setDayamiBatch(
+      [...active, ...finished].filter((batch) => {
+        return (
+          batch.materials.filter(({ material }) => {
+            return material.name === "Dayami";
+          }).length &&
+          !batch.materials.filter(({ material }) => {
+            return material.name === "Kusot";
+          }).length
+        );
+      })
+    );
+  }, [active, finished]);
 
   const getBatchesHarvestSum = (batches) => {
     return batches.reduce((prev, current) => {

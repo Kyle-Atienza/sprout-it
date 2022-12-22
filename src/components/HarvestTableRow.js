@@ -46,7 +46,7 @@ export const HarvestTableRow = ({ harvest, row, editRow, setEditRow }) => {
       }`}
     >
       <td className="py-2">
-        {new Date(harvest.createdAt).toDateString().slice(4)}
+        {new Date(harvest.harvestedAt).toDateString().slice(4)}
       </td>
       <td className="py-2">
         <input

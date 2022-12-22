@@ -241,6 +241,7 @@ export const userSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.resetLink = action.payload;
+        alert("Reset link has been sent to your email. This may take a while");
       })
       .addCase(forgetPassword.rejected, (state, action) => {
         state.isLoading = false;
