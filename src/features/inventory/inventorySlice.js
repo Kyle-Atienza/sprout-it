@@ -113,11 +113,13 @@ export const inventorySlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.materials = [...state.materials, action.payload];
+        alert("Successfully Added Material");
       })
       .addCase(postMaterial.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
+        alert("Error Added Material");
       })
       .addCase(putMaterial.pending, (state) => {
         state.isLoading = true;

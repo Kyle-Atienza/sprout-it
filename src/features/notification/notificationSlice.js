@@ -79,6 +79,7 @@ export const notificationSlice = createSlice({
         state.notifications = state.notifications.filter((notification) => {
           return notification._id !== action.payload.id;
         });
+        alert("Notification Dismissed");
       })
       .addCase(deleteNotification.rejected, (state, action) => {
         state.isLoading = false;

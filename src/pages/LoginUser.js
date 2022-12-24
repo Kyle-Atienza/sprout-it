@@ -40,13 +40,23 @@ export const LoginUser = () => {
     }));
   };
 
+  const onEnterSubmit = (e) => {
+    if (e.key === "Enter") {
+      onSubmit();
+    }
+  };
+
   const onSubmit = (e) => {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
 
     const user = {
       email,
       password,
     };
+
+    // console.log(passwordRegex.test(password));
 
     dispatch(login(user));
   };
@@ -78,7 +88,11 @@ export const LoginUser = () => {
               Log in to your account
             </h3>
           </div>
-          <form className="flex flex-col" onSubmit={onSubmit}>
+          <form
+            className="flex flex-col"
+            onSubmit={onSubmit}
+            onKeyDown={onEnterSubmit}
+          >
             <TextField
               value={email}
               type="text"

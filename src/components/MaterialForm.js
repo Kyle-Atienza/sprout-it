@@ -8,7 +8,7 @@ import {
   putMaterial,
 } from "../features/inventory/inventorySlice";
 
-export const MaterialForm = ({ material }) => {
+export const MaterialForm = ({ material, closeModal }) => {
   const dispatch = useDispatch();
 
   const { user, isSuccess, isLoading, isError, message } = useSelector(
@@ -25,12 +25,6 @@ export const MaterialForm = ({ material }) => {
   const [materialData, setMaterialData] = useState({});
 
   const { id, name, altName, unit } = materialData;
-
-  /* useEffect(() => {
-    if (material.name) {
-      setMaterialData(material);
-    }
-  }, []); */
 
   const onChange = (e) => {
     if (e.target.name === "material") {
@@ -55,8 +49,7 @@ export const MaterialForm = ({ material }) => {
         unit: unit,
       })
     );
-    // dispatch(getMaterials);
-    // window.location.reload();
+    closeModal();
   };
 
   const onUpdateMaterial = () => {

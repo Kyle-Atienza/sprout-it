@@ -93,7 +93,10 @@ export const Inventory = () => {
                             <CloseOutlined />
                           </button>
                         </div>
-                        <MaterialForm material={selectedMaterial} />
+                        <MaterialForm
+                          material={selectedMaterial}
+                          closeModal={closeModal}
+                        />
                       </Dialog.Panel>
                     </Transition.Child>
                   </div>

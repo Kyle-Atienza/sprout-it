@@ -4,6 +4,7 @@ import {
   getDailyHarvests,
   mapHarvestsByTimeFrame,
 } from "../features/harvest/harvestSlice";
+import { getBatchById } from "../features/batch/batchSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { Bar } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
@@ -21,23 +22,79 @@ export const AnalyticsHarvestByTime = () => {
   const [chartHarvestDates, setChartHarvestDates] = useState([]);
   const [chartHarvestDateRange, setChartHarvestDateRange] = useState("days");
   const [chartHarvestDatePage, setChartHarvestDatePage] = useState(0);
+  const [isChartScrollable, setIsChartScrollable] = useState({
+    older: true,
+    newer: false,
+  });
 
   const { days, weeks, months } = harvestsByTimeRange;
+
+  const colors = [];
 
   const chartHarvestData = {
     labels: chartHarvestDates.map((date) => date.label),
     datasets: [
       {
-        label: "Batch Harvests",
-        backgroundColor: "#BCDEA2",
-        data: chartHarvestDates.map((date) =>
-          date.data.reduce((prev, curr) => {
+        label: "Total Harvests",
+        data: chartHarvestDates.map((date) => {
+          // console.log(date);
+
+          return date.data.reduce((prev, curr) => {
             return prev + curr.weight;
-          }, 0)
-        ),
+          }, 0);
+        }),
       },
+      ...Object.values(
+        chartHarvestDates.reduce((batchHarvests, { data }) => {
+          data.forEach((dailyHarvest) => {
+            const batchName = initialBatches.find(
+              (batch) => batch._id === dailyHarvest.batch
+            ).name;
+            if (!batchHarvests[batchName]) {
+              batchHarvests[batchName] = {
+                label: `Batch ${batchName} Harvests`,
+                data: [],
+              };
+            }
+            if (batchHarvests[batchName]) {
+              batchHarvests[batchName].data.push(
+                data.find((harvest) => harvest.batch === dailyHarvest.batch)
+                  .weight
+              );
+            }
+          });
+          return batchHarvests;
+        }, {})
+      ),
     ],
   };
+
+  useEffect(() => {
+    console.log(
+      Object.values(
+        chartHarvestDates.reduce((batchHarvests, { data }) => {
+          data.forEach((dailyHarvest) => {
+            console.log(dailyHarvest.harvestedAt);
+            const batchName = initialBatches.find(
+              (batch) => batch._id === dailyHarvest.batch
+            ).name;
+            if (!batchHarvests[batchName]) {
+              batchHarvests[batchName] = {
+                label: `Batch ${batchName} Harvests`,
+                data: [],
+              };
+            }
+            if (batchHarvests[batchName]) {
+              batchHarvests[batchName].data.push(
+                data.find((harvest) => harvest.batch === dailyHarvest.batch)
+              );
+            }
+          });
+          return batchHarvests;
+        }, {})
+      )
+    );
+  }, [chartHarvestDates]);
 
   useEffect(() => {
     if (finished) {
@@ -63,11 +120,24 @@ export const AnalyticsHarvestByTime = () => {
 
   const scrollTimeRange = (direction) => {
     if (direction === "older") {
-      setChartHarvestDatePage(chartHarvestDatePage + 1);
+      if (isChartScrollable.older)
+        setChartHarvestDatePage(chartHarvestDatePage + 1);
+      setIsChartScrollable({
+        newer: true,
+        older: !!chunkHarvestsByTimeRange(
+          harvestsByTimeRange,
+          chartHarvestDateRange,
+          chartHarvestDatePage + 2
+        ).length,
+      });
     } else if (direction === "newer") {
       setChartHarvestDatePage(
         chartHarvestDatePage !== 0 ? chartHarvestDatePage - 1 : 0
       );
+      setIsChartScrollable({
+        ...isChartScrollable,
+        newer: chartHarvestDatePage > 1,
+      });
     }
   };
 
@@ -81,10 +151,17 @@ export const AnalyticsHarvestByTime = () => {
       group = 12;
     }
 
-    const chunkedHarvests = [
-      ..._.chunk([...harvests[range]].reverse(), group)[page],
-    ].reverse();
-    chunkedHarvests.pop();
+    let chunkedHarvests;
+
+    try {
+      chunkedHarvests = [
+        ..._.chunk([...harvests[range]].reverse(), group)[page],
+      ].reverse();
+      chunkedHarvests.pop();
+    } catch (error) {
+      chunkedHarvests = [];
+    }
+
     return chunkedHarvests;
   };
 
@@ -103,8 +180,16 @@ export const AnalyticsHarvestByTime = () => {
           onClick={() => setChartHarvestDateRange("months")}
           name="months"
         />
-        <SecondaryButton onClick={() => scrollTimeRange("older")} name="<" />
-        <SecondaryButton onClick={() => scrollTimeRange("newer")} name=">" />
+        <SecondaryButton
+          className={`${!isChartScrollable.older ? "opacity-50" : ""}`}
+          onClick={() => scrollTimeRange("older")}
+          name="<"
+        />
+        <SecondaryButton
+          className={`${!isChartScrollable.newer ? "opacity-50" : ""}`}
+          onClick={() => scrollTimeRange("newer")}
+          name=">"
+        />
       </div>
 
       <Bar
@@ -119,6 +204,9 @@ export const AnalyticsHarvestByTime = () => {
               display: true,
               text: "Harvests by Time",
               fontSize: 20,
+            },
+            colors: {
+              forceOverride: true,
             },
           },
         }}

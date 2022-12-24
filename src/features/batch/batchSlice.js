@@ -185,6 +185,12 @@ export const batchSlice = createSlice({
         });
       });
     },
+    getBatchById: (state, action) => {
+      console.log(action.payload);
+      return action.payload.initialBatches.filter((batch) => {
+        return batch._id === action.payload.id;
+      });
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -329,6 +335,6 @@ export const batchSlice = createSlice({
   },
 });
 
-export const { reset, loadBatchesBySubstrate, reloadBatches } =
+export const { reset, loadBatchesBySubstrate, reloadBatches, getBatchById } =
   batchSlice.actions;
 export default batchSlice.reducer;

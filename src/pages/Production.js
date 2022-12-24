@@ -46,6 +46,8 @@ export const Production = () => {
   const [isConfirmBatchModalOpen, setIsConfirmBatchModalOpen] = useState(false);
   const [isPhaseFormModal, setIsPhaseFormModal] = useState(false);
   const [isBatchHarvestModalOpen, setIsBatchHarvestModalOpen] = useState(false);
+  const [isConfirmEndTaskModelOpen, setIsConfirmEndTaskModelOpen] =
+    useState(false);
   const [selectedBatch, setSelectedBatch] = useState({});
   const [selectedTask, setSelectedTask] = useState({});
   const [phaseDetails, setPhaseDetails] = useState({});
@@ -515,6 +517,64 @@ export const Production = () => {
         </Dialog>
       </Transition>
 
+      <Transition appear show={isConfirmEndTaskModelOpen} as={Fragment}>
+        <Dialog
+          as="div"
+          className="relative z-20"
+          onClose={() => setIsConfirmEndTaskModelOpen(false)}
+        >
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-dark-700 bg-opacity-25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="overflow-y-scroll scrollbar-hidden bg-light-100 w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-lg transition-all h-[40rem] flex flex-col">
+                  <div className="w-full flex items-center justify-start mb-6">
+                    <Dialog.Title as="h3" className="poppins-heading-6 w-full">
+                      Confirm End Task
+                    </Dialog.Title>
+                    <div className="flex">
+                      <button
+                        type="button"
+                        className={`py-4 px-6 rounded-full poppins-button bg-red-500 hover:bg-red-700 text-light-100 shadow transition-all `}
+                        onClick={() => onEndTask()}
+                      >
+                        End Task
+                      </button>
+                      <button
+                        type="button"
+                        className={`py-4 px-6 rounded-full poppins-button bg-red-500 hover:bg-red-700 text-light-100 shadow transition-all `}
+                        onClick={() => setIsConfirmEndTaskModelOpen(false)}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
+
       <Transition appear show={isBatchModalOpen} as={Fragment}>
         <Dialog
           as="div"
@@ -672,7 +732,7 @@ export const Production = () => {
                   <button
                     type="button"
                     className={`py-4 px-6 rounded-full poppins-button bg-red-500 hover:bg-red-700 text-light-100 shadow transition-all `}
-                    onClick={() => onEndTask()}
+                    onClick={() => setIsConfirmEndTaskModelOpen(true)}
                   >
                     End Task
                   </button>
