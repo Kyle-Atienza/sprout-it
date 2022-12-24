@@ -58,8 +58,11 @@ export const AnalyticsHarvestByTime = () => {
             }
             if (batchHarvests[batchName]) {
               batchHarvests[batchName].data.push(
-                data.find((harvest) => harvest.batch === dailyHarvest.batch)
-                  .weight
+                data.find(
+                  (harvest) =>
+                    harvest.batch === dailyHarvest.batch &&
+                    harvest.harvestedAt === dailyHarvest.harvestedAt
+                ).weight
               );
             }
           });
@@ -70,30 +73,39 @@ export const AnalyticsHarvestByTime = () => {
   };
 
   useEffect(() => {
-    console.log(
-      Object.values(
-        chartHarvestDates.reduce((batchHarvests, { data }) => {
-          data.forEach((dailyHarvest) => {
-            console.log(dailyHarvest.harvestedAt);
-            const batchName = initialBatches.find(
-              (batch) => batch._id === dailyHarvest.batch
-            ).name;
-            if (!batchHarvests[batchName]) {
-              batchHarvests[batchName] = {
-                label: `Batch ${batchName} Harvests`,
-                data: [],
-              };
-            }
-            if (batchHarvests[batchName]) {
-              batchHarvests[batchName].data.push(
-                data.find((harvest) => harvest.batch === dailyHarvest.batch)
-              );
-            }
-          });
-          return batchHarvests;
-        }, {})
-      )
+    const batchesHarvest = chartHarvestDates.reduce(
+      (batchHarvests, { data }) => {
+        data.forEach((dailyHarvest) => {
+          if (
+            !batchHarvests.find(
+              (batchHarvest) => batchHarvest.batch === dailyHarvest.batch
+            )
+          ) {
+            batchHarvests.push({
+              batch: dailyHarvest.batch,
+              label: "",
+              data: [],
+            });
+          }
+        });
+        return batchHarvests;
+      },
+      []
     );
+    chartHarvestDates.forEach((dailyHarvest) => {
+      batchesHarvest.forEach((batchHarvest) => {
+        const currentBatch = batchHarvest.batch;
+        const currentBatchHarvest = dailyHarvest.data
+          .filter(({ batch }) => batch === currentBatch)
+          .map((harvest) => {
+            console.log(harvest);
+            return harvest.weight;
+          })
+          .reduce((total, harvest) => total + harvest, 0);
+        // console.log(currentBatch, currentBatchHarvest, dailyHarvest);
+        batchHarvest.data.push(currentBatchHarvest);
+      });
+    });
   }, [chartHarvestDates]);
 
   useEffect(() => {
