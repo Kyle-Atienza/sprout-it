@@ -5,7 +5,7 @@ import {
   PrimaryButton,
   PurchaseForm,
   SupplierForm,
-  BackToTopButton
+  BackToTopButton,
 } from "../components";
 import { EditFilled, DeleteFilled } from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
@@ -26,12 +26,27 @@ export const Financials = () => {
   const [selectedSupplier, setSelectedSupplier] = useState({});
   const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState(false);
   const [isSupplierModalOpen, setIsSupplierModalOpen] = useState(false);
+  const [newest, setNewest] = useState(true);
 
   useEffect(() => {
     dispatch(getPurchases());
     dispatch(getMaterials());
     dispatch(getSuppliers());
   }, []);
+
+  useEffect(() => {
+    console.log(
+      purchases.slice().sort((a, b) => {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      })
+    );
+
+    /* console.log(
+      purchases.map((a) => {
+        return new Date(a.createdAt);
+      })
+    ); */
+  }, [purchases]);
 
   const onDeleteSupplier = (id) => {
     dispatch(deleteSupplier(id));
@@ -52,37 +67,37 @@ export const Financials = () => {
     <>
       <Transition appear show={isPurchaseModalOpen} as={Fragment}>
         <Dialog
-          as='div'
-          className='relative z-20'
+          as="div"
+          className="relative z-20"
           onClose={() => setIsPurchaseModalOpen(false)}
         >
           <Transition.Child
             as={Fragment}
-            enter='ease-out duration-300'
-            enterFrom='opacity-0'
-            enterTo='opacity-100'
-            leave='ease-in duration-200'
-            leaveFrom='opacity-100'
-            leaveTo='opacity-0'
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
           >
-            <div className='fixed inset-0 bg-dark-700 bg-opacity-25' />
+            <div className="fixed inset-0 bg-dark-700 bg-opacity-25" />
           </Transition.Child>
 
-          <div className='fixed inset-0 overflow-y-auto'>
-            <div className='flex min-h-full items-center justify-center p-4 text-center'>
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
               <Transition.Child
                 as={Fragment}
-                enter='ease-out duration-300'
-                enterFrom='opacity-0 scale-95'
-                enterTo='opacity-100 scale-100'
-                leave='ease-in duration-200'
-                leaveFrom='opacity-100 scale-100'
-                leaveTo='opacity-0 scale-95'
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className='bg-light-100 w-full max-w-lg transform overflow-hidden rounded-2xl pl-12 pr-12 pb-12 text-left align-middle shadow-lg transition-all'>
-                  <div className='z-50 -mr-6 mb-2 mt-6 flex justify-end'>
+                <Dialog.Panel className="bg-light-100 w-full max-w-lg transform overflow-hidden rounded-2xl pl-12 pr-12 pb-12 text-left align-middle shadow-lg transition-all">
+                  <div className="z-50 -mr-6 mb-2 mt-6 flex justify-end">
                     <button
-                      className='text-xl leading-none flex justify-center items-center hover:text-red-500'
+                      className="text-xl leading-none flex justify-center items-center hover:text-red-500"
                       onClick={() => setIsPurchaseModalOpen(false)}
                     >
                       <CloseOutlined />
@@ -100,37 +115,37 @@ export const Financials = () => {
 
       <Transition appear show={isSupplierModalOpen} as={Fragment}>
         <Dialog
-          as='div'
-          className='relative z-20'
+          as="div"
+          className="relative z-20"
           onClose={() => setIsSupplierModalOpen(false)}
         >
           <Transition.Child
             as={Fragment}
-            enter='ease-out duration-300'
-            enterFrom='opacity-0'
-            enterTo='opacity-100'
-            leave='ease-in duration-200'
-            leaveFrom='opacity-100'
-            leaveTo='opacity-0'
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
           >
-            <div className='fixed inset-0 bg-dark-700 bg-opacity-25' />
+            <div className="fixed inset-0 bg-dark-700 bg-opacity-25" />
           </Transition.Child>
 
-          <div className='fixed inset-0 overflow-y-auto'>
-            <div className='flex min-h-full items-center justify-center p-4 text-center'>
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
               <Transition.Child
                 as={Fragment}
-                enter='ease-out duration-300'
-                enterFrom='opacity-0 scale-95'
-                enterTo='opacity-100 scale-100'
-                leave='ease-in duration-200'
-                leaveFrom='opacity-100 scale-100'
-                leaveTo='opacity-0 scale-95'
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className='bg-light-100 w-full max-w-lg transform overflow-hidden rounded-2xl pl-12 pr-12 pb-12 text-left align-middle shadow-lg transition-all'>
-                  <div className='z-50 -mr-6 mb-2 mt-6 flex justify-end'>
+                <Dialog.Panel className="bg-light-100 w-full max-w-lg transform overflow-hidden rounded-2xl pl-12 pr-12 pb-12 text-left align-middle shadow-lg transition-all">
+                  <div className="z-50 -mr-6 mb-2 mt-6 flex justify-end">
                     <button
-                      className='text-xl leading-none flex justify-center items-center hover:text-red-500'
+                      className="text-xl leading-none flex justify-center items-center hover:text-red-500"
                       onClick={() => setIsSupplierModalOpen(false)}
                     >
                       <CloseOutlined />
@@ -149,18 +164,18 @@ export const Financials = () => {
         </Dialog>
       </Transition>
 
-      <div className='flex flex-row'>
-        <div className='w-0 lg:w-1/6'>
+      <div className="flex flex-row">
+        <div className="w-0 lg:w-1/6">
           <SideNavBar />
         </div>
 
-        <div className='flex flex-col w-full lg:w-5/6 min-h-screen' id='top'>
-          <div className='w-full'>
-            <TopNavBar pageName='Financials' />
+        <div className="flex flex-col w-full lg:w-5/6 min-h-screen" id="top">
+          <div className="w-full">
+            <TopNavBar pageName="Financials" />
           </div>
 
           <Tab.Group>
-            <Tab.List className='mx-10 mt-16 flex gap-2 scrollbar pb-2 flex-shrink-0'>
+            <Tab.List className="mx-10 mt-16 flex gap-2 scrollbar pb-2 flex-shrink-0">
               <Tab
                 className={({ selected }) =>
                   selected
@@ -180,127 +195,139 @@ export const Financials = () => {
                 Suppliers
               </Tab>
             </Tab.List>
-            <Tab.Panels className='py-5 flex-1'>
+            <Tab.Panels className="py-5 flex-1">
               <Tab.Panel>
-                <div className='search mx-10 mt-4 flex justify-between'>
+                <div className="search mx-10 mt-4 flex justify-between">
                   <PrimaryButton
-                    className='text-xl leading-none flex justify-center items-center'
-                    name='Add Purchase'
+                    className="text-xl leading-none flex justify-center items-center"
+                    name="Add Purchase"
                     onClick={() => setIsPurchaseModalOpen(true)}
+                  />
+                  <PrimaryButton
+                    className="text-xl leading-none flex justify-center items-center"
+                    name={newest ? "Newest" : "Oldest"}
+                    onClick={() => setNewest(!newest)}
                   />
                 </div>
 
-                <div className='overflow-x-auto harvests-table mx-10 my-6 shadow-md bg-light-100 rounded-xl'>
-                  <table className='w-full text-sm text-left'>
-                    <thead className=' poppins-paragraph text-secondary-300'>
+                <div className="overflow-x-auto harvests-table mx-10 my-6 shadow-md bg-light-100 rounded-xl">
+                  <table className="w-full text-sm text-left">
+                    <thead className=" poppins-paragraph text-secondary-300">
                       <tr>
-                        <th scope='col' className='py-4 px-6'>
+                        <th scope="col" className="py-4 px-6">
                           Material
                         </th>
-                        <th scope='col' className='py-4 px-6'>
+                        <th scope="col" className="py-4 px-6">
                           Quantity
                         </th>
-                        <th scope='col' className='py-4 px-6'>
+                        <th scope="col" className="py-4 px-6">
                           Price
                         </th>
-                        <th scope='col' className='py-4 px-6'>
+                        <th scope="col" className="py-4 px-6">
                           Total
                         </th>
-                        <th scope='col' className='py-4 px-6'>
+                        <th scope="col" className="py-4 px-6">
                           Supplier
                         </th>
-                        <th scope='col' className='py-4 px-6'>
+                        <th scope="col" className="py-4 px-6">
                           Purchase On
                         </th>
                       </tr>
                     </thead>
-                    <tbody className='poppins-paragraph-sm '>
-                      {purchases.map((purchase, index) => {
-                        return (
-                          <tr
-                            key={index}
-                            className='bg-light-100 hover:bg-light-200 border-b dark:bg-gray-800 dark:border-gray-700 transition-all duration-300 ease-in-out cursor-pointer'
-                          >
-                            <td className='py-4 px-6'>
-                              {purchase.material.name}
-                            </td>
-                            <td className='py-4 px-6'>
-                              {`${purchase.quantity} ${purchase.material.unit}`}
-                            </td>
-                            <td className='py-4 px-6'>
-                              {formatter.format(
-                                purchase.material.price
-                                  ? purchase.material.price
-                                  : 0
-                              )}
-                            </td>
-                            <td className='py-4 px-6'>
-                              {formatter.format(
-                                (purchase.material.price
-                                  ? purchase.material.price
-                                  : 0) * purchase.quantity
-                              )}
-                            </td>
+                    <tbody className="poppins-paragraph-sm ">
+                      {purchases
+                        .slice()
+                        .sort((a, b) => {
+                          return newest
+                            ? new Date(b.createdAt) - new Date(a.createdAt)
+                            : new Date(a.createdAt) - new Date(b.createdAt);
+                        })
+                        .map((purchase, index) => {
+                          return (
+                            <tr
+                              key={index}
+                              className="bg-light-100 hover:bg-light-200 border-b dark:bg-gray-800 dark:border-gray-700 transition-all duration-300 ease-in-out cursor-pointer"
+                            >
+                              <td className="py-4 px-6">
+                                {purchase.material.name}
+                              </td>
+                              <td className="py-4 px-6">
+                                {`${purchase.quantity} ${purchase.material.unit}`}
+                              </td>
+                              <td className="py-4 px-6">
+                                {formatter.format(
+                                  purchase.material.price
+                                    ? purchase.material.price
+                                    : 0
+                                )}
+                              </td>
+                              <td className="py-4 px-6">
+                                {formatter.format(
+                                  (purchase.material.price
+                                    ? purchase.material.price
+                                    : 0) * purchase.quantity
+                                )}
+                              </td>
 
-                            <td className='py-4 px-6'>
-                              {purchase.supplier.name}
-                            </td>
-                            <td className='py-4 px-6'>
-                              {new Date(purchase.createdAt)
-                                .toDateString()
-                                .slice(4)}
-                            </td>
-                          </tr>
-                        );
-                      })}
+                              <td className="py-4 px-6">
+                                {purchase.supplier.name}
+                              </td>
+                              <td className="py-4 px-6">
+                                {new Date(purchase.createdAt)
+                                  .toDateString()
+                                  .slice(4)}
+                              </td>
+                            </tr>
+                          );
+                        })}
                     </tbody>
                   </table>
                 </div>
               </Tab.Panel>
 
               <Tab.Panel>
-                <div className='search mx-10 mt-4 flex justify-between'>
+                <div className="search mx-10 mt-4 flex justify-between">
                   <PrimaryButton
-                    className='text-xl leading-none flex justify-center items-center'
-                    name='Add Purchase'
+                    className="text-xl leading-none flex justify-center items-center"
+                    name="Add Purchase"
                     onClick={() => setIsPurchaseModalOpen(true)}
                   />
                 </div>
 
-                <div className='overflow-x-auto harvests-table mx-10 my-6 shadow-md bg-light-100 rounded-xl'>
-                  <table className='w-full text-sm text-left'>
-                    <thead className=' poppins-paragraph text-secondary-300'>
+                <div className="overflow-x-auto harvests-table mx-10 my-6 shadow-md bg-light-100 rounded-xl">
+                  <table className="w-full text-sm text-left">
+                    <thead className=" poppins-paragraph text-secondary-300">
                       <tr>
-                        <th scope='col' className='py-4 px-6'>
+                        <th scope="col" className="py-4 px-6">
                           Supplier
                         </th>
-                        <th scope='col' className='py-4 px-6'>
+                        <th scope="col" className="py-4 px-6">
                           Address
                         </th>
-                        <th scope='col' className='py-4 px-6'>
+                        <th scope="col" className="py-4 px-6">
                           Contact
                         </th>
-                        <th scope='col' className='py-4 px-6'></th>
-                        <th scope='col' className='py-4 px-6'></th>
+                        <th scope="col" className="py-4 px-6"></th>
+                        <th scope="col" className="py-4 px-6"></th>
                       </tr>
                     </thead>
 
-                    <tbody className='poppins-paragraph-sm '>
+                    <tbody className="poppins-paragraph-sm ">
                       {suppliers.map((supplier, index) => {
                         return (
                           <tr
                             key={index}
-                            className='bg-light-100 hover:bg-light-200 border-b dark:bg-gray-800 dark:border-gray-700 transition-all duration-300 ease-in-out cursor-pointer'
+                            className="bg-light-100 hover:bg-light-200 border-b dark:bg-gray-800 dark:border-gray-700 transition-all duration-300 ease-in-out cursor-pointer"
                           >
-                            <td className='py-4 px-6'>{supplier.name}</td>
-                            <td className='py-4 px-6'>{supplier.address}</td>
-                            <td className='py-4 px-6'>{supplier.address}</td>
-                            <td className='py-4 px-6'>
+                            <td className="py-4 px-6">{supplier.name}</td>
+                            <td className="py-4 px-6">{supplier.address}</td>
+                            <td className="py-4 px-6">{supplier.address}</td>
+                            <td className="py-4 px-6">
                               <button onClick={() => onEditSupplier(supplier)}>
                                 <EditFilled />
                               </button>
                             </td>
-                            <td className='py-4 px-6'>
+                            <td className="py-4 px-6">
                               <button
                                 onClick={() => onDeleteSupplier(supplier._id)}
                               >
