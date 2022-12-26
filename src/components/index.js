@@ -26,3 +26,4 @@ export * from "./MaterialCard";
 export * from "./AnalyticsHarvestByTime";
 export * from "./AnalyticsInsights";
 export * from "./SupplierForm";
+export * from "./BackToTopButton";

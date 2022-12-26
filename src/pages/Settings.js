@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { InviteForm } from "../components";
-import { SideNavBar, TopNavBar, TextField, PrimaryButton } from "../components";
+import {
+  SideNavBar,
+  TopNavBar,
+  TextField,
+  PrimaryButton,
+  BackToTopButton,
+} from "../components";
 import { useEffect } from "react";
 import { getMaterials } from "../features/inventory/inventorySlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -60,12 +66,12 @@ export function Settings() {
 
   return (
     <>
-      <div className='flex flex-row w-screen min-h-screen'>
+      <div className='flex flex-row min-h-screen'>
         <div className='w-0 lg:w-1/6'>
           <SideNavBar />
         </div>
 
-        <div className='flex flex-col w-full lg:w-5/6'>
+        <div className='flex flex-col w-full lg:w-5/6' id='top'>
           <div className='w-full'>
             <TopNavBar pageName='Settings' />
           </div>
@@ -89,7 +95,11 @@ export function Settings() {
                 placeholder='Confirm new password'
                 onChange={onChangeUpdatePassword}
               />
-              <PrimaryButton className="mt-4" name='Update Password' onClick={updatePassword} />
+              <PrimaryButton
+                className='mt-4'
+                name='Update Password'
+                onClick={updatePassword}
+              />
             </section>
 
             <div className='w-full lg:w-2/3 overflow-x-auto harvests-table mx-0 md:mx-6 lg:mx-10 my-6 shadow-md bg-light-100 rounded-xl'>
@@ -130,6 +140,7 @@ export function Settings() {
               </table>
             </div>
           </div>
+          <BackToTopButton />
         </div>
       </div>
     </>

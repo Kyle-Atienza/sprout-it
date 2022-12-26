@@ -5,6 +5,7 @@ import {
   AnalyticsHarvestByTime,
   AnalyticsSubstrateBatch,
   AnalyticsInsights,
+  BackToTopButton
 } from "../components";
 import { useState, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -73,32 +74,32 @@ export const Analytics = () => {
 
   return (
     <>
-      <div className="flex flex-row w-screen">
-        <div className="w-0 lg:w-1/6">
+      <div className='flex flex-row'>
+        <div className='w-0 lg:w-1/6'>
           <SideNavBar />
         </div>
-        <div className="flex flex-col w-full lg:w-5/6 min-h-screen">
-          <div className="w-full">
-            <TopNavBar pageName="Analytics" />
+        <div className='flex flex-col w-full lg:w-5/6 min-h-screen' id='top'>
+          <div className='w-full'>
+            <TopNavBar pageName='Analytics' />
           </div>
-          <div className="charts d-flex flex-col mx-10 mt-16">
-            <div className="flex flex-col gap-0 lg:gap-5 lg:flex-row">
-              <div className="p-4 md:p-6 lg:p-12 w-full lg:w-1/2 bg-white rounded-3xl shadow">
+          <div className='charts d-flex flex-col mx-10 mt-16'>
+            <div className='flex flex-col gap-0 lg:gap-5 lg:flex-row'>
+              <div className='p-4 md:p-6 lg:p-12 w-full lg:w-1/2 bg-white rounded-3xl shadow'>
                 <AnalyticsSubstrateBatch compareHarvestDefects />
               </div>
 
-              <div className=" w-full lg:w-1/2 flex flex-col gap-4 overflow-y-scroll scrollbar-hidden">
-                <h2 className="poppins-heading-6 text-dark-500 mt-6 lg:mt-0">
+              <div className=' w-full lg:w-1/2 flex flex-col gap-4 overflow-y-scroll scrollbar-hidden'>
+                <h2 className='poppins-heading-6 text-dark-500 mt-6 lg:mt-0'>
                   Insights
                 </h2>
                 <AnalyticsInsights />
               </div>
             </div>
-            <div className="flex gap-5 flex-col mt-6">
+            <div className='flex gap-5 flex-col mt-6'>
               <AnalyticsHarvestByTime />
             </div>
-            <div className="flex gap-5 my-6">
-              <div className="p-4 md:p-6 lg:p-12 w-full bg-white rounded-3xl shadow">
+            <div className='flex gap-5 my-6'>
+              <div className='p-4 md:p-6 lg:p-12 w-full bg-white rounded-3xl shadow'>
                 <Bar
                   data={chartHarvestCostData}
                   options={{
@@ -126,6 +127,7 @@ export const Analytics = () => {
               </div>
             </div>
           </div>
+          <BackToTopButton />
         </div>
       </div>
     </>
