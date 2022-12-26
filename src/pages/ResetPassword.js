@@ -39,18 +39,7 @@ export const ResetPassword = () => {
       setId(id);
       setEmail(email);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [decodedToken]);
-
-  useEffect(() => {
-    /* if (isError) {
-      alert(message.response);
-    }
-    if (isSuccess || user) {
-      navigate("/production");
-    } */
-    // dispatch(reset());
-  }, [user, isSuccess, isError, message, navigate, dispatch]);
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -74,6 +63,7 @@ export const ResetPassword = () => {
     };
 
     dispatch(resetPassword(payload));
+    navigate("/");
   };
 
   return (
