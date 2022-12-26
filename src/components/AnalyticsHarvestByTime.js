@@ -44,7 +44,7 @@ export const AnalyticsHarvestByTime = () => {
           }, 0);
         }),
       },
-      ...Object.values(
+      /* ...Object.values(
         chartHarvestDates.reduce((batchHarvests, { data }) => {
           data.forEach((dailyHarvest) => {
             const batchName = initialBatches.find(
@@ -68,7 +68,7 @@ export const AnalyticsHarvestByTime = () => {
           });
           return batchHarvests;
         }, {})
-      ),
+      ), */
     ],
   };
 
