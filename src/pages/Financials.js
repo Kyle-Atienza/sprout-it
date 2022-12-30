@@ -21,6 +21,7 @@ import {
 export const Financials = () => {
   const dispatch = useDispatch();
 
+  const { user } = useSelector((state) => state.user);
   const { purchases } = useSelector((state) => state.financial);
   const { suppliers } = useSelector((state) => state.supplier);
   const [selectedSupplier, setSelectedSupplier] = useState({});
@@ -40,22 +41,32 @@ export const Financials = () => {
         return new Date(b.createdAt) - new Date(a.createdAt);
       })
     );
-
-    /* console.log(
-      purchases.map((a) => {
-        return new Date(a.createdAt);
-      })
-    ); */
   }, [purchases]);
 
+  const onPurchase = () => {
+    if (user.role === "owner") {
+      setIsPurchaseModalOpen(true);
+    } else {
+      alert("Restricted to Owner Only");
+    }
+  };
+
   const onDeleteSupplier = (id) => {
-    dispatch(deleteSupplier(id));
-    dispatch(getSuppliers());
+    if (user.role === "owner") {
+      dispatch(deleteSupplier(id));
+      dispatch(getSuppliers());
+    } else {
+      alert("Restricted to Owner Only");
+    }
   };
 
   const onEditSupplier = (supplier) => {
-    setSelectedSupplier(supplier);
-    setIsSupplierModalOpen(true);
+    if (user.role === "owner") {
+      setSelectedSupplier(supplier);
+      setIsSupplierModalOpen(true);
+    } else {
+      alert("Restricted to Owner Only");
+    }
   };
 
   var formatter = new Intl.NumberFormat("tl-PH", {
@@ -201,7 +212,7 @@ export const Financials = () => {
                   <PrimaryButton
                     className="text-xl leading-none flex justify-center items-center"
                     name="Add Purchase"
-                    onClick={() => setIsPurchaseModalOpen(true)}
+                    onClick={onPurchase}
                   />
                   <PrimaryButton
                     className="text-xl leading-none flex justify-center items-center"
@@ -290,7 +301,7 @@ export const Financials = () => {
                   <PrimaryButton
                     className="text-xl leading-none flex justify-center items-center"
                     name="Add Purchase"
-                    onClick={() => setIsPurchaseModalOpen(true)}
+                    onClick={onPurchase}
                   />
                 </div>
 

@@ -52,8 +52,8 @@ export const AnalyticsHarvestByTime = () => {
   const getBatchesHarvest = () => {
     // creates the array with objects of batcg and its harvest data array
     const batchesHarvest = chartHarvestDates.reduce(
-      (batchHarvests, { data }) => {
-        data.forEach((dailyHarvest, index) => {
+      (batchHarvests, { data }, index) => {
+        data.forEach((dailyHarvest) => {
           if (
             !batchHarvests.find(
               (batchHarvest) => batchHarvest.batch === dailyHarvest.batch
@@ -66,7 +66,7 @@ export const AnalyticsHarvestByTime = () => {
             batchHarvests.push({
               batch: dailyHarvest.batch,
               label: `Batch ${batchName} Harvests`,
-              backgroundColor: setBgColors(index),
+              backgroundColor: setBgColors(batchHarvests.length),
               data: [],
             });
           }

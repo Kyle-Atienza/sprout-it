@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { PrimaryButton } from "../components";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   createSupplier,
   updateSupplier,
@@ -9,6 +9,8 @@ import {
 
 export const SupplierForm = ({ closeForm, supplier }) => {
   const dispatch = useDispatch();
+
+  const { user } = useSelector((state) => state.user);
 
   const [supplierData, setSupplierData] = useState({
     name: "",
@@ -19,33 +21,41 @@ export const SupplierForm = ({ closeForm, supplier }) => {
   const { name, address, contact } = supplierData;
 
   const onCreateSupplier = () => {
-    dispatch(
-      createSupplier({
-        name: name,
-        address: address,
-        contact: contact,
-      })
-    );
-    closeForm();
-    setSupplierData({
-      name: "",
-      address: "",
-      contact: "",
-    });
-  };
-
-  const onUpdateSupplier = () => {
-    dispatch(
-      updateSupplier({
-        id: supplier._id,
-        payload: {
+    if (user.role === "owner") {
+      dispatch(
+        createSupplier({
           name: name,
           address: address,
           contact: contact,
-        },
-      })
-    );
-    closeForm();
+        })
+      );
+      closeForm();
+      setSupplierData({
+        name: "",
+        address: "",
+        contact: "",
+      });
+    } else {
+      alert("Restricted to Owner Only");
+    }
+  };
+
+  const onUpdateSupplier = () => {
+    if (user.role === "owner") {
+      dispatch(
+        updateSupplier({
+          id: supplier._id,
+          payload: {
+            name: name,
+            address: address,
+            contact: contact,
+          },
+        })
+      );
+      closeForm();
+    } else {
+      alert("Restricted to Owner Only");
+    }
   };
 
   const onChange = (e) => {

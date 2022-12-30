@@ -133,18 +133,34 @@ export function Settings() {
                   </tr>
                 </thead>
                 <tbody className="open-paragraph">
-                  {users.map((user) => {
+                  {users.map((account) => {
                     return (
                       <tr
-                        key={user._id}
-                        className="bg-light-100 hover:bg-light-200 border-b dark:bg-gray-800 dark:border-gray-700 transition-all duration-300 ease-in-out cursor-pointer"
+                        key={account._id}
+                        className="bg-light-100 hover:bg-light-200 border-b dark:bg-gray-800 dark:border-gray-700 transition-all duration-300 ease-in-out"
                       >
-                        <td className="py-4 px-6">{user.name}</td>
-                        <td className="py-4 px-6">{user.email}</td>
-                        <td className="py-4 px-6">{user.role}</td>
+                        <td className="py-4 px-6">{account.name}</td>
+                        <td className="py-4 px-6">{account.email}</td>
+                        <td className="py-4 px-6">{account.role}</td>
                         <td className="py-4 px-6 ">
-                          <button onClick={() => onDeleteUser(user._id)}>
-                            <DeleteFilled className="text-red-500" />
+                          <button
+                            className={
+                              account.role === "owner"
+                                ? "hidden"
+                                : user.role === "owner"
+                                ? "cursor-pointer"
+                                : "cursor-default"
+                            }
+                            onClick={() => onDeleteUser(account._id)}
+                          >
+                            {/* <DeleteFilled className="text-red-500" /> */}
+                            <DeleteFilled
+                              className={
+                                user.role === "owner"
+                                  ? "text-red-500"
+                                  : "text-gray-400 pointer-events-none"
+                              }
+                            />
                           </button>
                         </td>
                       </tr>

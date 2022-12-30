@@ -7,6 +7,7 @@ import { useState } from "react";
 export const PreProductionForm = () => {
   const dispatch = useDispatch();
 
+  const { user } = useSelector((state) => state.user);
   const [formData, setFormData] = useState({});
   const { materials } = useSelector((state) => state.inventory);
   const { isError, isLoading, message } = useSelector((state) => state.batch);
@@ -26,21 +27,22 @@ export const PreProductionForm = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-
-    dispatch(
-      createBatch({
-        materials: Object.keys(formData).map((materialInput) => {
-          return {
-            material: materials.find((materialItem) => {
-              return materialItem.name === materialInput;
-            })._id,
-            weight: formData[materialInput],
-          };
-        }),
-      })
-    );
-
-    // window.location.reload();
+    if (user.role === "owner") {
+      dispatch(
+        createBatch({
+          materials: Object.keys(formData).map((materialInput) => {
+            return {
+              material: materials.find((materialItem) => {
+                return materialItem.name === materialInput;
+              })._id,
+              weight: formData[materialInput],
+            };
+          }),
+        })
+      );
+    } else {
+      alert("Restricted to Owner Only");
+    }
   };
 
   return (

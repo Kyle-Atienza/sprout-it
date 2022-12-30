@@ -188,7 +188,7 @@ export function TaskForm({ batch, closeModal }) {
           Start On <span className="text-red-600">*</span>
         </label>
         <div className="flex items-center gap-4">
-          <select
+          {/* <select
             id="countries"
             className="w-1/3 p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm my-2 focus:ring-primary-500 focus:border-primary-400"
             onChange={onChange}
@@ -200,8 +200,8 @@ export function TaskForm({ batch, closeModal }) {
             </option>
             <option value="phase">Phase</option>
             <option value="date">Date</option>
-          </select>
-          {getInputByType("start", task.startBy)}
+          </select> */}
+          {getInputByType("start", "date")}
         </div>
       </div>
 
