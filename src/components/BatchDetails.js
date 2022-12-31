@@ -107,7 +107,7 @@ export function BatchDetails({ batch }) {
               {batch.hasOwnProperty("composting")
                 ? batch.composting.waiting
                 : null}{" "}
-              week/s
+              {/* week/s */}
             </p>
             <p className="open-paragraph my-1">
               <span className="font-semibold">Mix Frequency: </span>
@@ -137,7 +137,6 @@ export function BatchDetails({ batch }) {
               {batch.hasOwnProperty("bagging")
                 ? new Date(batch.bagging.startedAt).toDateString()
                 : null}{" "}
-              kg
             </p>
             <p className="open-paragraph my-1">
               <span className="font-semibold">Bag Weight: </span>
@@ -221,7 +220,7 @@ export function BatchDetails({ batch }) {
               {batch.hasOwnProperty("fruiting")
                 ? batch.fruiting.waiting
                 : null}{" "}
-              week/s
+              {/* week/s */}
             </p>
             <p className="open-paragraph my-1">
               <span className="font-semibold">Defects: </span>

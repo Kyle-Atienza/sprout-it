@@ -25,7 +25,7 @@ export const AnalyticsInsights = () => {
             isGood: null,
             message: null,
           };
-          if (batch.daysWithHarvests > 5 || batch.totalHarvests < 25) {
+          if (batch.daysWithHarvests > 5 && batch.totalHarvests < 6) {
             data.message = `Batch ${batch.batch} doesn't produce much harvest, check on its current condition`;
             data.isGood = false;
             data.show = true;
@@ -79,9 +79,14 @@ export const AnalyticsInsights = () => {
           {
             show: true,
             isGood: getHarvestGrowthPercentage(days) > 0,
-            message: `Your daily harvest ${
-              getHarvestGrowthPercentage(days) > 0 ? "increased" : "decreased"
-            } by ${getHarvestGrowthPercentage(days)}%`,
+            message:
+              getHarvestGrowthPercentage(days) === -100
+                ? "You still havent recorded any harvests for today"
+                : `Your daily harvest ${
+                    getHarvestGrowthPercentage(days) > 0
+                      ? "increased"
+                      : "decreased"
+                  } by ${getHarvestGrowthPercentage(days)}%`,
           },
           {
             show: true,
@@ -186,9 +191,12 @@ export const AnalyticsInsights = () => {
         };
       })
       .map((harvests) => {
-        const totalHarvests = harvests.data.reduce((prev, currentHarvest) => {
-          return currentHarvest.weight + prev;
-        }, 0);
+        // past 5 days
+        const totalHarvests = harvests.data
+          .slice(0, 5)
+          .reduce((prev, currentHarvest) => {
+            return currentHarvest.weight + prev;
+          }, 0);
         return {
           batch: harvests.batch,
           daysWithHarvests: harvests.data.length,

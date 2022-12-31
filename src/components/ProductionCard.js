@@ -10,43 +10,55 @@ export const ProductionCard = ({
   const getBgByDays = (days) => {
     const week = days / 7;
 
-    if (week < 1) {
+    if (week > 0 && week <= 1) {
       return "#71BF88";
-    } else if (week < 2) {
+    } else if (week > 1 && week <= 2) {
       return "#A1C53D";
-    } else if (week < 3) {
+    } else if (week > 2 && week <= 3) {
       return "#E1BC38";
-    } else if (week < 4) {
+    } else if (week > 3 && week <= 4) {
       return "#F0925E";
-    } else if (week > 4) {
+    } else if (week > 4 && week >= 4) {
       return "#FD8282";
     }
   };
 
   const getMaterialSubstrate = (batch) => {
     if (
-      !(
-        batch.materials.every((material) => {
-          return material.material.name === "Dayami";
-        }) ||
-        batch.materials.every((material) => {
-          return material.material.name === "Kusot";
-        })
+      !!(
+        batch.materials.filter(({ material }) => {
+          return material.name === "Kusot";
+        }).length &&
+        batch.materials.filter(({ material }) => {
+          return material.name === "Dayami";
+        }).length
       )
     ) {
       return "Mixed";
     } else if (
-      batch.materials.some((material) => {
-        return material.material.name === "Dayami";
-      })
+      !!(
+        batch.materials.filter(({ material }) => {
+          return material.name === "Dayami";
+        }).length &&
+        !batch.materials.filter(({ material }) => {
+          return material.name === "Kusot";
+        }).length
+      )
     ) {
       return "Dayami";
     } else if (
-      batch.materials.some((material) => {
-        return material.material.name === "Kusot";
-      })
+      !!(
+        batch.materials.filter(({ material }) => {
+          return material.name === "Kusot";
+        }).length &&
+        !batch.materials.filter(({ material }) => {
+          return material.name === "Dayami";
+        }).length
+      )
     ) {
       return "Kusot";
+    } else {
+      return "Others";
     }
   };
 

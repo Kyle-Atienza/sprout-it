@@ -87,13 +87,15 @@ export const PurchaseForm = ({ openSupplierModal }) => {
           <option hidden defaultValue>
             Select Material
           </option>
-          {materials.map((material, index) => {
-            return (
-              <option value={material._id} key={index}>
-                {material.name}
-              </option>
-            );
-          })}
+          {materials
+            .filter((material) => !material.isHidden)
+            .map((material, index) => {
+              return (
+                <option value={material._id} key={index}>
+                  {material.name}
+                </option>
+              );
+            })}
         </select>
       </div>
       <div className="mb-4">

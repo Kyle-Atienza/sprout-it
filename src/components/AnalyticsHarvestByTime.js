@@ -59,7 +59,6 @@ export const AnalyticsHarvestByTime = () => {
               (batchHarvest) => batchHarvest.batch === dailyHarvest.batch
             )
           ) {
-            console.log(dailyHarvest);
             const batchName = initialBatches.find(
               (batch) => batch._id === dailyHarvest.batch
             ).name;

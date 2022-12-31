@@ -169,7 +169,6 @@ export const Home = () => {
 
   useEffect(() => {
     dispatch(getMaterials());
-    console.log("created");
   }, [batches, dispatch]);
 
   return (

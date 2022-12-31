@@ -56,17 +56,17 @@ export const Analytics = () => {
     labels: [...finished, ...active].map((batch) => "Batch" + batch.name),
     datasets: [
       {
-        label: "Batch Cost",
+        label: "Batch Harvests",
         backgroundColor: "#BCDEA2",
         data: [...finished, ...active].map((batch) => {
-          return batch.value;
+          return getBatchHarvestSum(batch) * 30;
         }),
       },
       {
-        label: "Batch Harvests",
+        label: "Batch Cost",
         backgroundColor: "#A29072",
         data: [...finished, ...active].map((batch) => {
-          return getBatchHarvestSum(batch) * 30;
+          return batch.value;
         }),
       },
     ],

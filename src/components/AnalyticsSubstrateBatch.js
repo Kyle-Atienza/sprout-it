@@ -28,10 +28,14 @@ export const AnalyticsSubstrateBatch = ({
     // dispatch(loadBatchesBySubstrate());
   }, []);
 
+  /* useEffect(() => {
+    console.log(substrate);
+  }, substrate); */
+
   useEffect(() => {
     setMixedBatch(
       [...active, ...finished].filter((batch) => {
-        return (
+        return !!(
           batch.materials.filter(({ material }) => {
             return material.name === "Kusot";
           }).length &&
@@ -44,7 +48,7 @@ export const AnalyticsSubstrateBatch = ({
 
     setKusotBatch(
       [...active, ...finished].filter((batch) => {
-        return (
+        return !!(
           batch.materials.filter(({ material }) => {
             return material.name === "Kusot";
           }).length &&
@@ -57,7 +61,7 @@ export const AnalyticsSubstrateBatch = ({
 
     setDayamiBatch(
       [...active, ...finished].filter((batch) => {
-        return (
+        return !!(
           batch.materials.filter(({ material }) => {
             return material.name === "Dayami";
           }).length &&
@@ -149,7 +153,7 @@ export const AnalyticsSubstrateBatch = ({
             },
             title: {
               display: true,
-              text: "Monthly Harvest per Substrate",
+              text: "Harvest and Defects per Substrate",
               fontSize: 20,
             },
           },
