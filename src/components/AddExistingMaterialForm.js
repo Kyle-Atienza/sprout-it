@@ -69,13 +69,15 @@ export const AddExistingMaterialForm = () => {
           <option hidden defaultValue>
             Select material
           </option>
-          {materials.map((material, index) => {
-            return (
-              <option value={material.name} key={index}>
-                {material.name}
-              </option>
-            );
-          })}
+          {materials
+            .filter((material) => !material.isHidden)
+            .map((material, index) => {
+              return (
+                <option value={material._id} key={index}>
+                  {material.name}
+                </option>
+              );
+            })}
         </select>
       </div>
       {/* <div className='mb-4'>

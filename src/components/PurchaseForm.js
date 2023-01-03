@@ -17,6 +17,7 @@ export const PurchaseForm = ({ openSupplierModal }) => {
   const selectSupplierRef = useRef();
 
   useEffect(() => {
+    console.log(materials);
     dispatch(getSuppliers());
     dispatch(getMaterials());
   }, []);

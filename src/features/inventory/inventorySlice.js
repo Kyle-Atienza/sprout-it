@@ -119,7 +119,7 @@ export const inventorySlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
-        alert("Error Added Material");
+        alert(action.payload.response);
       })
       .addCase(putMaterial.pending, (state) => {
         state.isLoading = true;
