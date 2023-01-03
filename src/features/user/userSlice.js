@@ -97,8 +97,10 @@ export const invite = createAsyncThunk(
 export const forgetPassword = createAsyncThunk(
   "user/forgotPassword",
   async (email, thunkAPI) => {
+    const origin = window.location.origin;
+
     try {
-      return await userService.forgotPassword(email);
+      return await userService.forgotPassword({ origin: origin, ...email });
     } catch (error) {
       const message = {
         status: error.message,
