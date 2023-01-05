@@ -17,6 +17,15 @@ import {
   getSuppliers,
   deleteSupplier,
 } from "../features/supplier/supplierSlice";
+import {
+  Button,
+  Checkbox,
+  Dropdown,
+  Label,
+  TextInput,
+  ToggleSwitch,
+} from "flowbite-react";
+import { filter } from "lodash";
 
 export const Financials = () => {
   const dispatch = useDispatch();
@@ -24,24 +33,29 @@ export const Financials = () => {
   const { user } = useSelector((state) => state.user);
   const { purchases } = useSelector((state) => state.financial);
   const { suppliers } = useSelector((state) => state.supplier);
+  const { materials } = useSelector((state) => state.inventory);
+
   const [selectedSupplier, setSelectedSupplier] = useState({});
   const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState(false);
   const [isSupplierModalOpen, setIsSupplierModalOpen] = useState(false);
   const [newest, setNewest] = useState(true);
+
+  const [filters, setFilters] = useState({
+    supplier: [],
+    material: [],
+    price: {
+      min: 0,
+      max: 0,
+    },
+    quantity: "default",
+    newest: true,
+  });
 
   useEffect(() => {
     dispatch(getPurchases());
     dispatch(getMaterials());
     dispatch(getSuppliers());
   }, []);
-
-  useEffect(() => {
-    console.log(
-      purchases.slice().sort((a, b) => {
-        return new Date(b.createdAt) - new Date(a.createdAt);
-      })
-    );
-  }, [purchases]);
 
   const onPurchase = () => {
     if (user.role === "owner") {
@@ -73,6 +87,45 @@ export const Financials = () => {
     style: "currency",
     currency: "PHP",
   });
+
+  const onChangeFilter = (e) => {
+    console.log(e);
+    // console.log(e.target.dataset.price);
+
+    if (e.target.name === "supplier" || e.target.name === "material") {
+      if (e.target.checked) {
+        setFilters((prevState) => ({
+          ...prevState,
+          [e.target.name]: [...prevState[e.target.name], e.target.value],
+        }));
+      } else {
+        setFilters((prevState) => ({
+          ...prevState,
+          [e.target.name]: prevState[e.target.name].filter(
+            (supplier) => supplier !== e.target.value
+          ),
+        }));
+      }
+    } else if (e.target.name === "price") {
+      setFilters((prevState) => ({
+        ...prevState,
+        price: {
+          ...prevState.price,
+          [e.target.dataset.price]: e.target.value,
+        },
+      }));
+    } else if (e.target.name === "newest") {
+      setFilters((prevState) => ({
+        ...prevState,
+        newest: !prevState.newest,
+      }));
+    } else {
+      setFilters((prevState) => ({
+        ...prevState,
+        [e.target.name]: e.target.value,
+      }));
+    }
+  };
 
   return (
     <>
@@ -163,7 +216,7 @@ export const Financials = () => {
                     </button>
                   </div>
                   <SupplierForm
-                    supplier={selectedSupplier}
+                    supplierId={selectedSupplier._id}
                     closeForm={() => {
                       setIsSupplierModalOpen(false);
                     }}
@@ -214,11 +267,81 @@ export const Financials = () => {
                     name="Add Purchase"
                     onClick={onPurchase}
                   />
-                  <PrimaryButton
-                    className="text-xl leading-none flex justify-center items-center"
-                    name={newest ? "Newest" : "Oldest"}
-                    onClick={() => setNewest(!newest)}
-                  />
+                  <div className="flex">
+                    <PrimaryButton
+                      className="text-xl leading-none flex justify-center items-center"
+                      name={newest ? "Many" : "Fewest"}
+                      onClick={() => setNewest(!newest)}
+                    />
+                    <div className="price-range">
+                      <TextInput
+                        id="min"
+                        type="text"
+                        name="price"
+                        data-price="min"
+                        placeholder="Min"
+                        onChange={onChangeFilter}
+                      />
+                      <TextInput
+                        id="max"
+                        type="text"
+                        name="price"
+                        data-price="max"
+                        placeholder="Max"
+                        onChange={onChangeFilter}
+                      />
+                    </div>
+                    <div className="drowdown">
+                      <Dropdown label="Materials" dismissOnClick={false}>
+                        {materials.map((material) => {
+                          return (
+                            <Dropdown.Item key={material._id}>
+                              <Checkbox
+                                id="accept"
+                                name="material"
+                                value={material.name}
+                                onChange={onChangeFilter}
+                              />
+                              <Label className="ml-5" htmlFor="accept">
+                                {material.name}
+                              </Label>
+                            </Dropdown.Item>
+                          );
+                        })}
+                      </Dropdown>
+                    </div>
+                    <div className="drowdown">
+                      <Dropdown label="Supplier" dismissOnClick={false}>
+                        {suppliers.map((supplier) => {
+                          return (
+                            <Dropdown.Item key={supplier._id}>
+                              <Checkbox
+                                id="accept"
+                                name="supplier"
+                                value={supplier.name}
+                                onChange={onChangeFilter}
+                              />
+                              <Label className="ml-5" htmlFor="accept">
+                                {supplier.name}
+                              </Label>
+                            </Dropdown.Item>
+                          );
+                        })}
+                      </Dropdown>
+                    </div>
+                    {/* <PrimaryButton
+                      className="text-xl leading-none flex justify-center items-center"
+                      name={newest ? "Newest" : "Oldest"}
+                      onClick={onChangeFilter}
+                    /> */}
+                    <div className="flex flex-col gap-4" id="toggle">
+                      <ToggleSwitch
+                        checked={filters.newest}
+                        label="Toggle me"
+                        onChange={() => onChangeFilter(newest)}
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 <div className="overflow-x-auto harvests-table mx-10 my-6 shadow-md bg-light-100 rounded-xl">
@@ -267,15 +390,13 @@ export const Financials = () => {
                               </td>
                               <td className="py-4 px-6">
                                 {formatter.format(
-                                  purchase.material.price
-                                    ? purchase.material.price
-                                    : 0
+                                  purchase.price ? purchase.price : 0
                                 )}
                               </td>
                               <td className="py-4 px-6">
                                 {formatter.format(
                                   (purchase.material.price
-                                    ? purchase.material.price
+                                    ? purchase.price
                                     : 0) * purchase.quantity
                                 )}
                               </td>

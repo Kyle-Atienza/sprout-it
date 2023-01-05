@@ -12,17 +12,55 @@ export const PurchaseForm = ({ openSupplierModal }) => {
   const { suppliers } = useSelector((state) => state.supplier);
   const { materials } = useSelector((state) => state.inventory);
 
-  const [purchaseData, setPurchaseData] = useState({});
+  const [purchaseData, setPurchaseData] = useState({
+    supplier: null,
+    material: null,
+    quantity: null,
+    price: null,
+  });
+  const [selectedSupplier, setSelectedSupplier] = useState();
+  const [selectedMaterial, setSelectedMaterial] = useState();
 
   const selectSupplierRef = useRef();
 
   useEffect(() => {
-    console.log(materials);
     dispatch(getSuppliers());
     dispatch(getMaterials());
   }, []);
 
+  useEffect(() => {
+    if (purchaseData.supplier) {
+      setSelectedSupplier(
+        suppliers.find((supplier) => supplier._id === purchaseData.supplier)
+      );
+    }
+
+    if (purchaseData.material) {
+      setSelectedMaterial(
+        selectedSupplier.products.find(({ product }) => {
+          return product._id === purchaseData.material;
+        })
+      );
+    }
+  }, [purchaseData]);
+
+  useEffect(() => {
+    console.log(selectedMaterial);
+    if (selectedMaterial)
+      setPurchaseData((prevState) => ({
+        ...prevState,
+        price: selectedMaterial.price,
+      }));
+  }, [selectedMaterial]);
+
   const onChange = (e) => {
+    if (e.target.name === "supplier") {
+      setPurchaseData((prevState) => ({
+        ...prevState,
+        price: null,
+      }));
+    }
+
     if (e.target.name === "supplier" && e.target.value === "add") {
       openSupplierModal();
       selectSupplierRef.current.value = "";
@@ -73,32 +111,52 @@ export const PurchaseForm = ({ openSupplierModal }) => {
           <option value="add">Add new Supplier</option>
         </select>
       </div>
-      <div className="mb-4">
-        <label className="block open-button" htmlFor="username">
-          Material
-          <span className="text-red-600">*</span>
-        </label>
-        <select
-          id="material"
-          className="w-full p-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400"
-          name="material"
-          onChange={onChange}
-          required
-        >
-          <option hidden defaultValue>
-            Select Material
-          </option>
-          {materials
-            .filter((material) => !material.isHidden)
-            .map((material, index) => {
+      {selectedSupplier ? (
+        <div className="mb-4">
+          <label className="block open-button" htmlFor="username">
+            Material
+            <span className="text-red-600">*</span>
+          </label>
+          <select
+            id="material"
+            className="w-full p-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400"
+            name="material"
+            onChange={onChange}
+            value={purchaseData.material}
+            required
+          >
+            <option hidden defaultValue>
+              Select Material
+            </option>
+            {selectedSupplier.products.map(({ product }, index) => {
               return (
-                <option value={material._id} key={index}>
-                  {material.name}
+                <option value={product._id} key={index}>
+                  {product.name}
                 </option>
               );
             })}
-        </select>
-      </div>
+          </select>
+        </div>
+      ) : null}
+      {selectedSupplier ? (
+        <div className="mb-4">
+          <label className="block open-button" htmlFor="username">
+            Price per unit <span className="text-red-600">*</span>
+          </label>
+          <div className="flex justify-center items-center">
+            <p className="open-paragraph">₱</p>
+            <input
+              className="w-full p-3 ml-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400"
+              name="price"
+              type="number"
+              required
+              value={parseFloat(
+                purchaseData.price ? purchaseData.price : 0
+              ).toFixed(2)}
+            />
+          </div>
+        </div>
+      ) : null}
       <div className="mb-4">
         <label className="block open-button" htmlFor="username">
           Quantity <span className="text-red-600">*</span>
@@ -111,24 +169,10 @@ export const PurchaseForm = ({ openSupplierModal }) => {
             onChange={onChange}
             required
           />
-          <p className="open-paragraph">kg/l</p>
+          <p className="open-paragraph">kg</p>
         </div>
       </div>
-      <div className="mb-4">
-        <label className="block open-button" htmlFor="username">
-          Price per unit <span className="text-red-600">*</span>
-        </label>
-        <div className="flex justify-center items-center">
-          <p className="open-paragraph">₱</p>
-          <input
-            className="w-full p-3 ml-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400"
-            name="price"
-            type="number"
-            onChange={onChange}
-            required
-          />
-        </div>
-      </div>
+
       <PrimaryButton onClick={submitPurchase} name="Submit Purchase" />
     </>
   );
