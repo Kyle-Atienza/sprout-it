@@ -17,15 +17,7 @@ import {
   getSuppliers,
   deleteSupplier,
 } from "../features/supplier/supplierSlice";
-import {
-  Button,
-  Checkbox,
-  Dropdown,
-  Label,
-  TextInput,
-  ToggleSwitch,
-} from "flowbite-react";
-import { filter } from "lodash";
+import { Checkbox, Dropdown, Label, Radio, TextInput } from "flowbite-react";
 
 export const Financials = () => {
   const dispatch = useDispatch();
@@ -38,7 +30,9 @@ export const Financials = () => {
   const [selectedSupplier, setSelectedSupplier] = useState({});
   const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState(false);
   const [isSupplierModalOpen, setIsSupplierModalOpen] = useState(false);
-  const [newest, setNewest] = useState(true);
+
+  const quantityModes = ["default", "many", "fewest"];
+  const sortByOptions = ["newest", "quantity"];
 
   const [filters, setFilters] = useState({
     supplier: [],
@@ -47,8 +41,9 @@ export const Financials = () => {
       min: 0,
       max: 0,
     },
-    quantity: "default",
+    quantity: 0,
     newest: true,
+    sortBy: "newest",
   });
 
   useEffect(() => {
@@ -90,7 +85,6 @@ export const Financials = () => {
 
   const onChangeFilter = (e) => {
     console.log(e);
-    // console.log(e.target.dataset.price);
 
     if (e.target.name === "supplier" || e.target.name === "material") {
       if (e.target.checked) {
@@ -114,16 +108,47 @@ export const Financials = () => {
           [e.target.dataset.price]: e.target.value,
         },
       }));
-    } else if (e.target.name === "newest") {
-      setFilters((prevState) => ({
-        ...prevState,
-        newest: !prevState.newest,
-      }));
     } else {
       setFilters((prevState) => ({
         ...prevState,
         [e.target.name]: e.target.value,
       }));
+    }
+  };
+
+  const sortBy = () => {
+    switch (filters.sortBy) {
+      case "newest":
+        return (
+          <PrimaryButton
+            className="text-xl leading-none flex justify-center items-center"
+            name={filters.newest ? "Newest" : "Oldest"}
+            onClick={() => {
+              setFilters((prevState) => ({
+                ...prevState,
+                newest: !filters.newest,
+              }));
+            }}
+          />
+        );
+      case "quantity":
+        return (
+          <PrimaryButton
+            className="text-xl leading-none flex justify-center items-center"
+            name={quantityModes[filters.quantity]}
+            onClick={() => {
+              setFilters((prevState) => ({
+                ...prevState,
+                quantity:
+                  prevState.quantity === quantityModes.length
+                    ? 0
+                    : prevState.quantity++,
+              }));
+            }}
+          />
+        );
+      default:
+        return null;
     }
   };
 
@@ -268,11 +293,6 @@ export const Financials = () => {
                     onClick={onPurchase}
                   />
                   <div className="flex">
-                    <PrimaryButton
-                      className="text-xl leading-none flex justify-center items-center"
-                      name={newest ? "Many" : "Fewest"}
-                      onClick={() => setNewest(!newest)}
-                    />
                     <div className="price-range">
                       <TextInput
                         id="min"
@@ -329,17 +349,29 @@ export const Financials = () => {
                         })}
                       </Dropdown>
                     </div>
-                    {/* <PrimaryButton
-                      className="text-xl leading-none flex justify-center items-center"
-                      name={newest ? "Newest" : "Oldest"}
-                      onClick={onChangeFilter}
-                    /> */}
-                    <div className="flex flex-col gap-4" id="toggle">
-                      <ToggleSwitch
-                        checked={filters.newest}
-                        label="Toggle me"
-                        onChange={() => onChangeFilter(newest)}
-                      />
+                    <div className="drowdown flex flex-col">
+                      <Dropdown label="Sort By" dismissOnClick={false}>
+                        <fieldset
+                          className="flex flex-col gap-4"
+                          id="radio"
+                          onChange={onChangeFilter}
+                        >
+                          {sortByOptions.map((option, index) => {
+                            return (
+                              <div className="flex items-center gap-2">
+                                <Radio
+                                  id="united-state"
+                                  name="sortBy"
+                                  value={option}
+                                  defaultChecked={option === filters.sortBy}
+                                />
+                                <Label htmlFor="united-state">{option}</Label>
+                              </div>
+                            );
+                          })}
+                        </fieldset>
+                      </Dropdown>
+                      {sortBy()}
                     </div>
                   </div>
                 </div>
@@ -371,10 +403,54 @@ export const Financials = () => {
                     <tbody className="poppins-paragraph-sm ">
                       {purchases
                         .slice()
+                        .filter((purchase) => {
+                          const total = purchase.price * purchase.quantity;
+
+                          return filters.price.max
+                            ? total > filters.price.min &&
+                                total < filters.price.max
+                            : total > filters.price.min;
+                        })
+                        .filter((purchase) => {
+                          let setFilter;
+
+                          setFilter = new Set(filters.supplier);
+
+                          return !setFilter.size
+                            ? true
+                            : setFilter.has(purchase.supplier.name);
+                        })
+                        .filter((purchase) => {
+                          let setFilter;
+
+                          setFilter = new Set(filters.material);
+
+                          return !setFilter.size
+                            ? true
+                            : setFilter.has(purchase.material.name);
+                        })
                         .sort((a, b) => {
-                          return newest
-                            ? new Date(b.createdAt) - new Date(a.createdAt)
-                            : new Date(a.createdAt) - new Date(b.createdAt);
+                          switch (filters.sortBy) {
+                            case "newest":
+                              return filters.newest
+                                ? new Date(b.createdAt) - new Date(a.createdAt)
+                                : new Date(a.createdAt) - new Date(b.createdAt);
+
+                            case "quantity":
+                              switch (filters.quantity) {
+                                case 2:
+                                  return a.quantity - b.quantity;
+
+                                case 1:
+                                  return b.quantity - a.quantity;
+
+                                default:
+                                  return true;
+                              }
+
+                            default:
+                              return true;
+                          }
                         })
                         .map((purchase, index) => {
                           return (
