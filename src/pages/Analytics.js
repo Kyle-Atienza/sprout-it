@@ -119,7 +119,7 @@ export const Analytics = () => {
                       title: {
                         display: true,
                         text: "Costs & Harvests per Batch",
-                        fontSize: 20,
+                        fontSize: 24,
                       },
                     },
                   }}

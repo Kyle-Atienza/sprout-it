@@ -434,7 +434,7 @@ export const Home = () => {
                         title: {
                           display: true,
                           text: "Monthly Harvest per Substrate",
-                          fontSize: 20,
+                          fontSize: 24,
                         },
                       },
                     }}

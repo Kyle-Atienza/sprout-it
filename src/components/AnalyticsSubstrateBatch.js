@@ -150,7 +150,7 @@ export const AnalyticsSubstrateBatch = ({
             title: {
               display: true,
               text: "Monthly Harvest per Substrate",
-              fontSize: 20,
+              fontSize: 24,
             },
           },
         }}
@@ -169,7 +169,7 @@ export const AnalyticsSubstrateBatch = ({
             title: {
               display: true,
               text: "Yield Percentage per Substrate",
-              fontSize: 20,
+              fontSize: 24,
             },
           },
         }}

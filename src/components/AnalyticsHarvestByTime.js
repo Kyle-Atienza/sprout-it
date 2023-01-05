@@ -215,7 +215,7 @@ export const AnalyticsHarvestByTime = () => {
             title: {
               display: true,
               text: "Harvests by Time",
-              fontSize: 20,
+              fontSize: 24,
             },
             colors: {
               forceOverride: true,
