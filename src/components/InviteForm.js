@@ -35,24 +35,25 @@ export function InviteForm() {
     };
   }, []);
 
-  const link = "https://sprout-it.vercel.app/register/";
+  // const link = "https://sprout-it.vercel.app/register/";
+  const link = `${window.location.origin}/register/`;
 
   return (
     <>
-      <h2 className='poppins-heading-6'>Invite Worker</h2>
-      <form className='flex flex-col' action=''>
-        <div className='flex gap-4 w-full'>
+      <h2 className="poppins-heading-6">Invite Worker</h2>
+      <form className="flex flex-col" action="">
+        <div className="flex gap-4 w-full">
           <TextField
             name={"firstName"}
             placeholder={"First Name"}
             onChange={onChange}
-            className='w-full'
+            className="w-full"
           />
           <TextField
             name={"lastName"}
             placeholder={"Last Name"}
             onChange={onChange}
-            className='w-full'
+            className="w-full"
           />
         </div>
         <TextField
@@ -62,16 +63,16 @@ export function InviteForm() {
           onChange={onChange}
         />
         <PrimaryButton
-          name='Generate Token'
-          className='my-4'
+          name="Generate Token"
+          className="my-4"
           onClick={onCreateInvite}
         />
       </form>
-      <h2 className='poppins-heading-6 mt-6'>Generated Link</h2>
+      <h2 className="poppins-heading-6 mt-6">Generated Link</h2>
       <TextField
-        className='w-full'
-        value={inviteToken ? link+inviteToken.inviteToken : ""}
-        type='text'
+        className="w-full"
+        value={inviteToken ? link + inviteToken.inviteToken : ""}
+        type="text"
         readonly
       />
     </>

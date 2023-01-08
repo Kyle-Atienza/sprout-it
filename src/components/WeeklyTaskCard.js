@@ -36,7 +36,7 @@ export const WeeklyTaskCard = ({
         onClick={onClick}
       >
         <div className="h-auto w-1/5 pl-4 hidden md:flex flex-col justify-center items-center rounded-l-lg">
-          <img src={image} alt="Weekly task icon" />
+          {image ? <img src={image} alt="Weekly task icon" /> : null}
         </div>
         <div className="py-4 px-4 md:px-0 flex flex-col h-full w-full md:w-3/5 text-left">
           <h5 className="open-paragraph font-semibold mb-2 text-primary-700">

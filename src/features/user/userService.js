@@ -63,8 +63,8 @@ const invite = async (invitedUser) => {
   return response.data;
 };
 
-const forgotPassword = async (email) => {
-  const response = await axios.post(`${API_URL}forgot-password`, email);
+const forgotPassword = async (payload) => {
+  const response = await axios.post(`${API_URL}forgot-password`, payload);
 
   return response.data;
 };

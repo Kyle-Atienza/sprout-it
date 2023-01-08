@@ -1,5 +1,5 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteMaterial } from "../features/inventory/inventorySlice";
 import React, { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
@@ -8,12 +8,12 @@ export const MaterialCard = ({ editMaterial, material, index }) => {
   const dispatch = useDispatch();
 
   const date = new Date(material.updatedAt).toDateString();
+  const { user } = useSelector((state) => state.user);
 
   let [isOpen, setIsOpen] = useState(false);
 
   const onDeleteMaterial = () => {
     dispatch(deleteMaterial(material._id));
-    // window.location.reload();
   };
 
   const closeModal = () => {
@@ -22,6 +22,14 @@ export const MaterialCard = ({ editMaterial, material, index }) => {
 
   const openModal = () => {
     setIsOpen(true);
+  };
+
+  const validateAccess = (callback) => {
+    if (user.role === "owner") {
+      callback();
+    } else {
+      alert("Restricted to Owner Only");
+    }
   };
   return (
     <>
@@ -73,10 +81,12 @@ export const MaterialCard = ({ editMaterial, material, index }) => {
           </h3>
           <div className="flex gap-4">
             <button className="hover:text-secondary-400 flex items-center">
-              <EditOutlined onClick={editMaterial} />
+              <EditOutlined onClick={() => validateAccess(editMaterial)} />
             </button>
             <button className="hover:text-red-600 flex items-center">
-              <DeleteOutlined onClick={onDeleteMaterial} />
+              <DeleteOutlined
+                onClick={() => validateAccess(onDeleteMaterial)}
+              />
             </button>
           </div>
         </div>
@@ -86,8 +96,21 @@ export const MaterialCard = ({ editMaterial, material, index }) => {
             {material.quantity}&nbsp;{material.unit}
           </h4>
         </div>
-        <p className="text-left open-paragraph-sm">Last updated</p>
-        <p className="text-left open-paragraph-sm font-bold">{date}</p>
+        <div className="flex justify-between">
+          <div className="flex flex-col">
+            <p className="text-left open-paragraph-sm">Last updated</p>
+            <p className="text-left open-paragraph-sm font-bold">{date}</p>
+          </div>
+          <div className="flex flex-col">
+            <p className="text-left open-paragraph-sm">Price</p>
+            <p className="text-left open-paragraph-sm font-bold">
+              {material.price.toLocaleString("en-PH", {
+                currency: "PHP",
+                style: "currency",
+              })}
+            </p>
+          </div>
+        </div>
       </div>
     </>
   );

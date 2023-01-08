@@ -120,6 +120,7 @@ export const supplierSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
+        alert(action.payload.response);
       })
       .addCase(updateSupplier.pending, (state) => {
         state.isLoading = true;

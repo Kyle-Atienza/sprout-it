@@ -97,8 +97,10 @@ export const invite = createAsyncThunk(
 export const forgetPassword = createAsyncThunk(
   "user/forgotPassword",
   async (email, thunkAPI) => {
+    const origin = window.location.origin;
+
     try {
-      return await userService.forgotPassword(email);
+      return await userService.forgotPassword({ origin: origin, ...email });
     } catch (error) {
       const message = {
         status: error.message,
@@ -247,6 +249,8 @@ export const userSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
+        console.log(action.payload);
+        alert(action.payload.response);
       })
       .addCase(resetPassword.pending, (state) => {
         state.isLoading = true;
@@ -255,6 +259,7 @@ export const userSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.resetLink = action.payload;
+        alert("Password Successfully Upadated");
       })
       .addCase(resetPassword.rejected, (state, action) => {
         state.isLoading = false;

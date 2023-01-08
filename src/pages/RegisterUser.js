@@ -84,18 +84,17 @@ export const RegisterUser = () => {
       e.preventDefault();
     }
 
-    if (password !== confirmPassword) {
-      alert("Password didn't match");
-    }
-
-    const userData = {
-      name: `${firstName} ${lastName}`,
-      email: email,
-      password: password,
-      role: "worker",
-    };
-
     if (passwordRegex.test(password)) {
+      if (password !== confirmPassword) {
+        alert("Password didn't match");
+      }
+
+      const userData = {
+        name: `${firstName} ${lastName}`,
+        email: email,
+        password: password,
+        role: "worker",
+      };
       dispatch(register(userData));
     } else {
       alert("Password is too weak");

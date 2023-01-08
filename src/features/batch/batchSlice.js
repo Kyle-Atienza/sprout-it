@@ -10,6 +10,7 @@ const initialState = {
     kusot: [],
     dayami: [],
     mixed: [],
+    unlisted: [],
   },
   isSuccess: false,
   isError: false,
@@ -114,7 +115,7 @@ export const batchSlice = createSlice({
     },
     loadBatchesBySubstrate: (state) => {
       state.substrate.mixed = state.active.filter((batch) => {
-        return (
+        return !!(
           batch.materials.filter(({ material }) => {
             return material.name === "Kusot";
           }).length &&
@@ -124,7 +125,7 @@ export const batchSlice = createSlice({
         );
       });
       state.substrate.dayami = state.active.filter((batch) => {
-        return (
+        return !!(
           batch.materials.filter(({ material }) => {
             return material.name === "Dayami";
           }).length &&
@@ -134,7 +135,7 @@ export const batchSlice = createSlice({
         );
       });
       state.substrate.kusot = state.active.filter((batch) => {
-        return (
+        return !!(
           batch.materials.filter(({ material }) => {
             return material.name === "Kusot";
           }).length &&
