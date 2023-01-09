@@ -40,7 +40,7 @@ export const AnalyticsInsights = () => {
     }
 
     if (days.length && weeks.length && months.length) {
-      if (
+      /* if (
         !!getHarvestGrowthPercentage(days) &&
         !!getHarvestGrowthPercentage(weeks) &&
         !!getHarvestGrowthPercentage(months)
@@ -103,7 +103,49 @@ export const AnalyticsInsights = () => {
             } by ${getHarvestGrowthPercentage(months)}%`,
           }
         );
-      }
+      } */
+
+      initialInsights.push(
+        {
+          show: true,
+          isGood: getHarvestGrowthPercentage(days) > 0,
+          message:
+            getHarvestGrowthPercentage(days) === -100 ||
+            getHarvestGrowthPercentage(days) === undefined
+              ? "You still havent recorded any harvests for today"
+              : `Your daily harvest ${
+                  getHarvestGrowthPercentage(days) > 0
+                    ? "increased"
+                    : "decreased"
+                } by ${getHarvestGrowthPercentage(days)}%`,
+        },
+        {
+          show: true,
+          isGood: getHarvestGrowthPercentage(weeks) > 0,
+          message:
+            getHarvestGrowthPercentage(weeks) === -100 ||
+            getHarvestGrowthPercentage(weeks) === undefined
+              ? "You still havent recorded any harvests for the week"
+              : `Your weekly harvest ${
+                  getHarvestGrowthPercentage(weeks) > 0
+                    ? "increased"
+                    : "decreased"
+                } by ${getHarvestGrowthPercentage(weeks)}%`,
+        },
+        {
+          show: true,
+          isGood: getHarvestGrowthPercentage(months) > 0,
+          message:
+            getHarvestGrowthPercentage(months) === -100 ||
+            getHarvestGrowthPercentage(months) === undefined
+              ? "You still havent recorded any harvests for the month"
+              : `Your monthly harvest ${
+                  getHarvestGrowthPercentage(months) > 0
+                    ? "increased"
+                    : "decreased"
+                } by ${getHarvestGrowthPercentage(months)}%`,
+        }
+      );
     }
 
     setInsights(initialInsights);

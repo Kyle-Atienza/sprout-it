@@ -104,14 +104,6 @@ export const Analytics = () => {
                   data={chartHarvestCostData}
                   options={{
                     responsive: true,
-                    /* scales: {
-                      x: {
-                        stacked: true,
-                      },
-                      y: {
-                        stacked: true,
-                      },
-                    }, */
                     plugins: {
                       legend: {
                         position: "top",

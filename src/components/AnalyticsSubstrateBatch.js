@@ -28,10 +28,6 @@ export const AnalyticsSubstrateBatch = ({
     // dispatch(loadBatchesBySubstrate());
   }, []);
 
-  /* useEffect(() => {
-    console.log(substrate);
-  }, substrate); */
-
   useEffect(() => {
     setMixedBatch(
       [...active, ...finished].filter((batch) => {
@@ -74,25 +70,29 @@ export const AnalyticsSubstrateBatch = ({
   }, [active, finished]);
 
   const getBatchesHarvestSum = (batches) => {
-    return batches.reduce((prev, current) => {
-      return (
-        prev +
-        current.harvests.reduce((prev, current) => {
-          return prev + current.weight;
-        }, 0)
-      );
-    }, 0);
+    return (
+      batches.reduce((prev, current) => {
+        return (
+          prev +
+          current.harvests.reduce((prev, current) => {
+            return prev + current.weight;
+          }, 0)
+        );
+      }, 0) / batches.length
+    );
   };
 
   const getDefectsSum = (batch) => {
+    let length = 0;
     let defectsSum = 0;
     const defectedPhase = Object.keys(batch).filter(
       (key) => batch[key].defects
     );
     defectedPhase.forEach((phase) => {
       defectsSum += batch[phase].defects;
+      length += 1;
     });
-    return defectsSum;
+    return defectsSum / length;
   };
 
   const getBatchesDefectsSum = (batches) => {
@@ -153,7 +153,7 @@ export const AnalyticsSubstrateBatch = ({
             },
             title: {
               display: true,
-              text: "Harvest and Defects per Substrate",
+              text: "Average Harvest and Defects per Substrate",
               fontSize: 20,
             },
           },
