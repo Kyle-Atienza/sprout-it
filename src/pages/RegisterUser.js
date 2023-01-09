@@ -8,16 +8,6 @@ import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export const RegisterUser = () => {
-  // Initialize a boolean state
-  const [passwordShown, setPasswordShown] = useState(false); //change to useref
-
-  // Password toggle handler
-  const togglePassword = () => {
-    // When the handler is invoked
-    // inverse the boolean state of passwordShown
-    setPasswordShown(!passwordShown);
-  };
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
