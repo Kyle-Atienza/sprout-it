@@ -87,15 +87,15 @@ export const RegisterUser = () => {
     if (passwordRegex.test(password)) {
       if (password !== confirmPassword) {
         alert("Password didn't match");
+      } else {
+        const userData = {
+          name: `${firstName} ${lastName}`,
+          email: email,
+          password: password,
+          role: "worker",
+        };
+        dispatch(register(userData));
       }
-
-      const userData = {
-        name: `${firstName} ${lastName}`,
-        email: email,
-        password: password,
-        role: "worker",
-      };
-      dispatch(register(userData));
     } else {
       alert("Password is too weak");
     }
@@ -156,15 +156,6 @@ export const RegisterUser = () => {
               readonly
               className="pointer-events-none"
             />
-            {/* <button onClick={togglePassword}>Show Password</button>
-            <TextField
-              value={password}
-              type={passwordShown ? "text" : "password"}
-              name='password'
-              id='password'
-              placeholder='Password'
-              onChange={onChange}
-            /> */}
             <TextField
               value={password}
               type="password"

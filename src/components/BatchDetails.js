@@ -147,7 +147,10 @@ export function BatchDetails({ batch }) {
             </p>
             <p className="open-paragraph my-1">
               <span className="font-semibold">Number of Bags: </span>
-              {batch.hasOwnProperty("bagging") ? batch.bagging.total : null} kg
+              {batch.hasOwnProperty("bagging")
+                ? batch.bagging.total
+                : null}{" "}
+              bags
             </p>
             <p className="open-paragraph my-1">
               <span className="font-semibold">Defects: </span>
