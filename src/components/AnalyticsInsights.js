@@ -113,11 +113,13 @@ export const AnalyticsInsights = () => {
             getHarvestGrowthPercentage(days) === -100 ||
             getHarvestGrowthPercentage(days) === undefined
               ? "You still havent recorded any harvests for today"
-              : `Your daily harvest ${
+              : `Harvests ${
                   getHarvestGrowthPercentage(days) > 0
                     ? "increased"
                     : "decreased"
-                } by ${getHarvestGrowthPercentage(days)}%`,
+                } by ${getHarvestGrowthPercentage(
+                  days
+                )}% compared from yesterday`,
         },
         {
           show: true,
@@ -126,11 +128,13 @@ export const AnalyticsInsights = () => {
             getHarvestGrowthPercentage(weeks) === -100 ||
             getHarvestGrowthPercentage(weeks) === undefined
               ? "You still havent recorded any harvests for the week"
-              : `Your weekly harvest ${
+              : `Harvests ${
                   getHarvestGrowthPercentage(weeks) > 0
                     ? "increased"
                     : "decreased"
-                } by ${getHarvestGrowthPercentage(weeks)}%`,
+                } by ${getHarvestGrowthPercentage(
+                  weeks
+                )}% compared from last week`,
         },
         {
           show: true,
@@ -139,11 +143,13 @@ export const AnalyticsInsights = () => {
             getHarvestGrowthPercentage(months) === -100 ||
             getHarvestGrowthPercentage(months) === undefined
               ? "You still havent recorded any harvests for the month"
-              : `Your monthly harvest ${
+              : `Harvests ${
                   getHarvestGrowthPercentage(months) > 0
                     ? "increased"
                     : "decreased"
-                } by ${getHarvestGrowthPercentage(months)}%`,
+                } by ${getHarvestGrowthPercentage(
+                  months
+                )}% compared from last month`,
         }
       );
     }

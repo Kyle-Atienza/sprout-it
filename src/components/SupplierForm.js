@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
-import { PrimaryButton } from "../components";
+import React, { useEffect, useRef } from "react";
+import { MaterialForm, PrimaryButton } from "../components";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createSupplier,
   updateSupplier,
 } from "../features/supplier/supplierSlice";
-
+import { PlusOutlined } from "@ant-design/icons";
 import { SupplierProductsTableRow } from "./SupplierProductsTableRow";
 
 export const SupplierForm = ({ closeForm, supplierId }) => {
@@ -17,20 +17,22 @@ export const SupplierForm = ({ closeForm, supplierId }) => {
   const { suppliers } = useSelector((state) => state.supplier);
   const [supplier, setSupplier] = useState({});
   const [editRow, setEditRow] = useState(null); //index of currently edited row
+  const [productsStash, setProductsStash] = useState([]);
 
-  /* const supplier = () => {
-    return suppliers.find((supplier) => supplier._id === supplierId);
-  }; */
+  const selectProductRef = useRef();
+  const priceInputProductRef = useRef();
 
   useEffect(() => {
-    console.log(supplierId);
-
     setSupplier(suppliers.find((supplier) => supplier._id === supplierId));
 
     return () => {
       setSupplier({});
     };
   }, []);
+
+  useEffect(() => {
+    console.log([suppliers]);
+  }, [suppliers]);
 
   const [supplierData, setSupplierData] = useState({
     name: "",
@@ -40,7 +42,7 @@ export const SupplierForm = ({ closeForm, supplierId }) => {
   });
   const [product, setProduct] = useState({
     product: "",
-    price: "",
+    price: 0,
   });
 
   const { name, address, contact } = supplierData;
@@ -52,6 +54,7 @@ export const SupplierForm = ({ closeForm, supplierId }) => {
           name: name,
           address: address,
           contact: contact,
+          products: productsStash,
         })
       );
       closeForm();
@@ -74,43 +77,12 @@ export const SupplierForm = ({ closeForm, supplierId }) => {
             name: name,
             address: address,
             contact: contact,
-          },
-        })
-      );
-      closeForm();
-    } else {
-      alert("Restricted to Owner Only");
-    }
-  };
-
-  const onAddProduct = () => {
-    console.log({
-      id: supplier._id,
-      payload: {
-        products: [
-          ...supplier.products.map((supplierProduct) => {
-            return {
-              product: supplierProduct.product._id,
-              price: supplierProduct.price,
-            };
-          }),
-          product,
-        ],
-      },
-    });
-    if (user.role === "owner") {
-      dispatch(
-        updateSupplier({
-          id: supplier._id,
-          payload: {
             products: [
-              ...supplier.products.map((supplierProduct) => {
-                return {
-                  product: supplierProduct.product._id,
-                  price: supplierProduct.price,
-                };
-              }),
-              product,
+              ...supplier.products.map((product) => ({
+                product: product.product._id,
+                price: product.price,
+              })),
+              ...productsStash,
             ],
           },
         })
@@ -118,6 +90,18 @@ export const SupplierForm = ({ closeForm, supplierId }) => {
     } else {
       alert("Restricted to Owner Only");
     }
+  };
+
+  const onStashProduct = () => {
+    console.log("add");
+
+    setProductsStash([...productsStash, product]);
+    selectProductRef.current.selectedIndex = 0;
+    priceInputProductRef.current.value = "";
+    setProduct({
+      product: "",
+      price: "",
+    });
   };
 
   const onChange = (e) => {
@@ -146,6 +130,11 @@ export const SupplierForm = ({ closeForm, supplierId }) => {
       });
     }
   }, [supplier]);
+
+  useEffect(() => {
+    setSupplier(suppliers.find((supplier) => supplier._id === supplierId));
+    setProductsStash([]);
+  }, [suppliers]);
 
   return (
     <>
@@ -230,6 +219,42 @@ export const SupplierForm = ({ closeForm, supplierId }) => {
                   );
                 })
               : null}
+            {productsStash.map((product, index) => {
+              return (
+                <SupplierProductsTableRow
+                  stash
+                  setEditRow={(rowIndex) => setEditRow(rowIndex)}
+                  deleteRow={(id) =>
+                    setProductsStash(
+                      productsStash.filter((product) => product.product !== id)
+                    )
+                  }
+                  onEditPrice={(price) =>
+                    setProductsStash(
+                      productsStash.map((editProduct) => {
+                        if (editProduct.product === product.product) {
+                          return {
+                            product: editProduct.product,
+                            price: price,
+                          };
+                        }
+
+                        return editProduct;
+                      })
+                    )
+                  }
+                  editRow={editRow}
+                  row={index}
+                  product={{
+                    product: materials.find(
+                      (material) => material._id === product.product
+                    ),
+                    price: product.price,
+                  }}
+                  key={index}
+                />
+              );
+            })}
           </tbody>
         </table>
         <div className="flex gap-5">
@@ -239,6 +264,7 @@ export const SupplierForm = ({ closeForm, supplierId }) => {
             name="product"
             onChange={onSetProduct}
             required
+            ref={selectProductRef}
           >
             <option hidden defaultValue>
               Select Material
@@ -247,9 +273,10 @@ export const SupplierForm = ({ closeForm, supplierId }) => {
               .filter((material) => !material.isHidden)
               .filter((material) => {
                 if (supplier && supplier.products) {
-                  const existingProductsSet = new Set(
-                    supplier.products.map(({ product }) => product._id)
-                  );
+                  const existingProductsSet = new Set([
+                    ...supplier.products.map(({ product }) => product._id),
+                    ...productsStash.map(({ product }) => product),
+                  ]);
                   return !existingProductsSet.has(material._id);
                 }
                 return true;
@@ -268,19 +295,25 @@ export const SupplierForm = ({ closeForm, supplierId }) => {
               defaultValue="0"
               className=" w-full p-3 mr-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400"
               name="price"
-              type="text"
+              type="number"
+              min="1"
+              step="any"
               required
               onChange={onSetProduct}
+              ref={priceInputProductRef}
             />
           </div>
+          <button
+            onClick={
+              Object.keys(product).every((key) => product[key])
+                ? onStashProduct
+                : null
+            }
+            className="bg-primary-300 w-14 h-14 rounded-full"
+          >
+            <PlusOutlined />
+          </button>
         </div>
-        {name ? (
-          <PrimaryButton
-            onClick={onAddProduct}
-            className="w-full"
-            name={`Add ${name}'s Product`}
-          />
-        ) : null}
       </div>
       <PrimaryButton
         onClick={supplierId ? onUpdateSupplier : onCreateSupplier}

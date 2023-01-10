@@ -4,11 +4,14 @@ import { useDispatch } from "react-redux";
 import { updateSupplier } from "../features/supplier/supplierSlice";
 
 export const SupplierProductsTableRow = ({
+  stash,
   supplier,
   product,
   row,
   editRow,
+  deleteRow,
   setEditRow,
+  onEditPrice,
 }) => {
   const dispatch = useDispatch();
 
@@ -50,7 +53,7 @@ export const SupplierProductsTableRow = ({
                 };
               }),
             {
-              product: product._id,
+              product: product.product._id,
               price: priceInput,
             },
           ],
@@ -61,42 +64,54 @@ export const SupplierProductsTableRow = ({
   };
 
   const onDeleteProduct = () => {
-    dispatch(
-      updateSupplier({
-        id: supplier._id,
-        payload: {
-          products: [
-            ...supplier.products
-              .filter((supplierProduct) => {
-                return supplierProduct._id !== product._id;
-              })
-              .map((supplierProduct) => {
-                return {
-                  product: supplierProduct.product._id,
-                  price: supplierProduct.price,
-                };
-              }),
-          ],
-        },
-      })
-    );
-    setEditRow(-1);
+    if (deleteRow) {
+      deleteRow(product.product._id);
+    } else {
+      dispatch(
+        updateSupplier({
+          id: supplier._id,
+          payload: {
+            products: [
+              ...supplier.products
+                .filter((supplierProduct) => {
+                  return supplierProduct._id !== product._id;
+                })
+                .map((supplierProduct) => {
+                  return {
+                    product: supplierProduct.product._id,
+                    price: supplierProduct.price,
+                  };
+                }),
+            ],
+          },
+        })
+      );
+      setEditRow(-1);
+    }
   };
 
   return (
     <tr
       className={`transition-all duration-300 ease-in-out cursor-pointer bg-re ${
-        row === editRow ? "bg-red-500" : " bg-primary-400"
+        row === editRow
+          ? "bg-red-500"
+          : stash
+          ? "bg-yellow-200"
+          : " bg-primary-400"
       }`}
     >
       <td className="py-2">{product.product.name}</td>
       <td className="py-2">
         <input
           ref={priceInputRef}
-          disabled={!editPriceInput}
+          disabled={!editPriceInput && !stash}
           type="number"
           defaultValue={product.price}
-          onChange={(e) => setPriceInput(e.target.value)}
+          onChange={
+            stash
+              ? (e) => onEditPrice(e.target.value)
+              : (e) => setPriceInput(e.target.value)
+          }
         />
       </td>
       <td>
