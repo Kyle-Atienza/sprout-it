@@ -52,6 +52,10 @@ export const Financials = () => {
     dispatch(getSuppliers());
   }, []);
 
+  useEffect(() => {
+    if (!isSupplierModalOpen) setSelectedSupplier({});
+  }, [isSupplierModalOpen]);
+
   const onPurchase = () => {
     if (user.role === "owner") {
       setIsPurchaseModalOpen(true);
@@ -317,12 +321,12 @@ export const Financials = () => {
                           return (
                             <Dropdown.Item key={material._id}>
                               <Checkbox
-                                id="accept"
+                                id={material.name}
                                 name="material"
                                 value={material.name}
                                 onChange={onChangeFilter}
                               />
-                              <Label className="ml-5" htmlFor="accept">
+                              <Label className="ml-5" htmlFor={material.name}>
                                 {material.name}
                               </Label>
                             </Dropdown.Item>
@@ -336,12 +340,12 @@ export const Financials = () => {
                           return (
                             <Dropdown.Item key={supplier._id}>
                               <Checkbox
-                                id="accept"
+                                id={supplier.name}
                                 name="supplier"
                                 value={supplier.name}
                                 onChange={onChangeFilter}
                               />
-                              <Label className="ml-5" htmlFor="accept">
+                              <Label className="ml-5" htmlFor={supplier.name}>
                                 {supplier.name}
                               </Label>
                             </Dropdown.Item>
@@ -360,12 +364,12 @@ export const Financials = () => {
                             return (
                               <div className="flex items-center gap-2">
                                 <Radio
-                                  id="united-state"
+                                  id={option}
                                   name="sortBy"
                                   value={option}
                                   defaultChecked={option === filters.sortBy}
                                 />
-                                <Label htmlFor="united-state">{option}</Label>
+                                <Label htmlFor={option}>{option}</Label>
                               </div>
                             );
                           })}

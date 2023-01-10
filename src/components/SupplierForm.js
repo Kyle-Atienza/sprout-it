@@ -23,7 +23,13 @@ export const SupplierForm = ({ closeForm, supplierId }) => {
   }; */
 
   useEffect(() => {
+    console.log(supplierId);
+
     setSupplier(suppliers.find((supplier) => supplier._id === supplierId));
+
+    return () => {
+      setSupplier({});
+    };
   }, []);
 
   const [supplierData, setSupplierData] = useState({
@@ -141,7 +147,7 @@ export const SupplierForm = ({ closeForm, supplierId }) => {
     }
   }, [supplier]);
 
-  return supplier && supplier.products ? (
+  return (
     <>
       <div className="mb-4">
         <label className="block open-button" htmlFor="username">
@@ -210,18 +216,20 @@ export const SupplierForm = ({ closeForm, supplierId }) => {
             </tr>
           </thead>
           <tbody>
-            {supplier.products.map((product, index) => {
-              return (
-                <SupplierProductsTableRow
-                  supplier={supplier}
-                  setEditRow={(rowIndex) => setEditRow(rowIndex)}
-                  editRow={editRow}
-                  row={index}
-                  product={product}
-                  key={index}
-                />
-              );
-            })}
+            {supplier && supplier.products
+              ? supplier.products.map((product, index) => {
+                  return (
+                    <SupplierProductsTableRow
+                      supplier={supplier}
+                      setEditRow={(rowIndex) => setEditRow(rowIndex)}
+                      editRow={editRow}
+                      row={index}
+                      product={product}
+                      key={index}
+                    />
+                  );
+                })
+              : null}
           </tbody>
         </table>
         <div className="flex gap-5">
@@ -238,10 +246,13 @@ export const SupplierForm = ({ closeForm, supplierId }) => {
             {materials
               .filter((material) => !material.isHidden)
               .filter((material) => {
-                const existingProductsSet = new Set(
-                  supplier.products.map(({ product }) => product._id)
-                );
-                return !existingProductsSet.has(material._id);
+                if (supplier && supplier.products) {
+                  const existingProductsSet = new Set(
+                    supplier.products.map(({ product }) => product._id)
+                  );
+                  return !existingProductsSet.has(material._id);
+                }
+                return true;
               })
               .map((material, index) => {
                 return (
@@ -263,18 +274,18 @@ export const SupplierForm = ({ closeForm, supplierId }) => {
             />
           </div>
         </div>
-        <PrimaryButton
-          onClick={onAddProduct}
-          className="w-full"
-          name={`Add ${name}'s Product`}
-        />
+        {name ? (
+          <PrimaryButton
+            onClick={onAddProduct}
+            className="w-full"
+            name={`Add ${name}'s Product`}
+          />
+        ) : null}
       </div>
       <PrimaryButton
-        onClick={
-          Object.keys(supplier).length ? onUpdateSupplier : onCreateSupplier
-        }
-        name="Create Supplier"
+        onClick={supplierId ? onUpdateSupplier : onCreateSupplier}
+        name={supplierId ? "Update Supplier" : "Create Supplier"}
       />
     </>
-  ) : null;
+  );
 };

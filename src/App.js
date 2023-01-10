@@ -41,7 +41,7 @@ export const App = () => {
 
   return (
     <div className="bg-accent-100">
-      {/* {loading.some((slice) => slice === true) ? (
+      {loading.some((slice) => slice === true) ? (
         <div className="loading fixed top-0 left-0 bg-dark-400 bg-opacity-30 w-full h-full z-50 flex justify-center items-center">
           <ReactLoading
             type={"balls"}
@@ -50,7 +50,7 @@ export const App = () => {
             width={375}
           />
         </div>
-      ) : null} */}
+      ) : null}
       <Routes>
         <Route element={<LoginUser />} path="/" />
         <Route element={<RegisterUser />} path="/register/:token" />

@@ -59,7 +59,6 @@ export function TaskForm({ batch, closeModal }) {
   };
   // new Date(new Date("2022-11-11").toUTCString())
   const onCreateTask = (e) => {
-    console.log("create task");
     e.preventDefault();
     dispatch(
       createTask({

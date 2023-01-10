@@ -107,7 +107,7 @@ export const ResetPassword = () => {
             />
             <PrimaryButton
               className={"mt-10"}
-              name="Generate Token"
+              name="Update Password"
               onClick={onSubmit}
             >
               <input type="submit" value="Submit" />

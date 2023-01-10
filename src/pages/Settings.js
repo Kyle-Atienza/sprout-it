@@ -36,8 +36,12 @@ export function Settings() {
   }, [users]); */
 
   const onDeleteUser = (id) => {
-    dispatch(deleteUser(id));
-    window.location.reload();
+    if (user.role === "owner") {
+      dispatch(deleteUser(id));
+      window.location.reload();
+    } else {
+      alert("Restricted to Owner Only");
+    }
   };
 
   const onChangeUpdatePassword = (e) => {
@@ -137,7 +141,11 @@ export function Settings() {
                     return (
                       <tr
                         key={account._id}
-                        className="bg-light-100 hover:bg-light-200 border-b dark:bg-gray-800 dark:border-gray-700 transition-all duration-300 ease-in-out"
+                        className={`${
+                          user._id === account._id
+                            ? "bg-green-100"
+                            : "bg-light-100"
+                        } hover:bg-light-200 border-b dark:bg-gray-800 dark:border-gray-700 transition-all duration-300 ease-in-out`}
                       >
                         <td className="py-4 px-6">{account.name}</td>
                         <td className="py-4 px-6">{account.email}</td>

@@ -8,6 +8,7 @@ import { useState } from "react";
 export function InviteForm() {
   const dispatch = useDispatch();
 
+  const { user } = useSelector((state) => state.user);
   const [invitedUser, setInvitedUser] = useState({});
   const [inviteToken, setInviteToken] = useState("");
 
@@ -21,7 +22,11 @@ export function InviteForm() {
   };
 
   const onCreateInvite = () => {
-    dispatch(invite(invitedUser));
+    if (user.role === "owner") {
+      dispatch(invite(invitedUser));
+    } else {
+      alert("Restricted to Owner Only");
+    }
   };
 
   useEffect(() => {

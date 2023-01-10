@@ -255,12 +255,12 @@ export const Records = () => {
                           key={index}
                         >
                           <Radio
-                            id="sortBy"
+                            id={option.name}
                             name="sortBy"
                             value={option.name}
                             defaultChecked={option.active}
                           />
-                          <Label htmlFor="united-state">{option.name}</Label>
+                          <Label htmlFor={option.name}>{option.name}</Label>
                         </Dropdown.Item>
                       );
                     })}
@@ -276,12 +276,12 @@ export const Records = () => {
                       return (
                         <Dropdown.Item key={material._id}>
                           <Checkbox
-                            id="accept"
+                            id={material.name}
                             name="material"
                             value={material._id}
                             onChange={onChangeFilter}
                           />
-                          <Label className="ml-5" htmlFor="accept">
+                          <Label className="ml-5" htmlFor={material.name}>
                             {material.name}
                           </Label>
                         </Dropdown.Item>
