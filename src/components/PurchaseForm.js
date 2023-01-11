@@ -6,7 +6,7 @@ import { createPurchase } from "../features/financial/financialSlice";
 
 import { PrimaryButton } from "../components";
 
-export const PurchaseForm = ({ openSupplierModal }) => {
+export const PurchaseForm = ({ openSupplierModal, closePurchaseForm }) => {
   const dispatch = useDispatch();
 
   const { suppliers } = useSelector((state) => state.supplier);
@@ -63,6 +63,7 @@ export const PurchaseForm = ({ openSupplierModal }) => {
 
     if (e.target.name === "supplier" && e.target.value === "add") {
       openSupplierModal();
+      closePurchaseForm();
       selectSupplierRef.current.value = "";
     } else {
       setPurchaseData((prevState) => ({

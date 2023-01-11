@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { InviteForm } from "../components";
 import {
   SideNavBar,
@@ -13,8 +13,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUsers, deleteUser } from "../features/user/userSlice";
 import { DeleteFilled } from "@ant-design/icons";
 import { updateUser } from "../features/user/userSlice";
+import { Dialog, Transition } from "@headlessui/react";
 
 export function Settings() {
+  const [confirmDeleteModal, setConfirmDeleteModal] = useState(false);
+  const [deleteUserId, setDeleteUserId] = useState(null);
+  const [modalSetup, setModalSetup] = useState({
+    message: "",
+    action: null,
+  });
   const dispatch = useDispatch();
   const [password, setPassword] = useState({
     newPass: "",
@@ -31,10 +38,6 @@ export function Settings() {
     dispatch(getUsers());
   }, []);
 
-  /* useEffect(() => {
-    dispatch(getUsers());
-  }, [users]); */
-
   const onDeleteUser = (id) => {
     if (user.role === "owner") {
       dispatch(deleteUser(id));
@@ -42,6 +45,11 @@ export function Settings() {
     } else {
       alert("Restricted to Owner Only");
     }
+    setModalSetup({
+      message: "",
+      action: null,
+    });
+    setConfirmDeleteModal(false);
   };
 
   const onChangeUpdatePassword = (e) => {
@@ -67,6 +75,11 @@ export function Settings() {
           confirmPass: "",
         });
         alert("Password Updated Successfully");
+        setModalSetup({
+          message: "",
+          action: null,
+        });
+        setConfirmDeleteModal(false);
       } else {
         alert("Your password didn't match");
       }
@@ -77,6 +90,64 @@ export function Settings() {
 
   return (
     <>
+      <Transition appear show={confirmDeleteModal} as={Fragment}>
+        <Dialog
+          as="div"
+          className="relative z-20"
+          onClose={() => setConfirmDeleteModal(false)}
+        >
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-dark-700 bg-opacity-25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="overflow-y-scroll scrollbar-hidden bg-light-100 w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-lg transition-all flex flex-col">
+                  <div className="w-full flex flex-col items-center justify-start mb-6">
+                    <Dialog.Title as="h3" className="poppins-heading-6 w-full">
+                      Confirm End Task
+                    </Dialog.Title>
+                    <p className="my-4">{modalSetup.message}</p>
+                    <div className="flex gap-x-4">
+                      <button
+                        type="button"
+                        className={`py-4 px-6 rounded-full poppins-button border-2 border-red-500 hover:bg-red-500 hover:text-light-100 text-red-500 shadow transition-all `}
+                        onClick={modalSetup.action}
+                      >
+                        Yes
+                      </button>
+                      <button
+                        type="button"
+                        className={`py-4 px-6 rounded-full poppins-button bg-red-500 hover:bg-red-700 text-light-100 shadow transition-all `}
+                        onClick={() => setConfirmDeleteModal(false)}
+                      >
+                        No
+                      </button>
+                    </div>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
       <div className="flex flex-row min-h-screen">
         <div className="w-0 lg:w-1/6">
           <SideNavBar />
@@ -116,7 +187,13 @@ export function Settings() {
               <PrimaryButton
                 className="mt-4"
                 name="Update Password"
-                onClick={updatePassword}
+                onClick={() => {
+                  setModalSetup({
+                    message: "Are you sure you to update your password?",
+                    action: updatePassword,
+                  });
+                  setConfirmDeleteModal(true);
+                }}
               />
             </section>
 
@@ -159,7 +236,14 @@ export function Settings() {
                                 ? "cursor-pointer"
                                 : "cursor-default"
                             }
-                            onClick={() => onDeleteUser(account._id)}
+                            onClick={() => {
+                              setModalSetup({
+                                message:
+                                  "Are you sure you want to delete this user?",
+                                action: () => onDeleteUser(account._id),
+                              });
+                              setConfirmDeleteModal(true);
+                            }}
                           >
                             {/* <DeleteFilled className="text-red-500" /> */}
                             <DeleteFilled
