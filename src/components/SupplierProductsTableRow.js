@@ -92,20 +92,21 @@ export const SupplierProductsTableRow = ({
 
   return (
     <tr
-      className={`transition-all duration-300 ease-in-out cursor-pointer bg-re ${
+      className={`transition-all duration-300 ease-in-out cursor-pointer   bg-re ${
         row === editRow
           ? "bg-red-500"
           : stash
           ? "bg-yellow-200"
-          : " bg-primary-400"
+          : " bg-light-200"
       }`}
     >
-      <td className="py-2">{product.product.name}</td>
-      <td className="py-2">
+      <td className='py-2'>{product.product.name}</td>
+      <td className='py-2'>
         <input
           ref={priceInputRef}
+          className='p-3 bg-light-100 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
           disabled={!editPriceInput && !stash}
-          type="number"
+          type='number'
           defaultValue={product.price}
           onChange={
             stash

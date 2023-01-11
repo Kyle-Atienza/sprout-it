@@ -139,130 +139,135 @@ export const SupplierForm = ({ closeForm, supplierId }) => {
 
   return (
     <>
-      <div className="mb-4">
-        <label className="block open-button" htmlFor="username">
+      <div className='mb-4'>
+        <label className='block open-button' htmlFor='username'>
           Supplier
         </label>
-        <div className="flex justify-center items-center">
+        <div className='flex justify-center items-center'>
           <input
             defaultValue={name}
-            className="w-full p-3 mr-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400"
-            name="name"
-            type="text"
+            className='w-full p-3 mr-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
+            name='name'
+            type='text'
             required
             onChange={onChange}
           />
         </div>
       </div>
-      <div className="mb-4">
-        <label className="block open-button" htmlFor="username">
+      <div className='mb-4'>
+        <label className='block open-button' htmlFor='username'>
           Address
         </label>
-        <div className="flex justify-center items-center">
+        <div className='flex justify-center items-center'>
           <input
             defaultValue={address}
-            className="w-full p-3 mr-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400"
-            name="address"
-            type="text"
+            className='w-full p-3 mr-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
+            name='address'
+            type='text'
             required
             onChange={onChange}
           />
         </div>
       </div>
-      <div className="mb-4">
-        <label className="block open-button" htmlFor="username">
+      <div className='mb-4'>
+        <label className='block open-button' htmlFor='username'>
           Contact
         </label>
-        <div className="flex justify-center items-center">
+        <div className='flex justify-center items-center'>
           <input
             defaultValue={contact}
-            className="w-full p-3 mr-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400"
-            name="contact"
-            type="text"
+            className='w-full p-3 mr-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
+            name='contact'
+            type='text'
             required
             onChange={onChange}
           />
         </div>
       </div>
-      <div className="mb-4">
-        <label className="block open-button" htmlFor="username">
+      <div className='mb-4'>
+        <label className='block open-button' htmlFor='username'>
           Products
         </label>
-        <table className="w-full text-sm text-left">
-          <thead className=" poppins-paragraph ">
-            <tr>
-              <th scope="col" className="py-2">
-                Product
-              </th>
-              <th scope="col" className="py-2">
-                Price
-              </th>
-              <th scope="col" className="py-2">
-                Edit
-              </th>
-              <th scope="col" className="py-2">
-                Delete
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {supplier && supplier.products
-              ? supplier.products.map((product, index) => {
-                  return (
-                    <SupplierProductsTableRow
-                      supplier={supplier}
-                      setEditRow={(rowIndex) => setEditRow(rowIndex)}
-                      editRow={editRow}
-                      row={index}
-                      product={product}
-                      key={index}
-                    />
-                  );
-                })
-              : null}
-            {productsStash.map((product, index) => {
-              return (
-                <SupplierProductsTableRow
-                  stash
-                  setEditRow={(rowIndex) => setEditRow(rowIndex)}
-                  deleteRow={(id) =>
-                    setProductsStash(
-                      productsStash.filter((product) => product.product !== id)
-                    )
-                  }
-                  onEditPrice={(price) =>
-                    setProductsStash(
-                      productsStash.map((editProduct) => {
-                        if (editProduct.product === product.product) {
-                          return {
-                            product: editProduct.product,
-                            price: price,
-                          };
-                        }
+        <div className='overflow-x-auto harvests-table p-4 shadow-md bg-light-200 rounded-sm'>
+          <table className='w-full text-sm text-left'>
+            <thead className='poppins-paragraph-sm'>
+              <tr>
+                <th scope='col' className='py-2'>
+                  Product
+                </th>
+                <th scope='col' className='py-2'>
+                  Price
+                </th>
+                <th scope='col' className='py-2'>
+                  Edit
+                </th>
+                <th scope='col' className='py-2'>
+                  Delete
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {supplier && supplier.products
+                ? supplier.products.map((product, index) => {
+                    return (
+                      <SupplierProductsTableRow
+                        supplier={supplier}
+                        setEditRow={(rowIndex) => setEditRow(rowIndex)}
+                        editRow={editRow}
+                        row={index}
+                        product={product}
+                        key={index}
+                      />
+                    );
+                  })
+                : null}
+              {productsStash.map((product, index) => {
+                return (
+                  <SupplierProductsTableRow
+                    stash
+                    setEditRow={(rowIndex) => setEditRow(rowIndex)}
+                    deleteRow={(id) =>
+                      setProductsStash(
+                        productsStash.filter(
+                          (product) => product.product !== id
+                        )
+                      )
+                    }
+                    onEditPrice={(price) =>
+                      setProductsStash(
+                        productsStash.map((editProduct) => {
+                          if (editProduct.product === product.product) {
+                            return {
+                              product: editProduct.product,
+                              price: price,
+                            };
+                          }
 
-                        return editProduct;
-                      })
-                    )
-                  }
-                  editRow={editRow}
-                  row={index}
-                  product={{
-                    product: materials.find(
-                      (material) => material._id === product.product
-                    ),
-                    price: product.price,
-                  }}
-                  key={index}
-                />
-              );
-            })}
-          </tbody>
-        </table>
-        <div className="flex gap-5">
+                          return editProduct;
+                        })
+                      )
+                    }
+                    editRow={editRow}
+                    row={index}
+                    product={{
+                      product: materials.find(
+                        (material) => material._id === product.product
+                      ),
+                      price: product.price,
+                    }}
+                    key={index}
+                  />
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+
+        <div className='flex flex-wrap gap-4 items-center'>
           <select
-            id="product"
-            className="w-3/5 p-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400"
-            name="product"
+            id='product'
+            className='pl-3 pt-3 pb-3 pr-6 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
+            name='product'
             onChange={onSetProduct}
             required
             ref={selectProductRef}
@@ -290,15 +295,15 @@ export const SupplierForm = ({ closeForm, supplierId }) => {
                 );
               })}
           </select>
-          <div className="flex w-2/5 items-center gap-2">
+          <div className='flex items-center gap-2'>
             <p>₱</p>
             <input
-              defaultValue="0"
-              className=" w-full p-3 mr-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400"
-              name="price"
-              type="number"
-              min="1"
-              step="any"
+              defaultValue='0'
+              className='w-24 p-3 mr-3 my-2 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
+              name='price'
+              type='number'
+              min='1'
+              step='any'
               required
               onChange={onSetProduct}
               ref={priceInputProductRef}
@@ -310,9 +315,9 @@ export const SupplierForm = ({ closeForm, supplierId }) => {
                 ? onStashProduct
                 : null
             }
-            className="bg-primary-300 w-14 h-14 rounded-full"
+            className='bg-primary-400 w-12 h-12 rounded-full pb-1'
           >
-            <PlusOutlined />
+            <PlusOutlined className='text-light-100' />
           </button>
         </div>
       </div>
