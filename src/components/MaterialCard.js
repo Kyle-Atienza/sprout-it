@@ -11,6 +11,11 @@ export const MaterialCard = ({ editMaterial, material, index }) => {
   const { user } = useSelector((state) => state.user);
 
   let [isOpen, setIsOpen] = useState(false);
+  const [modalSetup, setModalSetup] = useState({
+    message: "",
+    action: null,
+    toggled: false,
+  });
 
   const onDeleteMaterial = () => {
     dispatch(deleteMaterial(material._id));
@@ -33,6 +38,72 @@ export const MaterialCard = ({ editMaterial, material, index }) => {
   };
   return (
     <>
+      <Transition appear show={modalSetup.toggled} as={Fragment}>
+        <Dialog
+          as="div"
+          className="relative z-20"
+          onClose={() =>
+            setModalSetup({ message: "", action: null, toggled: false })
+          }
+        >
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-dark-700 bg-opacity-25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="overflow-y-scroll scrollbar-hidden bg-light-100 w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-lg transition-all flex flex-col">
+                  <div className="w-full flex flex-col items-center justify-start mb-6">
+                    <Dialog.Title as="h3" className="poppins-heading-6 w-full">
+                      Confirm End Task
+                    </Dialog.Title>
+                    <p className="my-4">{modalSetup.message}</p>
+                    <div className="flex gap-x-4">
+                      <button
+                        type="button"
+                        className={`py-4 px-6 rounded-full poppins-button border-2 border-red-500 hover:bg-red-500 hover:text-light-100 text-red-500 shadow transition-all `}
+                        onClick={modalSetup.action}
+                      >
+                        Yes
+                      </button>
+                      <button
+                        type="button"
+                        className={`py-4 px-6 rounded-full poppins-button bg-red-500 hover:bg-red-700 text-light-100 shadow transition-all `}
+                        onClose={() =>
+                          setModalSetup({
+                            message: "",
+                            action: null,
+                            toggled: false,
+                          })
+                        }
+                      >
+                        No
+                      </button>
+                    </div>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-20" onClose={closeModal}>
           <Transition.Child
@@ -85,7 +156,13 @@ export const MaterialCard = ({ editMaterial, material, index }) => {
             </button>
             <button className="hover:text-red-600 flex items-center">
               <DeleteOutlined
-                onClick={() => validateAccess(onDeleteMaterial)}
+                onClick={() =>
+                  setModalSetup({
+                    message: "Are you sure to delete this material?",
+                    action: () => validateAccess(onDeleteMaterial),
+                    toggled: true,
+                  })
+                }
               />
             </button>
           </div>

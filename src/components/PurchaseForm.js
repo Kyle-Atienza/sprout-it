@@ -11,6 +11,7 @@ export const PurchaseForm = ({ openSupplierModal, closePurchaseForm }) => {
 
   const { suppliers } = useSelector((state) => state.supplier);
   const { materials } = useSelector((state) => state.inventory);
+  const { user } = useSelector((state) => state.user);
 
   const [purchaseData, setPurchaseData] = useState({
     supplier: null,
@@ -74,14 +75,18 @@ export const PurchaseForm = ({ openSupplierModal, closePurchaseForm }) => {
   };
 
   const submitPurchase = () => {
-    dispatch(
-      createPurchase({
-        materialId: purchaseData.material,
-        supplierId: purchaseData.supplier,
-        quantity: purchaseData.quantity,
-        price: purchaseData.price,
-      })
-    );
+    if (user.role === "owner") {
+      dispatch(
+        createPurchase({
+          materialId: purchaseData.material,
+          supplierId: purchaseData.supplier,
+          quantity: purchaseData.quantity,
+          price: purchaseData.price,
+        })
+      );
+    } else {
+      alert("Restricted to Owner Only");
+    }
   };
 
   return (

@@ -17,7 +17,6 @@ import { Dialog, Transition } from "@headlessui/react";
 
 export function Settings() {
   const [confirmDeleteModal, setConfirmDeleteModal] = useState(false);
-  const [deleteUserId, setDeleteUserId] = useState(null);
   const [modalSetup, setModalSetup] = useState({
     message: "",
     action: null,
