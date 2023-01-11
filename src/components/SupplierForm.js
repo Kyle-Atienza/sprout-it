@@ -62,6 +62,7 @@ export const SupplierForm = ({ closeForm, supplierId }) => {
         name: "",
         address: "",
         contact: "",
+        products: [],
       });
     } else {
       alert("Restricted to Owner Only");

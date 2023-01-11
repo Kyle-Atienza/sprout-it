@@ -198,6 +198,7 @@ export const Financials = () => {
                   </div>
                   <PurchaseForm
                     openSupplierModal={() => setIsSupplierModalOpen(true)}
+                    closePurchaseForm={() => setIsPurchaseModalOpen(false)}
                   />
                 </Dialog.Panel>
               </Transition.Child>
