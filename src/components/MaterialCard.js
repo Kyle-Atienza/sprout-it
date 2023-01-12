@@ -86,7 +86,7 @@ export const MaterialCard = ({ editMaterial, material, index }) => {
                       <button
                         type="button"
                         className={`py-4 px-6 rounded-full poppins-button bg-red-500 hover:bg-red-700 text-light-100 shadow transition-all `}
-                        onClose={() =>
+                        onClick={() =>
                           setModalSetup({
                             message: "",
                             action: null,
