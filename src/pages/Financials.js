@@ -622,7 +622,7 @@ export const Financials = () => {
                           >
                             <td className="py-4 px-6">{supplier.name}</td>
                             <td className="py-4 px-6">{supplier.address}</td>
-                            <td className="py-4 px-6">{supplier.address}</td>
+                            <td className="py-4 px-6">{supplier.contact}</td>
                             <td className="py-4 px-6">
                               <button onClick={() => onEditSupplier(supplier)}>
                                 <EditFilled />
