@@ -5,9 +5,7 @@ import { useState } from "react";
 import { batch, useDispatch, useSelector } from "react-redux";
 
 export const AnalyticsInsights = () => {
-  // const dispatch = useDispatch();
-
-  const { batches } = useSelector((state) => state.batch);
+  const { batches, initialBatches } = useSelector((state) => state.batch);
   const { harvestsByTimeRange } = useSelector((state) => state.harvest);
 
   const { days, weeks, months } = harvestsByTimeRange;
@@ -40,71 +38,6 @@ export const AnalyticsInsights = () => {
     }
 
     if (days.length && weeks.length && months.length) {
-      /* if (
-        !!getHarvestGrowthPercentage(days) &&
-        !!getHarvestGrowthPercentage(weeks) &&
-        !!getHarvestGrowthPercentage(months)
-      ) {
-        // wip
-        const getHarvestGrowthInsight = (range) => {
-          let rangeName;
-          if (range === "days") {
-            rangeName = "daily";
-          } else if (range === "weeks") {
-            rangeName = "weekly";
-          } else if (range === "months") {
-            rangeName = "monthly";
-          }
-
-          const harvestGrowthPercentage = getHarvestGrowthPercentage(range);
-
-          if (harvestGrowthPercentage === -100) {
-            return {
-              show: true,
-              isGood: false,
-              message: "You still haven't harvested anything today",
-            };
-          } else {
-            return {
-              show: true,
-              isGood: harvestGrowthPercentage > 0,
-              message: `Your ${rangeName} harvest ${
-                harvestGrowthPercentage > 0 ? "increased" : "decreased"
-              } by ${harvestGrowthPercentage}%`,
-            };
-          }
-        };
-
-        initialInsights.push(
-          {
-            show: true,
-            isGood: getHarvestGrowthPercentage(days) > 0,
-            message:
-              getHarvestGrowthPercentage(days) === -100
-                ? "You still havent recorded any harvests for today"
-                : `Your daily harvest ${
-                    getHarvestGrowthPercentage(days) > 0
-                      ? "increased"
-                      : "decreased"
-                  } by ${getHarvestGrowthPercentage(days)}%`,
-          },
-          {
-            show: true,
-            isGood: getHarvestGrowthPercentage(weeks) > 0,
-            message: `Your weekly harvest ${
-              getHarvestGrowthPercentage(weeks) > 0 ? "increased" : "decreased"
-            } by ${getHarvestGrowthPercentage(weeks)}%`,
-          },
-          {
-            show: true,
-            isGood: getHarvestGrowthPercentage(months) > 0,
-            message: `Your monthly harvest ${
-              getHarvestGrowthPercentage(months) > 0 ? "increased" : "decreased"
-            } by ${getHarvestGrowthPercentage(months)}%`,
-          }
-        );
-      } */
-
       initialInsights.push(
         {
           show: true,
@@ -154,51 +87,30 @@ export const AnalyticsInsights = () => {
       );
     }
 
+    const bestBatchesName = initialBatches
+      .map((batch) => {
+        return {
+          value: getBatchHarvestSum(batch) * 30 - batch.value,
+          batch: batch,
+        };
+      })
+      .slice()
+      .sort((a, b) => b.value - a.value)
+      .slice(0, 3)
+      .map(({ batch }) => batch.name);
+
+    initialInsights.push({
+      show: true,
+      isGood: true,
+      message: `Batches ${bestBatchesName
+        .map((batch, index) =>
+          index === bestBatchesName.length - 1 ? `and ${batch}` : batch
+        )
+        .join(", ")} are the best performing batches`,
+    });
+
     setInsights(initialInsights);
   }, [batches, harvestsByTimeRange]);
-
-  /*  useEffect(() => {
-    if (days.length && weeks.length && months.length) {
-      if (
-        !!getHarvestGrowthPercentage(days) &&
-        !!getHarvestGrowthPercentage(weeks) &&
-        !!getHarvestGrowthPercentage(months)
-      ) {
-        setInsights(
-          _.uniqBy(
-            [
-              ...insights,
-              {
-                show: "true",
-                message: `Your daily harvest ${
-                  getHarvestGrowthPercentage(days) > 0
-                    ? "increased"
-                    : "decreased"
-                } by ${getHarvestGrowthPercentage(days)}%`,
-              },
-              {
-                show: "true",
-                message: `Your weekly harvest ${
-                  getHarvestGrowthPercentage(weeks) > 0
-                    ? "increased"
-                    : "decreased"
-                } by ${getHarvestGrowthPercentage(weeks)}%`,
-              },
-              {
-                show: "true",
-                message: `Your monthly harvest ${
-                  getHarvestGrowthPercentage(months) > 0
-                    ? "increased"
-                    : "decreased"
-                } by ${getHarvestGrowthPercentage(months)}%`,
-              },
-            ],
-            "message"
-          )
-        );
-      }
-    }
-  }, [harvestsByTimeRange]); */
 
   const pastDays = (current, daysPast) => {
     return new Date(current.setDate(current.getDate() - daysPast));
@@ -221,7 +133,7 @@ export const AnalyticsInsights = () => {
     );
 
     if (!isNaN(percentage)) {
-      return percentage;
+      return isFinite(percentage) ? percentage : 100;
     }
   };
 
@@ -251,6 +163,12 @@ export const AnalyticsInsights = () => {
           totalHarvests: totalHarvests,
         };
       });
+  };
+
+  const getBatchHarvestSum = (batch) => {
+    return batch.harvests.reduce((prev, current) => {
+      return prev + current.weight;
+    }, 0);
   };
 
   return (

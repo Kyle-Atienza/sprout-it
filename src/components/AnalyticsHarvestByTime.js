@@ -179,7 +179,6 @@ export const AnalyticsHarvestByTime = () => {
     if (index + 1 > colors.length * (loopCount + 1)) {
       loopCount += 1;
     }
-    console.log(colors.length, loopCount);
 
     return colors[index - loopCount * colors.length];
   };
