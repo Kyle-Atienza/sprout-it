@@ -18,6 +18,7 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "luxon": "^3.0.3",
+    "ml-regression-multivariate-linear": "^2.0.4",
     "npm-watch": "^0.11.0",
     "push.js": "^1.0.12",
     "react": "^18.2.0",

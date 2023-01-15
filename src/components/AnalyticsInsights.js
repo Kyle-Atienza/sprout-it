@@ -3,17 +3,139 @@ import _ from "lodash";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { batch, useDispatch, useSelector } from "react-redux";
+import MLR from "ml-regression-multivariate-linear";
 
 export const AnalyticsInsights = () => {
-  const { batches, initialBatches } = useSelector((state) => state.batch);
+  const { batches, initialBatches, finished } = useSelector(
+    (state) => state.batch
+  );
   const { harvestsByTimeRange } = useSelector((state) => state.harvest);
+  const { materials } = useSelector((state) => state.inventory);
 
   const { days, weeks, months } = harvestsByTimeRange;
 
   const [insights, setInsights] = useState([]);
+  const [regressionParameters, setRegressionParameters] = useState({
+    x: [],
+    y: [],
+  });
+  const [regressionResults, setregressionResults] = useState({
+    fruiting: [],
+    completed: [],
+  });
+
+  const getVariables = (parameter) => {
+    return parameter.map(({ variables }) =>
+      Object.keys(variables).map((variable) => variables[variable])
+    );
+  };
 
   useEffect(() => {
     const initialInsights = [];
+    const regressionData = initialBatches
+      .map((batch) => {
+        return {
+          batch: parseInt(batch.name),
+          variables: {
+            Harvests: Math.round(getBatchHarvestSum(batch)),
+            // Defects: Math.round(getBatchDefectsSum(batch)),
+            Value: batch.value,
+            ...materials
+              .filter((material) => !material.isHidden)
+              .reduce((materialCase, material) => {
+                materialCase[capitalize(material.name)] =
+                  batch.materials.find(({ material: batchMaterial }, index) => {
+                    return (
+                      batchMaterial.name.toLowerCase() ===
+                      material.name.toLowerCase()
+                    );
+                  })?.weight ?? 0;
+                return materialCase;
+              }, {}),
+          },
+        };
+      })
+      .slice()
+      .sort((a, b) => a.batch - b.batch);
+
+    setRegressionParameters({
+      x: regressionData.map((data) => {
+        const variables = Object.keys(data.variables).reduce(
+          (xVariables, variable) => {
+            if (variable !== "Harvests") {
+              xVariables[variable] = data.variables[variable];
+            }
+            return xVariables;
+          },
+          {}
+        );
+        return {
+          batch: data.batch,
+          variables: variables,
+        };
+      }),
+      y: regressionData.map((data) => {
+        return {
+          batch: data.batch,
+          variables: { Harvests: data.variables["Harvests"] },
+        };
+      }),
+    });
+
+    if (
+      getVariables(regressionParameters.x).length &&
+      getVariables(regressionParameters.y).length
+    ) {
+      const mlr = new MLR(
+        getVariables(regressionParameters.x),
+        getVariables(regressionParameters.y)
+      );
+
+      const fruitingBatchesName = batches.fruiting?.map((batch) =>
+        parseInt(batch.name)
+      );
+      const finishedBatchesName = finished?.map((batch) =>
+        parseInt(batch.name)
+      );
+
+      const initialRegressionResults = regressionParameters.x
+        .map((batch) => {
+          return {
+            batch: batch.batch,
+            prediction: Math.round(
+              mlr.predict(
+                Object.keys(batch.variables).map(
+                  (variable) => batch.variables[variable]
+                )
+              )[0]
+            ),
+          };
+        })
+        .slice()
+        .sort((a, b) => b.prediction - a.prediction);
+
+      setregressionResults({
+        fruiting: initialRegressionResults.filter((result) => {
+          return fruitingBatchesName.includes(result.batch);
+        }),
+        completed: initialRegressionResults.filter((result) => {
+          return finishedBatchesName.includes(result.batch);
+        }),
+      });
+
+      console.log(
+        regressionResults.completed.map((result) => result.batch).join(", ")
+      );
+
+      initialInsights.push({
+        show: true,
+        isGood: true,
+        message: `Batches ${regressionResults.completed
+          .map((result) => result.batch)
+          .slice(0, 3)
+          .join(", ")} performs best in the past`,
+      });
+    }
 
     if (batches.fruiting) {
       initialInsights.push(
@@ -99,7 +221,7 @@ export const AnalyticsInsights = () => {
       .slice(0, 3)
       .map(({ batch }) => batch.name);
 
-    initialInsights.push({
+    /* initialInsights.push({
       show: true,
       isGood: true,
       message: `Batches ${bestBatchesName
@@ -107,7 +229,7 @@ export const AnalyticsInsights = () => {
           index === bestBatchesName.length - 1 ? `and ${batch}` : batch
         )
         .join(", ")} are the best performing batches`,
-    });
+    }); */
 
     setInsights(initialInsights);
   }, [batches, harvestsByTimeRange]);
@@ -166,9 +288,31 @@ export const AnalyticsInsights = () => {
   };
 
   const getBatchHarvestSum = (batch) => {
-    return batch.harvests.reduce((prev, current) => {
-      return prev + current.weight;
-    }, 0);
+    return (
+      batch.harvests.reduce((prev, current) => {
+        return prev + current.weight;
+      }, 0) || 0
+    );
+  };
+
+  const getBatchDefectsSum = (batch) => {
+    const phases = [
+      "composting",
+      "bagging",
+      "sterilization",
+      "inoculation",
+      "fruiting",
+    ];
+
+    return (
+      phases
+        .map((phase) => batch[phase]?.defects ?? 0)
+        .reduce((totalDefects, defect) => (totalDefects += defect), 0) || 0
+    );
+  };
+
+  const capitalize = (string) => {
+    return string.slice(0, 1).toUpperCase() + string.slice(1);
   };
 
   return (
