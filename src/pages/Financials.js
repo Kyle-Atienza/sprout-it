@@ -35,22 +35,11 @@ export const Financials = () => {
   /* const quantityModes = ["many", "fewest"];
   const sortByOptions = ["newest", "quantity"]; */
   const [modalSetup, setModalSetup] = useState({
+    title: "",
     message: "",
     action: null,
     toggled: false,
   });
-
-  /* const [filters, setFilters] = useState({
-    supplier: [],
-    material: [],
-    price: {
-      min: 0,
-      max: 0,
-    },
-    quantity: 0,
-    newest: true,
-    sortBy: "newest",
-  }); */
 
   const [filters, setFilters] = useState({
     sortBy: [
@@ -161,13 +150,19 @@ export const Financials = () => {
   const sortByButton = () => {
     const activeSortBy = filters.sortBy.find((option) => option.active);
 
+    let buttonLabel = "";
+
+    if (activeSortBy.name === "quantity") {
+      buttonLabel = activeSortBy.ascending ? "Least" : "Many";
+    } else if (activeSortBy.name === "time") {
+      buttonLabel = activeSortBy.ascending ? "Newest" : "Oldest";
+    }
+
     if (activeSortBy.name !== "default") {
       return (
         <PrimaryButton
           className="text-xl leading-none flex justify-center items-center"
-          name={`${activeSortBy.ascending ? "Least" : "Most"} ${
-            activeSortBy.name
-          }`}
+          name={buttonLabel}
           onClick={() =>
             setFilters((prevState) => ({
               ...prevState,
@@ -254,7 +249,7 @@ export const Financials = () => {
                       <button
                         type="button"
                         className={`py-4 px-6 rounded-full poppins-button bg-red-500 hover:bg-red-700 text-light-100 shadow transition-all `}
-                        onClose={() =>
+                        onClick={() =>
                           setModalSetup({
                             message: "",
                             action: null,

@@ -114,6 +114,8 @@ export const AnalyticsInsights = () => {
         .slice()
         .sort((a, b) => b.prediction - a.prediction);
 
+      console.log(initialRegressionResults);
+
       setregressionResults({
         fruiting: initialRegressionResults.filter((result) => {
           return fruitingBatchesName.includes(result.batch);
