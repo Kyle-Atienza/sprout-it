@@ -119,6 +119,11 @@ export const AnalyticsInsights = () => {
           return fruitingBatchesName.includes(result.batch);
         }),
         completed: initialRegressionResults.filter((result) => {
+          console.log(
+            finishedBatchesName.includes(result.batch),
+            finishedBatchesName,
+            result
+          );
           return finishedBatchesName.includes(result.batch);
         }),
       });
