@@ -118,10 +118,10 @@ export const AnalyticsInsights = () => {
 
       setregressionResults({
         fruiting: initialRegressionResults.filter((result) => {
-          console.log(fruitingBatchesName, result);
           return fruitingBatchesName.includes(result.batch);
         }),
         completed: initialRegressionResults.filter((result) => {
+          console.log(finishedBatchesName, result);
           return finishedBatchesName.includes(result.batch);
         }),
       });
