@@ -126,8 +126,7 @@ export const AnalyticsInsights = () => {
       console.log(
         regressionResults.completed.map((result) => result.batch).join(", ")
       );
-
-      console.log(regressionResults.completed.map((result) => result.batch));
+      console.log(regressionResults.completed);
 
       initialInsights.push({
         show: true,
