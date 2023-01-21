@@ -18,6 +18,7 @@ import {
   deleteSupplier,
 } from "../features/supplier/supplierSlice";
 import { Checkbox, Dropdown, Label, Radio, TextInput } from "flowbite-react";
+import { filter } from "lodash";
 
 export const Financials = () => {
   const dispatch = useDispatch();
@@ -31,15 +32,15 @@ export const Financials = () => {
   const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState(false);
   const [isSupplierModalOpen, setIsSupplierModalOpen] = useState(false);
 
-  const quantityModes = ["many", "fewest"];
-  const sortByOptions = ["newest", "quantity"];
+  /* const quantityModes = ["many", "fewest"];
+  const sortByOptions = ["newest", "quantity"]; */
   const [modalSetup, setModalSetup] = useState({
     message: "",
     action: null,
     toggled: false,
   });
 
-  const [filters, setFilters] = useState({
+  /* const [filters, setFilters] = useState({
     supplier: [],
     material: [],
     price: {
@@ -49,6 +50,27 @@ export const Financials = () => {
     quantity: 0,
     newest: true,
     sortBy: "newest",
+  }); */
+
+  const [filters, setFilters] = useState({
+    sortBy: [
+      {
+        name: "quantity",
+        active: false,
+        ascending: true,
+      },
+      {
+        name: "time",
+        active: true,
+        ascending: true,
+      },
+    ],
+    amount: {
+      min: null,
+      max: null,
+    },
+    material: [],
+    supplier: [],
   });
 
   useEffect(() => {
@@ -100,7 +122,18 @@ export const Financials = () => {
   const onChangeFilter = (e) => {
     console.log(e);
 
-    if (e.target.name === "supplier" || e.target.name === "material") {
+    if (e.target.name === "sortBy") {
+      setFilters((prevState) => ({
+        ...prevState,
+        sortBy: filters.sortBy.map((option) => {
+          return {
+            ...option,
+            active: option.name === e.target.value ? true : false,
+            ascending: true,
+          };
+        }),
+      }));
+    } else if (e.target.name === "material" || e.target.name === "supplier") {
       if (e.target.checked) {
         setFilters((prevState) => ({
           ...prevState,
@@ -114,56 +147,61 @@ export const Financials = () => {
           ),
         }));
       }
-    } else if (e.target.name === "price") {
+    } else if (e.target.name === "amount") {
       setFilters((prevState) => ({
         ...prevState,
-        price: {
-          ...prevState.price,
-          [e.target.dataset.price]: e.target.value,
+        amount: {
+          ...prevState.amount,
+          [e.target.dataset.amount]: e.target.value,
         },
-      }));
-    } else {
-      setFilters((prevState) => ({
-        ...prevState,
-        [e.target.name]: e.target.value,
       }));
     }
   };
 
-  const sortBy = () => {
-    switch (filters.sortBy) {
-      case "newest":
-        return (
-          <PrimaryButton
-            className="text-xl leading-none flex justify-center items-center"
-            name={filters.newest ? "Newest" : "Oldest"}
-            onClick={() => {
-              setFilters((prevState) => ({
-                ...prevState,
-                newest: !filters.newest,
-              }));
-            }}
-          />
-        );
-      case "quantity":
-        return (
-          <PrimaryButton
-            className="text-xl leading-none flex justify-center items-center"
-            name={quantityModes[filters.quantity]}
-            onClick={() => {
-              setFilters((prevState) => ({
-                ...prevState,
-                quantity:
-                  prevState.quantity === quantityModes.length
-                    ? 0
-                    : prevState.quantity++,
-              }));
-            }}
-          />
-        );
-      default:
-        return null;
+  const sortByButton = () => {
+    const activeSortBy = filters.sortBy.find((option) => option.active);
+
+    if (activeSortBy.name !== "default") {
+      return (
+        <PrimaryButton
+          className="text-xl leading-none flex justify-center items-center"
+          name={`${activeSortBy.ascending ? "Least" : "Most"} ${
+            activeSortBy.name
+          }`}
+          onClick={() =>
+            setFilters((prevState) => ({
+              ...prevState,
+              sortBy: filters.sortBy.map((option) => {
+                return {
+                  ...option,
+                  ascending:
+                    option.name === activeSortBy.name
+                      ? !option.ascending
+                      : option.ascending,
+                };
+              }),
+            }))
+          }
+        />
+      );
+    } else {
+      return null;
     }
+  };
+
+  const sortByCondition = (a, b) => {
+    const activeSortBy = filters.sortBy.find((option) => option.active);
+
+    if (activeSortBy.name === "quantity") {
+      return activeSortBy.ascending
+        ? a.quantity - b.quantity
+        : b.quantity - a.quantity;
+    } else if (activeSortBy.name === "time") {
+      return activeSortBy.ascending
+        ? new Date(b.createdAt) - new Date(a.createdAt)
+        : new Date(a.createdAt) - new Date(b.createdAt);
+    }
+    return true;
   };
 
   return (
@@ -377,18 +415,20 @@ export const Financials = () => {
                     <TextInput
                       id="min"
                       class="p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400"
-                      type="text"
-                      name="price"
-                      data-price="min"
+                      type="number"
+                      min={0}
+                      name="amount"
+                      data-amount="min"
                       placeholder="Min"
                       onChange={onChangeFilter}
                     />
                     <TextInput
                       id="max"
                       class="p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400"
-                      type="text"
-                      name="price"
-                      data-price="max"
+                      type="number"
+                      min={0}
+                      name="amount"
+                      data-amount="max"
                       placeholder="Max"
                       onChange={onChangeFilter}
                     />
@@ -405,7 +445,7 @@ export const Financials = () => {
                             <Checkbox
                               id={material.name}
                               name="material"
-                              value={material.name}
+                              value={material.name.toLowerCase()}
                               onChange={onChangeFilter}
                             />
                             <Label class="ml-2" htmlFor={material.name}>
@@ -428,7 +468,7 @@ export const Financials = () => {
                             <Checkbox
                               id={supplier.name}
                               name="supplier"
-                              value={supplier.name}
+                              value={supplier._id}
                               onChange={onChangeFilter}
                             />
                             <Label class="ml-2" htmlFor={supplier.name}>
@@ -450,22 +490,25 @@ export const Financials = () => {
                         id="radio"
                         onChange={onChangeFilter}
                       >
-                        {sortByOptions.map((option, index) => {
+                        {filters.sortBy.map((option, index) => {
                           return (
-                            <div className="flex px-4 items-center gap-2">
+                            <Dropdown.Item
+                              className="flex items-center gap-2"
+                              key={index}
+                            >
                               <Radio
-                                id={option}
+                                id={option.name}
                                 name="sortBy"
-                                value={option}
-                                defaultChecked={option === filters.sortBy}
+                                value={option.name}
+                                defaultChecked={option.active}
                               />
-                              <Label htmlFor={option}>{option}</Label>
-                            </div>
+                              <Label htmlFor={option.name}>{option.name}</Label>
+                            </Dropdown.Item>
                           );
                         })}
                       </fieldset>
                     </Dropdown>
-                    {sortBy()}
+                    {sortByButton()}
                   </div>
                 </div>
 
@@ -496,54 +539,27 @@ export const Financials = () => {
                     <tbody className="poppins-paragraph-sm ">
                       {purchases
                         .slice()
+                        .sort((a, b) => {
+                          return sortByCondition(a, b);
+                        })
                         .filter((purchase) => {
                           const total = purchase.price * purchase.quantity;
-
-                          return filters.price.max
-                            ? total > filters.price.min &&
-                                total < filters.price.max
-                            : total > filters.price.min;
+                          return filters.amount.max
+                            ? total > filters.amount.min &&
+                                total < filters.amount.max
+                            : total > filters.amount.min;
                         })
                         .filter((purchase) => {
-                          let setFilter;
-
-                          setFilter = new Set(filters.supplier);
-
-                          return !setFilter.size
+                          return !filters.material.length
                             ? true
-                            : setFilter.has(purchase.supplier.name);
+                            : filters.material.includes(
+                                purchase.material.name.toLowerCase()
+                              );
                         })
                         .filter((purchase) => {
-                          let setFilter;
-
-                          setFilter = new Set(filters.material);
-
-                          return !setFilter.size
+                          return !filters.supplier.length
                             ? true
-                            : setFilter.has(purchase.material.name);
-                        })
-                        .sort((a, b) => {
-                          switch (filters.sortBy) {
-                            case "newest":
-                              return filters.newest
-                                ? new Date(b.createdAt) - new Date(a.createdAt)
-                                : new Date(a.createdAt) - new Date(b.createdAt);
-
-                            case "quantity":
-                              switch (filters.quantity) {
-                                case 2:
-                                  return a.quantity - b.quantity;
-
-                                case 1:
-                                  return b.quantity - a.quantity;
-
-                                default:
-                                  return true;
-                              }
-
-                            default:
-                              return true;
-                          }
+                            : filters.supplier.includes(purchase.supplier._id);
                         })
                         .map((purchase, index) => {
                           return (

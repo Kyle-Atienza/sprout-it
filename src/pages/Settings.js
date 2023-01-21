@@ -40,7 +40,6 @@ export function Settings() {
   const onDeleteUser = (id) => {
     if (user.role === "owner") {
       dispatch(deleteUser(id));
-      window.location.reload();
     } else {
       alert("Restricted to Owner Only");
     }

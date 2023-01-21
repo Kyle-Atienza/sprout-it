@@ -301,7 +301,8 @@ export const userSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.users = state.users.filter((user) => {
-          return user._id !== action.payload._id;
+          console.log(user._id, action);
+          return user._id !== action.payload.id;
         });
       })
       .addCase(deleteUser.rejected, (state, action) => {
