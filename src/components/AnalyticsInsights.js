@@ -22,7 +22,7 @@ export const AnalyticsInsights = () => {
     x: [],
     y: [],
   });
-  const [regressionResults, setregressionResults] = useState({
+  const [regressionResults, setRegressionResults] = useState({
     fruiting: [],
     completed: [],
   });
@@ -117,7 +117,7 @@ export const AnalyticsInsights = () => {
         .slice()
         .sort((a, b) => b.prediction - a.prediction);
 
-      setregressionResults({
+      setRegressionResults({
         fruiting: initialRegressionResults.filter((result) => {
           return fruitingBatchesName.includes(result.batch);
         }),
@@ -269,7 +269,7 @@ export const AnalyticsInsights = () => {
         .slice()
         .sort((a, b) => b.prediction - a.prediction);
 
-      setregressionResults({
+      setRegressionResults({
         fruiting: initialRegressionResults.filter((result) => {
           return fruitingBatchesName.includes(result.batch);
         }),
@@ -278,9 +278,7 @@ export const AnalyticsInsights = () => {
         }),
       });
 
-      console.log(
-        regressionResults.completed.map((result) => result.batch).join(", ")
-      );
+      console.log(regressionResults.completed);
       console.log(regressionResults.completed);
 
       setInsights((prevState) => ({
