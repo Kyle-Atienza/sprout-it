@@ -114,8 +114,6 @@ export const AnalyticsInsights = () => {
         .slice()
         .sort((a, b) => b.prediction - a.prediction);
 
-      console.log(initialRegressionResults);
-
       setregressionResults({
         fruiting: initialRegressionResults.filter((result) => {
           return fruitingBatchesName.includes(result.batch);
@@ -124,6 +122,8 @@ export const AnalyticsInsights = () => {
           return finishedBatchesName.includes(result.batch);
         }),
       });
+
+      console.log(regressionResults);
 
       console.log(
         regressionResults.completed.map((result) => result.batch).join(", ")
