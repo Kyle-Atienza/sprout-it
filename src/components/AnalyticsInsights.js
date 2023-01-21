@@ -114,14 +114,11 @@ export const AnalyticsInsights = () => {
         .slice()
         .sort((a, b) => b.prediction - a.prediction);
 
-      console.log(initialRegressionResults);
-
       setregressionResults({
         fruiting: initialRegressionResults.filter((result) => {
           return fruitingBatchesName.includes(result.batch);
         }),
         completed: initialRegressionResults.filter((result) => {
-          console.log(finishedBatchesName, result);
           return finishedBatchesName.includes(result.batch);
         }),
       });
@@ -129,6 +126,8 @@ export const AnalyticsInsights = () => {
       console.log(
         regressionResults.completed.map((result) => result.batch).join(", ")
       );
+
+      console.log(regressionResults.completed.map((result) => result.batch));
 
       initialInsights.push({
         show: true,
