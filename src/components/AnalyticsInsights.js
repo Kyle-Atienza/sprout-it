@@ -14,7 +14,10 @@ export const AnalyticsInsights = () => {
 
   const { days, weeks, months } = harvestsByTimeRange;
 
-  const [insights, setInsights] = useState([]);
+  const [insights, setInsights] = useState({
+    timeRange: [],
+    regression: [],
+  });
   const [regressionParameters, setRegressionParameters] = useState({
     x: [],
     y: [],
@@ -82,7 +85,7 @@ export const AnalyticsInsights = () => {
       }),
     });
 
-    if (
+    /* if (
       getVariables(regressionParameters.x).length &&
       getVariables(regressionParameters.y).length
     ) {
@@ -141,7 +144,7 @@ export const AnalyticsInsights = () => {
           .slice(0, 3)
           .join(", ")} performs best in the past`,
       });
-    }
+    } */
 
     if (batches.fruiting) {
       initialInsights.push(
@@ -227,18 +230,74 @@ export const AnalyticsInsights = () => {
       .slice(0, 3)
       .map(({ batch }) => batch.name);
 
-    /* initialInsights.push({
-      show: true,
-      isGood: true,
-      message: `Batches ${bestBatchesName
-        .map((batch, index) =>
-          index === bestBatchesName.length - 1 ? `and ${batch}` : batch
-        )
-        .join(", ")} are the best performing batches`,
-    }); */
-
-    setInsights(initialInsights);
+    setInsights((prevState) => ({
+      ...prevState,
+      timeRange: initialInsights,
+    }));
   }, [batches, harvestsByTimeRange]);
+
+  useEffect(() => {
+    if (
+      getVariables(regressionParameters.x).length &&
+      getVariables(regressionParameters.y).length
+    ) {
+      const mlr = new MLR(
+        getVariables(regressionParameters.x),
+        getVariables(regressionParameters.y)
+      );
+
+      const fruitingBatchesName = batches.fruiting?.map((batch) =>
+        parseInt(batch.name)
+      );
+      const finishedBatchesName = finished?.map((batch) =>
+        parseInt(batch.name)
+      );
+
+      const initialRegressionResults = regressionParameters.x
+        .map((batch) => {
+          return {
+            batch: batch.batch,
+            prediction: Math.round(
+              mlr.predict(
+                Object.keys(batch.variables).map(
+                  (variable) => batch.variables[variable]
+                )
+              )[0]
+            ),
+          };
+        })
+        .slice()
+        .sort((a, b) => b.prediction - a.prediction);
+
+      setregressionResults({
+        fruiting: initialRegressionResults.filter((result) => {
+          return fruitingBatchesName.includes(result.batch);
+        }),
+        completed: initialRegressionResults.filter((result) => {
+          return finishedBatchesName.includes(result.batch);
+        }),
+      });
+
+      console.log(
+        regressionResults.completed.map((result) => result.batch).join(", ")
+      );
+      console.log(regressionResults.completed);
+
+      setInsights((prevState) => ({
+        ...prevState,
+        regression: [
+          {
+            show: true,
+            isGood: true,
+            message: `Batches ${regressionResults.completed
+              .map((result) => result.batch)
+              .slice(0, 3)
+              .join(", ")} performs best in the past`,
+          },
+        ],
+      }));
+    }
+  }, [regressionParameters]);
 
   const pastDays = (current, daysPast) => {
     return new Date(current.setDate(current.getDate() - daysPast));
@@ -323,7 +382,7 @@ export const AnalyticsInsights = () => {
 
   return (
     <>
-      {insights
+      {[...insights.regression, ...insights.timeRange]
         .filter((insight) => {
           return insight.show;
         })
