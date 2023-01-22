@@ -18,7 +18,15 @@ export const MaterialCard = ({ editMaterial, material, index }) => {
   });
 
   const onDeleteMaterial = () => {
-    dispatch(deleteMaterial(material._id));
+    modalSetup({
+      message: `${
+        material.quantity ? "Material still has quantity," : ""
+      } Are you sure you want to delete it?`,
+      action: null,
+      toggled: true,
+    });
+
+    // dispatch(deleteMaterial(material._id));
   };
 
   const closeModal = () => {
@@ -156,13 +164,7 @@ export const MaterialCard = ({ editMaterial, material, index }) => {
             </button>
             <button className="hover:text-red-600 flex items-center">
               <DeleteOutlined
-                onClick={() =>
-                  setModalSetup({
-                    message: "Are you sure to delete this material?",
-                    action: () => validateAccess(onDeleteMaterial),
-                    toggled: true,
-                  })
-                }
+                onClick={() => validateAccess(onDeleteMaterial)}
               />
             </button>
           </div>

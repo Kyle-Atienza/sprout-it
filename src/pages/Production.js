@@ -960,122 +960,143 @@ export const Production = () => {
                 <h2 className="poppins-heading-6 text-dark-500 mb-4">
                   Pre-production
                 </h2>
-                {batches["pre"]?.map((batch) => {
-                  return (
-                    <ProductionCard
-                      onClick={() => {
-                        setIsBatchModalOpen(true);
-                        setSelectedBatch(batch);
-                      }}
-                      key={batch.name}
-                      countDays={false}
-                      batch={batch}
-                    />
-                  );
-                })}
+                {batches["pre"]
+                  ?.slice()
+                  .sort((a, b) => parseInt(a.name) - parseInt(b.name))
+                  .map((batch) => {
+                    return (
+                      <ProductionCard
+                        onClick={() => {
+                          setIsBatchModalOpen(true);
+                          setSelectedBatch(batch);
+                        }}
+                        key={batch.name}
+                        countDays={false}
+                        batch={batch}
+                      />
+                    );
+                  })}
               </div>
               <div className="w-80 text-center">
                 <h2 className="poppins-heading-6 text-dark-500 mb-4">
                   Composting
                 </h2>
-                {batches["composting"]?.map((batch, index) => {
-                  return (
-                    <ProductionCard
-                      onClick={() => {
-                        setIsBatchModalOpen(true);
-                        setSelectedBatch(batch);
-                      }}
-                      key={index}
-                      batch={batch}
-                    />
-                  );
-                })}
+                {batches["composting"]
+                  ?.slice()
+                  .sort((a, b) => parseInt(a.name) - parseInt(b.name))
+                  .map((batch, index) => {
+                    return (
+                      <ProductionCard
+                        onClick={() => {
+                          setIsBatchModalOpen(true);
+                          setSelectedBatch(batch);
+                        }}
+                        key={index}
+                        batch={batch}
+                      />
+                    );
+                  })}
               </div>
               <div className="w-80 text-center">
                 <h2 className="poppins-heading-6 text-dark-500 mb-4">
                   Bagging
                 </h2>
-                {batches["bagging"]?.map((batch) => {
-                  return (
-                    <ProductionCard
-                      onClick={() => {
-                        setIsBatchModalOpen(true);
-                        setSelectedBatch(batch);
-                      }}
-                      key={batch.name}
-                      batch={batch}
-                    />
-                  );
-                })}
+                {batches["bagging"]
+                  ?.slice()
+                  .sort((a, b) => parseInt(a.name) - parseInt(b.name))
+                  .map((batch) => {
+                    return (
+                      <ProductionCard
+                        onClick={() => {
+                          setIsBatchModalOpen(true);
+                          setSelectedBatch(batch);
+                        }}
+                        key={batch.name}
+                        batch={batch}
+                      />
+                    );
+                  })}
               </div>
               <div className="w-80 text-center">
                 <h2 className="poppins-heading-6 text-dark-500 mb-4">
                   Sterilization
                 </h2>
-                {batches["sterilization"]?.map((batch) => {
-                  return (
-                    <ProductionCard
-                      onClick={() => {
-                        setIsBatchModalOpen(true);
-                        setSelectedBatch(batch);
-                      }}
-                      key={batch.name}
-                      batch={batch}
-                    />
-                  );
-                })}
+                {batches["sterilization"]
+                  ?.slice()
+                  .sort((a, b) => parseInt(a.name) - parseInt(b.name))
+                  .map((batch) => {
+                    return (
+                      <ProductionCard
+                        onClick={() => {
+                          setIsBatchModalOpen(true);
+                          setSelectedBatch(batch);
+                        }}
+                        key={batch.name}
+                        batch={batch}
+                      />
+                    );
+                  })}
               </div>
               <div className="w-80 text-center">
                 <h2 className="poppins-heading-6 text-dark-500 mb-4">
                   Inoculation
                 </h2>
-                {batches["inoculation"]?.map((batch) => {
-                  return (
-                    <ProductionCard
-                      onClick={() => {
-                        setIsBatchModalOpen(true);
-                        setSelectedBatch(batch);
-                      }}
-                      key={batch.name}
-                      batch={batch}
-                    />
-                  );
-                })}
+                {batches["inoculation"]
+                  ?.slice()
+                  .sort((a, b) => parseInt(a.name) - parseInt(b.name))
+                  .map((batch) => {
+                    return (
+                      <ProductionCard
+                        onClick={() => {
+                          setIsBatchModalOpen(true);
+                          setSelectedBatch(batch);
+                        }}
+                        key={batch.name}
+                        batch={batch}
+                      />
+                    );
+                  })}
               </div>
               <div className="w-80 text-center">
                 <h2 className="poppins-heading-6 text-dark-500 mb-4">
                   Fruiting
                 </h2>
-                {batches["fruiting"]?.map((batch) => {
-                  return (
-                    <ProductionCard
-                      onClick={() => {
-                        setIsBatchModalOpen(true);
-                        setSelectedBatch(batch);
-                      }}
-                      key={batch.name}
-                      batch={batch}
-                    />
-                  );
-                })}
+                {batches["fruiting"]
+                  ?.slice()
+                  .sort((a, b) => parseInt(a.name) - parseInt(b.name))
+                  .map((batch) => {
+                    return (
+                      <ProductionCard
+                        onClick={() => {
+                          setIsBatchModalOpen(true);
+                          setSelectedBatch(batch);
+                        }}
+                        key={batch.name}
+                        batch={batch}
+                      />
+                    );
+                  })}
               </div>
               <div className="w-80 text-center">
                 <h2 className="poppins-heading-6 text-dark-500 mb-4">
                   Post-production
                 </h2>
-                {batches["post"]?.map((batch) => {
-                  return (
-                    <ProductionCard
-                      onClick={() => {
-                        setIsBatchModalOpen(true);
-                        setSelectedBatch(batch);
-                      }}
-                      key={batch.name}
-                      countDays={false}
-                      batch={batch}
-                    />
-                  );
-                })}
+                {batches["post"]
+                  ?.slice()
+                  .sort((a, b) => parseInt(a.name) - parseInt(b.name))
+                  .map((batch) => {
+                    return (
+                      <ProductionCard
+                        onClick={() => {
+                          setIsBatchModalOpen(true);
+                          setSelectedBatch(batch);
+                        }}
+                        key={batch.name}
+                        countDays={false}
+                        batch={batch}
+                      />
+                    );
+                  })}
               </div>
             </section>
           </div>

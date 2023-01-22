@@ -53,21 +53,30 @@ export const Analytics = () => {
   };
 
   const chartHarvestCostData = {
-    labels: [...finished, ...active].map((batch) => "Batch" + batch.name),
+    labels: [...finished, ...active]
+      .slice()
+      .sort((a, b) => parseInt(a.name) - parseInt(b.name))
+      .map((batch) => "Batch" + batch.name),
     datasets: [
       {
         label: "Batch Harvests",
         backgroundColor: "#BCDEA2",
-        data: [...finished, ...active].map((batch) => {
-          return getBatchHarvestSum(batch) * 30;
-        }),
+        data: [...finished, ...active]
+          .slice()
+          .sort((a, b) => parseInt(a.name) - parseInt(b.name))
+          .map((batch) => {
+            return getBatchHarvestSum(batch) * 300;
+          }),
       },
       {
         label: "Batch Cost",
         backgroundColor: "#A29072",
-        data: [...finished, ...active].map((batch) => {
-          return batch.value;
-        }),
+        data: [...finished, ...active]
+          .slice()
+          .sort((a, b) => parseInt(a.name) - parseInt(b.name))
+          .map((batch) => {
+            return batch.value;
+          }),
       },
     ],
   };
@@ -112,6 +121,12 @@ export const Analytics = () => {
                         display: true,
                         text: "Costs & Harvests per Batch",
                         fontSize: 24,
+                      },
+                    },
+                    scales: {
+                      y: {
+                        beginAtZero: true,
+                        type: "logarithmic",
                       },
                     },
                   }}

@@ -279,7 +279,14 @@ export const AnalyticsInsights = () => {
       });
 
       console.log(regressionResults.completed);
-      console.log(regressionResults.completed);
+      console.log(
+        initialRegressionResults
+          .filter((result) => {
+            return finishedBatchesName.includes(result.batch);
+          })
+          .map((result) => result.batch)
+          .slice(0, 3)
+      );
 
       setInsights((prevState) => ({
         ...prevState,
