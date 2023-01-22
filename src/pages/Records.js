@@ -120,7 +120,7 @@ export const Records = () => {
     if (activeSortBy.name !== "default") {
       return (
         <PrimaryButton
-          className="text-xl leading-none flex justify-center items-center"
+          className='text-xl leading-none flex justify-center items-center'
           name={`${activeSortBy.ascending ? "Least" : "Most"} ${
             activeSortBy.name
           }`}
@@ -164,57 +164,57 @@ export const Records = () => {
     <>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
-          as="div"
-          className="relative z-20"
+          as='div'
+          className='relative z-20'
           onClose={() => setIsOpen(false)}
         >
           <Transition.Child
             as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
+            enter='ease-out duration-300'
+            enterFrom='opacity-0'
+            enterTo='opacity-100'
+            leave='ease-in duration-200'
+            leaveFrom='opacity-100'
+            leaveTo='opacity-0'
           >
-            <div className="fixed inset-0 bg-dark-700 bg-opacity-25" />
+            <div className='fixed inset-0 bg-dark-700 bg-opacity-25' />
           </Transition.Child>
 
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
+          <div className='fixed inset-0 overflow-y-auto'>
+            <div className='flex min-h-full items-center justify-center p-4 text-center'>
               <Transition.Child
                 as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
+                enter='ease-out duration-300'
+                enterFrom='opacity-0 scale-95'
+                enterTo='opacity-100 scale-100'
+                leave='ease-in duration-200'
+                leaveFrom='opacity-100 scale-100'
+                leaveTo='opacity-0 scale-95'
               >
-                <Dialog.Panel className="overflow-y-scroll scrollbar-hidden bg-light-100 w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-lg transition-all h-[40rem] flex flex-col">
-                  <div className="w-full flex items-center justify-start mb-3">
-                    <Dialog.Title as="h3" className="poppins-heading-6 w-full">
+                <Dialog.Panel className='overflow-y-scroll scrollbar-hidden bg-light-100 w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-lg transition-all h-[40rem] flex flex-col'>
+                  <div className='w-full flex items-center justify-start mb-3'>
+                    <Dialog.Title as='h3' className='poppins-heading-6 w-full'>
                       Batch {selectedBatch.name}
                     </Dialog.Title>
                     <button
-                      className="hover:text-red-700 flex items-center"
+                      className='hover:text-red-700 flex items-center'
                       onClick={() => setIsOpen(false)}
                     >
                       <CloseOutlined />
                     </button>
                   </div>
-                  <div className="dates my-3 flex gap-7">
-                    <div className="dates-started flex flex-col gap-1">
-                      <p className="open-paragraph-sm">Date Started</p>
-                      <h6 className="open-paragraph font-bold">
+                  <div className='dates my-3 flex gap-7'>
+                    <div className='dates-started flex flex-col gap-1'>
+                      <p className='open-paragraph-sm'>Date Started</p>
+                      <h6 className='open-paragraph font-bold'>
                         {new Date(selectedBatch.createdAt).toLocaleDateString(
                           "en-ph"
                         )}
                       </h6>
                     </div>
-                    <div className="dates-started flex flex-col gap-1">
-                      <p className="open-paragraph-sm">Date Finished</p>
-                      <h6 className="open-paragraph font-bold">
+                    <div className='dates-started flex flex-col gap-1'>
+                      <p className='open-paragraph-sm'>Date Finished</p>
+                      <h6 className='open-paragraph font-bold'>
                         {new Date(selectedBatch.finishedAt).toLocaleDateString(
                           "en-ph"
                         )}
@@ -229,41 +229,43 @@ export const Records = () => {
         </Dialog>
       </Transition>
 
-      <div className="flex flex-row">
-        <div className="w-0 lg:w-1/6">
+      <div className='flex flex-row'>
+        <div className='w-0 lg:w-1/6'>
           <SideNavBar />
         </div>
 
-        <div className="flex flex-col w-full lg:w-5/6 min-h-screen" id="top">
-          <div className="w-full">
-            <TopNavBar pageName="Records" />
+        <div className='flex flex-col w-full lg:w-5/6 min-h-screen' id='top'>
+          <div className='w-full'>
+            <TopNavBar pageName='Records' />
           </div>
 
-          <div className="flex flex-wrap gap-4 mx-10 mt-16">
-            <div className="dropdown flex gap-2 flex-nowrap">
+          <div className='flex flex-wrap gap-4 mx-10 mt-16'>
+            <div className='dropdown flex gap-2 flex-nowrap'>
               <Dropdown
-                class="py-1 px-2 rounded-full poppins-button bg-transparent text-primary-500 hover:text-light-100 border-primary-400 hover:border-primary-500 border-2 hover:bg-primary-500 shadow transition-all"
-                label="Sort By"
+                class='py-1 px-2 rounded-full poppins-button bg-transparent text-primary-500 hover:text-light-100 border-primary-400 hover:border-primary-500 border-2 hover:bg-primary-500 shadow transition-all'
+                label='Sort By'
                 dismissOnClick={false}
               >
                 <fieldset
-                  className="flex flex-col gap-4"
-                  id="radio"
+                  className='flex flex-col gap-4'
+                  id='radio'
                   onChange={onChangeFilter}
                 >
                   {filters.sortBy.map((option, index) => {
                     return (
                       <Dropdown.Item
-                        className="flex items-center gap-2"
+                        className='flex items-center gap-2'
                         key={index}
                       >
                         <Radio
                           id={option.name}
-                          name="sortBy"
+                          name='sortBy'
                           value={option.name}
                           defaultChecked={option.active}
                         />
-                        <Label htmlFor={option.name}>{option.name}</Label>
+                        <Label class='ml-2' htmlFor={option.name}>
+                          {option.name}
+                        </Label>
                       </Dropdown.Item>
                     );
                   })}
@@ -271,10 +273,10 @@ export const Records = () => {
               </Dropdown>
               {sortByButton()}
             </div>
-            <div className="dropdown">
+            <div className='dropdown'>
               <Dropdown
-                class="py-1 px-2 rounded-full poppins-button bg-transparent text-primary-500 hover:text-light-100 border-primary-400 hover:border-primary-500 border-2 hover:bg-primary-500 shadow transition-all"
-                label="Materials"
+                class='py-1 px-2 rounded-full poppins-button bg-transparent text-primary-500 hover:text-light-100 border-primary-400 hover:border-primary-500 border-2 hover:bg-primary-500 shadow transition-all'
+                label='Materials'
               >
                 {materials
                   .filter((material) => !material.isHidden)
@@ -283,11 +285,11 @@ export const Records = () => {
                       <Dropdown.Item key={material._id}>
                         <Checkbox
                           id={material.name}
-                          name="material"
+                          name='material'
                           value={material._id}
                           onChange={onChangeFilter}
                         />
-                        <Label className="ml-5" htmlFor={material.name}>
+                        <Label class='ml-2' htmlFor={material.name}>
                           {material.name}
                         </Label>
                       </Dropdown.Item>
@@ -295,50 +297,50 @@ export const Records = () => {
                   })}
               </Dropdown>
             </div>
-            <div className="active flex items-center gap-2">
-              <p className="whitespace-nowrap">Active from</p>
+            <div className='active flex items-center gap-2'>
+              <p className='whitespace-nowrap'>Active from</p>
               <input
-                className="p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400"
-                type="month"
-                name="active"
+                className='p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
+                type='month'
+                name='active'
                 onChange={onChangeFilter}
-                data-active="min"
-                id=""
+                data-active='min'
+                id=''
               />
               <p>to</p>
               <input
-                className="p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400"
-                type="month"
-                name="active"
+                className='p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
+                type='month'
+                name='active'
                 onChange={onChangeFilter}
-                data-active="max"
-                id=""
+                data-active='max'
+                id=''
               />
             </div>
           </div>
 
-          <div className="overflow-x-auto harvests-table mx-10 my-6 shadow-md bg-light-100 rounded-xl">
-            <table className="w-full text-sm text-left">
-              <thead className=" poppins-paragraph text-secondary-300">
+          <div className='overflow-x-auto harvests-table mx-10 my-6 shadow-md bg-light-100 rounded-xl'>
+            <table className='w-full text-sm text-left'>
+              <thead className=' poppins-paragraph text-secondary-300'>
                 <tr>
-                  <th scope="col" className="py-4 px-6">
+                  <th scope='col' className='py-4 px-6'>
                     Batch #
                   </th>
-                  <th scope="col" className="py-4 px-6">
+                  <th scope='col' className='py-4 px-6'>
                     Date Started
                   </th>
-                  <th scope="col" className="py-4 px-6">
+                  <th scope='col' className='py-4 px-6'>
                     Date Finished
                   </th>
-                  <th scope="col" className="py-4 px-6">
+                  <th scope='col' className='py-4 px-6'>
                     Total Harvests (kg)
                   </th>
-                  <th scope="col" className="py-4 px-6">
+                  <th scope='col' className='py-4 px-6'>
                     Total Defects (kg)
                   </th>
                 </tr>
               </thead>
-              <tbody className="poppins-paragraph-sm ">
+              <tbody className='poppins-paragraph-sm '>
                 {finished
                   .slice()
                   .sort((a, b) => {
@@ -370,27 +372,27 @@ export const Records = () => {
                     return (
                       <tr
                         key={batch.name}
-                        className="bg-light-100 hover:bg-light-200 border-b dark:bg-gray-800 dark:border-gray-700 transition-all duration-300 ease-in-out cursor-pointer"
+                        className='bg-light-100 hover:bg-light-200 border-b dark:bg-gray-800 dark:border-gray-700 transition-all duration-300 ease-in-out cursor-pointer'
                         onClick={() => {
                           setIsOpen(true);
                           setSelectedBatch(batch);
                         }}
                       >
-                        <td className="py-4 px-6">Batch {batch.name}</td>
-                        <td className="py-4 px-6">
+                        <td className='py-4 px-6'>Batch {batch.name}</td>
+                        <td className='py-4 px-6'>
                           {new Date(batch.createdAt).toLocaleDateString(
                             "en-ph"
                           )}
                         </td>
-                        <td className="py-4 px-6">
+                        <td className='py-4 px-6'>
                           {new Date(batch.finishedAt).toLocaleDateString(
                             "en-ph"
                           )}
                         </td>
-                        <td className="py-4 px-6">
+                        <td className='py-4 px-6'>
                           {Math.round(getHarvestSum(batch))}
                         </td>
-                        <td className="py-4 px-6">{getDefectsSum(batch)}</td>
+                        <td className='py-4 px-6'>{getDefectsSum(batch)}</td>
                       </tr>
                     );
                   })}

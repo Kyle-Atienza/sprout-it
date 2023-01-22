@@ -497,7 +497,9 @@ export const Financials = () => {
                                 value={option.name}
                                 defaultChecked={option.active}
                               />
-                              <Label htmlFor={option.name}>{option.name}</Label>
+                              <Label class='ml-2' htmlFor={option.name}>
+                                {option.name}
+                              </Label>
                             </Dropdown.Item>
                           );
                         })}
