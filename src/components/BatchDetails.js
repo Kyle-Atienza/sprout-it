@@ -38,8 +38,6 @@ export function BatchDetails({ batch }) {
       defectsSum += batch[phase].defects;
     });
     setTotalDefects(defectsSum);
-
-    console.log(phases.indexOf(batch.activePhase), batch.activePhase);
   }, []);
 
   return (
