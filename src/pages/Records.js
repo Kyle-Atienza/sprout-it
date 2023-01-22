@@ -298,25 +298,29 @@ export const Records = () => {
                   })}
               </Dropdown>
             </div>
-            <div className="active flex items-center gap-2">
-              <p className="whitespace-nowrap">Active from</p>
-              <input
-                className="p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400"
-                type="month"
-                name="active"
-                onChange={onChangeFilter}
-                data-active="min"
-                id=""
-              />
-              <p>to</p>
-              <input
-                className="p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400"
-                type="month"
-                name="active"
-                onChange={onChangeFilter}
-                data-active="max"
-                id=""
-              />
+            <div className='active flex flex-wrap gap-2'>
+              <div className='flex items-center gap-2'>
+                <p className='whitespace-nowrap'>Active from</p>
+                <input
+                  className='p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
+                  type='month'
+                  name='active'
+                  onChange={onChangeFilter}
+                  data-active='min'
+                  id=''
+                />
+              </div>
+              <div className='flex items-center gap-2'>
+                <p>to</p>
+                <input
+                  className='p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400'
+                  type='month'
+                  name='active'
+                  onChange={onChangeFilter}
+                  data-active='max'
+                  id=''
+                />
+              </div>
             </div>
           </div>
 

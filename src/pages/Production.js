@@ -289,7 +289,7 @@ export const Production = () => {
             type="text"
             name="defects"
             onChange={(e) => setDefects(e.target.value)}
-            placeholder="Lorem ipsum dolor"
+            placeholder="0"
             required
           />
           <h1>What is the moisture content</h1>
@@ -338,7 +338,7 @@ export const Production = () => {
             type="text"
             name="defects"
             onChange={(e) => setDefects(e.target.value)}
-            placeholder="Lorem ipsum dolor"
+            placeholder="0"
             required
           />
           <h1>Total Number of bags</h1>
@@ -353,7 +353,7 @@ export const Production = () => {
                 total: e.target.value,
               }))
             }
-            placeholder="Lorem ipsum dolor"
+            placeholder="0"
             required
           />
           <h1 className="poppins-heading-6 mt-6 mb-3">
@@ -371,7 +371,7 @@ export const Production = () => {
                 waiting: e.target.value,
               }))
             }
-            placeholder="Lorem ipsum dolor"
+            placeholder="Enter value"
             required
           />
         </>
@@ -379,33 +379,33 @@ export const Production = () => {
     } else if (phase === "sterilization") {
       return (
         <>
-          <h1 className="poppins-heading-6 mb-3">Phase Results</h1>
+          <h1 className='poppins-heading-6 mb-3'>Phase Results</h1>
           <h1>How many defects where there at phase</h1>
           <TextField
-            className="w-full open-paragraph-sm mt-0"
-            id="username"
-            type="text"
-            name="defects"
+            className='w-full open-paragraph-sm mt-0'
+            id='username'
+            type='text'
+            name='defects'
             onChange={(e) => setDefects(e.target.value)}
-            placeholder="Lorem ipsum dolor"
+            placeholder='0'
             required
           />
-          <h1 className="poppins-heading-6 mt-6 mb-3">
+          <h1 className='poppins-heading-6 mt-6 mb-3'>
             Next Phase Preparation
           </h1>
           <h1>What is the spawn that will be used</h1>
           <TextField
-            className="w-full open-paragraph-sm mt-0"
-            id="username"
-            type="text"
-            name="defects"
+            className='w-full open-paragraph-sm mt-0'
+            id='username'
+            type='text'
+            name='defects'
             onChange={(e) =>
               setPhaseDetails((prevState) => ({
                 ...prevState,
                 spawn: e.target.value,
               }))
             }
-            placeholder="Lorem ipsum dolor"
+            placeholder='Select'
             required
           />
         </>
@@ -421,7 +421,7 @@ export const Production = () => {
             type="text"
             name="defects"
             onChange={(e) => setDefects(e.target.value)}
-            placeholder="Lorem ipsum dolor"
+            placeholder="0"
             required
           />
           <h1>What is the total number of bags inoculated</h1>
@@ -436,7 +436,7 @@ export const Production = () => {
                 total: e.target.value,
               }))
             }
-            placeholder="Lorem ipsum dolor"
+            placeholder="0"
             required
           />
           <h1 className="poppins-heading-6 mt-6 mb-3">
@@ -454,7 +454,7 @@ export const Production = () => {
                 waiting: e.target.value,
               }))
             }
-            placeholder="Lorem ipsum dolor"
+            placeholder="Enter value"
             required
           />
         </>
@@ -469,7 +469,7 @@ export const Production = () => {
             type="text"
             name="defects"
             onChange={(e) => setDefects(e.target.value)}
-            placeholder="Lorem ipsum dolor"
+            placeholder="0"
             required
           />
         </>
