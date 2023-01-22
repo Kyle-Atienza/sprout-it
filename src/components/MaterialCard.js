@@ -18,26 +18,28 @@ export const MaterialCard = ({ editMaterial, material, index }) => {
   });
 
   const onDeleteMaterial = () => {
-    modalSetup({
-      message: `${
-        material.quantity ? "Material still has quantity," : ""
-      } Are you sure you want to delete it?`,
-      action: null,
-      toggled: true,
-    });
-
-    // dispatch(deleteMaterial(material._id));
+    console.log("set");
+    if (material.quantity) {
+      setModalSetup({
+        message: "Material still has quantity, unable to delete",
+        action: null,
+        toggled: true,
+      });
+    } else {
+      setModalSetup({
+        message: "Are you sure you want to delete it?",
+        action: () => dispatch(deleteMaterial(material._id)),
+        toggled: true,
+      });
+    }
   };
 
   const closeModal = () => {
     setIsOpen(false);
   };
 
-  const openModal = () => {
-    setIsOpen(true);
-  };
-
   const validateAccess = (callback) => {
+    console.log(callback);
     if (user.role === "owner") {
       callback();
     } else {
@@ -83,28 +85,46 @@ export const MaterialCard = ({ editMaterial, material, index }) => {
                       Confirm End Task
                     </Dialog.Title>
                     <p className="my-4">{modalSetup.message}</p>
-                    <div className="flex gap-x-4">
-                      <button
-                        type="button"
-                        className={`py-4 px-6 rounded-full poppins-button border-2 border-red-500 hover:bg-red-500 hover:text-light-100 text-red-500 shadow transition-all `}
-                        onClick={modalSetup.action}
-                      >
-                        Yes
-                      </button>
-                      <button
-                        type="button"
-                        className={`py-4 px-6 rounded-full poppins-button bg-red-500 hover:bg-red-700 text-light-100 shadow transition-all `}
-                        onClick={() =>
-                          setModalSetup({
-                            message: "",
-                            action: null,
-                            toggled: false,
-                          })
-                        }
-                      >
-                        No
-                      </button>
-                    </div>
+                    {modalSetup.action ? (
+                      <div className="flex gap-x-4">
+                        <button
+                          type="button"
+                          className={`py-4 px-6 rounded-full poppins-button border-2 border-red-500 hover:bg-red-500 hover:text-light-100 text-red-500 shadow transition-all `}
+                          onClick={modalSetup.action}
+                        >
+                          Yes
+                        </button>
+                        <button
+                          type="button"
+                          className={`py-4 px-6 rounded-full poppins-button bg-red-500 hover:bg-red-700 text-light-100 shadow transition-all `}
+                          onClick={() =>
+                            setModalSetup({
+                              message: "",
+                              action: null,
+                              toggled: false,
+                            })
+                          }
+                        >
+                          No
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="flex gap-x-4">
+                        <button
+                          type="button"
+                          className={`py-4 px-6 rounded-full poppins-button bg-red-500 hover:bg-red-700 text-light-100 shadow transition-all `}
+                          onClick={() =>
+                            setModalSetup({
+                              message: "",
+                              action: null,
+                              toggled: false,
+                            })
+                          }
+                        >
+                          OK
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

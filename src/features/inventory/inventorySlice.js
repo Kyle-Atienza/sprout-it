@@ -149,8 +149,6 @@ export const inventorySlice = createSlice({
         state.materials = state.materials.filter((notification) => {
           return notification._id !== action.payload.id;
         });
-
-        window.location.reload();
       })
       .addCase(deleteMaterial.rejected, (state, action) => {
         state.isLoading = false;
