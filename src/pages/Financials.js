@@ -406,8 +406,8 @@ export const Financials = () => {
                     name='Add Purchase'
                     onClick={onPurchase}
                   />
-                  <div className='price-range flex gap-4 z-0'>
-                    <TextInput
+                  <div className='price-range flex flex-wrap gap-4 z-0'>
+                    <input
                       id='min'
                       class='p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400 z-0'
                       type='number'
@@ -417,7 +417,7 @@ export const Financials = () => {
                       placeholder='Minimum Total'
                       onChange={onChangeFilter}
                     />
-                    <TextInput
+                    <input
                       id='max'
                       class='p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm focus:ring-primary-500 focus:border-primary-400 z-0'
                       type='number'
