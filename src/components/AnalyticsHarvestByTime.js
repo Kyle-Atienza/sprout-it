@@ -37,7 +37,8 @@ export const AnalyticsHarvestByTime = () => {
       ? [...batchesHarvestData]
       : [
           {
-            label: "Total Harvests",
+            label: "Total Harvests (kg)",
+            backgroundColor: "#BCDEA2",
             data: chartHarvestDates.map((date) => {
               // console.log(date);
 
@@ -184,33 +185,34 @@ export const AnalyticsHarvestByTime = () => {
   };
 
   return (
-    <div className="p-4 md:p-6 lg:p-12 w-full bg-white rounded-3xl shadow">
-      <div className="flex justify-between">
-        <div className="flex flex-wrap gap-2">
+    <div className='p-4 md:p-6 lg:p-12 w-full bg-white rounded-3xl shadow'>
+      <div className='flex justify-between'>
+        <div className='flex flex-wrap gap-2'>
           <SecondaryButton
             onClick={() => setChartHarvestDateRange("days")}
-            name="days"
+            name='days'
           />
           <SecondaryButton
             onClick={() => setChartHarvestDateRange("weeks")}
-            name="weeks"
+            name='weeks'
           />
           <SecondaryButton
             onClick={() => setChartHarvestDateRange("months")}
-            name="months"
+            name='months'
           />
-          <SecondaryButton
-            className={`${!isChartScrollable.older ? "opacity-50" : ""}`}
-            onClick={() => scrollTimeRange("older")}
-            name="<"
-          />
-          <SecondaryButton
-            className={`${!isChartScrollable.newer ? "opacity-50" : ""}`}
-            onClick={() => scrollTimeRange("newer")}
-            name=">"
-          />
-        </div>
-        <div className="flex flex-wrap gap-2">
+          <div className='flex gap-2'>
+            <SecondaryButton
+              className={`${!isChartScrollable.older ? "opacity-50" : ""}`}
+              onClick={() => scrollTimeRange("older")}
+              name='<'
+            />
+            <SecondaryButton
+              className={`${!isChartScrollable.newer ? "opacity-50" : ""}`}
+              onClick={() => scrollTimeRange("newer")}
+              name='>'
+            />
+          </div>
+
           <SecondaryButton
             onClick={() => setBreakdownView(!breakdownView)}
             name={breakdownView ? "Total Harvests" : "By Batch Harvests"}

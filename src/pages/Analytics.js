@@ -59,7 +59,7 @@ export const Analytics = () => {
       .map((batch) => "Batch" + batch.name),
     datasets: [
       {
-        label: "Batch Harvests",
+        label: "Batch Harvests (₱)",
         backgroundColor: "#BCDEA2",
         data: [...finished, ...active]
           .slice()
@@ -69,7 +69,7 @@ export const Analytics = () => {
           }),
       },
       {
-        label: "Batch Cost",
+        label: "Batch Cost (₱)",
         backgroundColor: "#A29072",
         data: [...finished, ...active]
           .slice()
@@ -97,7 +97,7 @@ export const Analytics = () => {
                 <AnalyticsSubstrateBatch compareHarvestDefects />
               </div>
 
-              <div className=" w-full lg:w-1/2 flex flex-col gap-4 overflow-y-scroll scrollbar-hidden">
+              <div className=" w-full lg:w-1/2 h-96 flex flex-col gap-4 overflow-y-scroll scrollbar-hidden">
                 <h2 className="poppins-heading-6 text-dark-500 mt-6 lg:mt-0">
                   Insights
                 </h2>
