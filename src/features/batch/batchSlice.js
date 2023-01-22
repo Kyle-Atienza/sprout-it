@@ -308,6 +308,8 @@ export const batchSlice = createSlice({
             phases[activePhase].push(batch);
             return phases;
           }, {});
+
+        window.location.reload();
       })
       .addCase(updateBatch.rejected, (state, action) => {
         state.isLoading = false;

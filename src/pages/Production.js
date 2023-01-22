@@ -199,7 +199,6 @@ export const Production = () => {
     setIsPhaseFormModal(false);
     setDefects(0);
     setPhaseDetails({});
-    window.location.reload();
   };
 
   const mapButtonByPhase = (phase) => {
