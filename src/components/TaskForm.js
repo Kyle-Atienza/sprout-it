@@ -262,7 +262,7 @@ export function TaskForm({ batch, closeModal }) {
             <option hidden defaultValue>
               End By
             </option>
-            <option value="phase">Phase</option>
+            {/* <option value="phase">Phase</option> */}
             <option value="date">Date</option>
             <option value="occurrence">Occurrence</option>
             <option value="manual">Manually End</option>

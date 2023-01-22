@@ -38,14 +38,12 @@ export function BatchDetails({ batch }) {
       defectsSum += batch[phase].defects;
     });
     setTotalDefects(defectsSum);
+
+    console.log(phases.indexOf(batch.activePhase), batch.activePhase);
   }, []);
 
   return (
-    <Tab.Group
-      selectedIndex={phases.indexOf(
-        batch.activePhase.slice(0, 1).toUpperCase() + batch.activePhase.slice(1)
-      )}
-    >
+    <Tab.Group selectedIndex={phases.indexOf(batch.activePhase)}>
       <Tab.List className="flex gap-2 overflow-x-scroll scrollbar pb-2 flex-shrink-0">
         {phases.map((phase, index) => {
           return (
