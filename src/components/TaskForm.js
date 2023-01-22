@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import { createTask, getTasks } from "../features/batch/batchSlice";
 import { createTask, getTasks } from "../features/task/taskSlice";
 import { PrimaryButton, TextField } from "../components";
 
 export function TaskForm({ batch, closeModal }) {
   const dispatch = useDispatch();
+
+  const { user } = useSelector((state) => state.user);
 
   const [task, setTask] = useState({
     name: "",
@@ -57,29 +59,32 @@ export function TaskForm({ batch, closeModal }) {
       return new Date().toISOString().split("T")[0];
     }
   };
-  // new Date(new Date("2022-11-11").toUTCString())
+
   const onCreateTask = (e) => {
     e.preventDefault();
-    dispatch(
-      createTask({
-        batch: batch._id,
-        start: {
-          by: startBy,
-          on: startOn,
-        },
-        end: {
-          by: endBy,
-          on: endOn,
-        },
-        name: name,
-        description: description,
-        for: batch.activePhase,
-        frequency: frequency,
-        time: time,
-      })
-    );
-    closeModal();
-    // window.location.reload();
+    if (user.role === "owner") {
+      dispatch(
+        createTask({
+          batch: batch._id,
+          start: {
+            by: startBy,
+            on: startOn,
+          },
+          end: {
+            by: endBy,
+            on: endOn,
+          },
+          name: name,
+          description: description,
+          for: batch.activePhase,
+          frequency: frequency,
+          time: time,
+        })
+      );
+      closeModal();
+    } else {
+      alert("Restricted to Owner Only");
+    }
   };
 
   const getInputByType = (on, type) => {
@@ -209,7 +214,7 @@ export function TaskForm({ batch, closeModal }) {
           Time <span className="text-red-600">*</span>
         </label>
         <div className="flex items-center gap-4">
-          <div className="form-check flex">
+          {/* <div className="form-check flex">
             <input
               className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-primary-500 checked:border-primary-500 focus:ring-primary-500 focus:border-primary-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
               type="checkbox"
@@ -229,7 +234,7 @@ export function TaskForm({ batch, closeModal }) {
             >
               All day
             </label>
-          </div>
+          </div> */}
           <input
             disabled={task.time === "allDay"}
             className="w-full p-3 bg-light-200 rounded-lg border-1 border-light-200 open-paragrap-sm my-2 focus:ring-primary-500 focus:border-primary-400"

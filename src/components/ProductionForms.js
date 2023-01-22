@@ -25,8 +25,7 @@ export const PreProductionForm = () => {
     }));
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = () => {
     if (user.role === "owner") {
       dispatch(
         createBatch({

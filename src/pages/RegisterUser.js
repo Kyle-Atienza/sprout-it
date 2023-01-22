@@ -50,7 +50,7 @@ export const RegisterUser = () => {
       alert(message.response);
     }
     if (isSuccess || user) {
-      navigate("/production");
+      navigate("/home");
     }
 
     dispatch(reset());

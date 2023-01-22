@@ -46,7 +46,7 @@ export const PurchaseForm = ({ openSupplierModal, closePurchaseForm }) => {
   }, [purchaseData]);
 
   useEffect(() => {
-    console.log(selectedMaterial);
+    // console.log(selectedMaterial, selectedMaterial.price);
     if (selectedMaterial)
       setPurchaseData((prevState) => ({
         ...prevState,

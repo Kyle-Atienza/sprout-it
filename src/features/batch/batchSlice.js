@@ -273,13 +273,12 @@ export const batchSlice = createSlice({
         state.batches.pre = state.batches.pre
           ? [...state.batches.pre, action.payload]
           : [action.payload];
-
-        window.location.reload();
       })
       .addCase(createBatch.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
+        window.location.reload();
 
         //temporary
         // alert(action.payload.response);

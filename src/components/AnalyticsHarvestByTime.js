@@ -40,8 +40,6 @@ export const AnalyticsHarvestByTime = () => {
             label: "Total Harvests (kg)",
             backgroundColor: "#BCDEA2",
             data: chartHarvestDates.map((date) => {
-              // console.log(date);
-
               return date.data.reduce((prev, curr) => {
                 return prev + curr.weight;
               }, 0);
