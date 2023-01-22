@@ -39,7 +39,6 @@ export const MaterialCard = ({ editMaterial, material, index }) => {
   };
 
   const validateAccess = (callback) => {
-    console.log(callback);
     if (user.role === "owner") {
       callback();
     } else {

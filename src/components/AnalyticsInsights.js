@@ -299,6 +299,14 @@ export const AnalyticsInsights = () => {
               .slice(0, 3)
               .join(", ")} performs best in the past`,
           },
+          {
+            show: true,
+            isGood: true,
+            message: `Fruitin Batch ${regressionResults.fruiting
+              .map((result) => result.batch)
+              .slice(0, 1)
+              .join(", ")} is projected to perform well`,
+          },
         ],
       }));
     }

@@ -278,6 +278,7 @@ export const batchSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
+        window.location.reload();
 
         //temporary
         // alert(action.payload.response);
