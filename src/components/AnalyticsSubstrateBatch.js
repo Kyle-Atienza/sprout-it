@@ -29,6 +29,12 @@ export const AnalyticsSubstrateBatch = ({
   }, []);
 
   useEffect(() => {
+    if (mixedBatch) {
+      // console.log(getBatchesDefectsSum(mixedBatch));
+    }
+  }, [mixedBatch]);
+
+  useEffect(() => {
     setMixedBatch(
       [...active, ...finished].filter((batch) => {
         return !!(
@@ -95,9 +101,9 @@ export const AnalyticsSubstrateBatch = ({
     return defectsSum / length;
   };
 
-  const getBatchesDefectsSum = (batches) => {
+  const getBatchesDefectsSum = (batches, name) => {
     return batches.reduce((prev, current) => {
-      return prev + getDefectsSum(current);
+      return prev + getDefectsSum(current) || 0;
     }, 0);
   };
 
@@ -117,9 +123,9 @@ export const AnalyticsSubstrateBatch = ({
         label: "Total Defects",
         backgroundColor: "#A29072",
         data: [
-          getBatchesDefectsSum(kusotBatch),
-          getBatchesDefectsSum(dayamiBatch),
-          getBatchesDefectsSum(mixedBatch),
+          getBatchesDefectsSum(kusotBatch, "kusot"),
+          getBatchesDefectsSum(dayamiBatch, "dayami"),
+          getBatchesDefectsSum(mixedBatch, "mixed"),
         ],
       },
     ],
