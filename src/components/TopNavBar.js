@@ -44,7 +44,7 @@ export const TopNavBar = ({ pageName }) => {
     <>
       <nav
         className='
-        z-0
+        z-50
             absolute
             w-auto
             h-20
